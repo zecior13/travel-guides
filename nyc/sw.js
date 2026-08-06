@@ -1,6 +1,6 @@
-const CACHE = "nyc-2026-v90";
+const CACHE_PREFIX = "nyc-2026-";
+const CACHE = "nyc-2026-v91";
 
-// Rdzeń jest mały i musi zostać zapisany w całości, aby aplikacja zawsze się uruchomiła.
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -18,8 +18,6 @@ const CORE_ASSETS = [
   "./icons/favicon-32.png"
 ];
 
-// Zdjęcia pobieramy osobno, na wyraźne polecenie użytkownika. Pojedynczy błąd
-// nie może już zablokować instalacji całej aplikacji.
 const MEDIA_ASSETS = [
   "./assets/maps/nyc-illustrated-master-v1.png",
   "./assets/maps/nyc-subway-map-2025.svg",
@@ -66,7 +64,11 @@ self.addEventListener("install", event => {
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key))))
+      .then(keys => Promise.all(
+        keys
+          .filter(key => key.startsWith(CACHE_PREFIX) && key !== CACHE)
+          .map(key => caches.delete(key))
+      ))
       .then(() => self.clients.claim())
   );
 });
@@ -89,9 +91,9 @@ async function cacheOfflineMedia(client) {
   let failed = 0;
   const total = MEDIA_ASSETS.length;
 
-  // Małe partie są stabilniejsze w Safari na iPhonie niż 134 pobrania jednocześnie.
   for (let start = 0; start < MEDIA_ASSETS.length; start += 5) {
     const batch = MEDIA_ASSETS.slice(start, start + 5);
+
     await Promise.all(batch.map(async asset => {
       const url = assetUrl(asset);
       try {
@@ -110,7 +112,6 @@ async function cacheOfflineMedia(client) {
     }));
   }
 
-  // Ponowne policzenie pamięci podręcznej daje prawdziwy wynik także po ponowieniu.
   const matches = await Promise.all(MEDIA_ASSETS.map(asset => cache.match(assetUrl(asset))));
   client?.postMessage({
     type: "OFFLINE_COMPLETE",
@@ -131,6 +132,7 @@ self.addEventListener("message", event => {
 
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
+
   const sameOrigin = new URL(event.request.url).origin === self.location.origin;
 
   if (!sameOrigin) {
@@ -150,12 +152,14 @@ self.addEventListener("fetch", event => {
     return;
   }
 
-  // Obrazy i pliki aplikacji otwieramy najpierw lokalnie; po pierwszym pobraniu
-  // nie wymagają już sieci.
   event.respondWith(
-    caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
-      if (response.ok) caches.open(CACHE).then(cache => cache.put(event.request, response.clone()));
-      return response;
-    }))
+    caches.match(event.request).then(cached =>
+      cached || fetch(event.request).then(response => {
+        if (response.ok) {
+          caches.open(CACHE).then(cache => cache.put(event.request, response.clone()));
+        }
+        return response;
+      })
+    )
   );
 });
