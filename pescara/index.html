@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f3d49" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Pescara" />
+  <meta name="description" content="Offline weekend guide: Pescara & Costa dei Trabocchi, 7–9 sierpnia 2026." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Pescara Weekend 2026</title>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <div class="eyebrow">ABRUZZO · 7–9 VIII 2026</div>
+      <h1>Pescara Weekend</h1>
+      <p>Morze · Pescara · Costa dei Trabocchi · e-bike · lokalne jedzenie</p>
+      <div class="chips">
+        <span>✈️ 07.08 · 10:40</span>
+        <span>🏠 Corso Vittorio Emanuele II 180</span>
+        <span>✈️ 09.08 · 23:20</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="statusbar">
+    <span id="networkBadge" class="status status--ok">● online</span>
+    <span id="cacheStatus">Plan działa offline po pierwszym pełnym otwarciu.</span>
+  </div>
+
+  <nav class="tabs" aria-label="Główna nawigacja">
+    <button class="tab is-active" data-target="home">Start</button>
+    <button class="tab" data-target="fri">Pt 7</button>
+    <button class="tab" data-target="sat">Sob 8 ⭐</button>
+    <button class="tab" data-target="sun">Nd 9</button>
+    <button class="tab" data-target="food">Jedzenie</button>
+    <button class="tab" data-target="info">Info</button>
+  </nav>
+
+  <main>
+    <section id="home" class="panel is-active">
+      <article class="notice notice--important">
+        <strong>🎒 Tryb małych plecaków</strong>
+        <p>Przechowalnia bagażu nie jest elementem krytycznym planu. W piątek przed check-inem i w niedzielę po checkout możecie po prostu nosić małe plecaki ze sobą. Na plaży nie zostawiajcie ich bez opieki — przy kąpieli jedna osoba pilnuje rzeczy albo korzystacie z lido/szafki, jeśli jest dostępna.</p>
+      </article>
+
+      <article class="card card--feature">
+        <div>
+          <div class="kicker">GŁÓWNY PUNKT WEEKENDU</div>
+          <h2>Sobota: Costa dei Trabocchi</h2>
+          <p>Pociąg do San Vito, e-bike wzdłuż dawnej linii kolejowej, kąpiel przy Trabocco Turchino i XI-wieczne opactwo San Giovanni in Venere.</p>
+          <button class="ghost jump" data-target="sat">Zobacz sobotę →</button>
+        </div>
+        <img src="assets/trabocco.jpg" alt="Trabocco na Costa dei Trabocchi" loading="eager" />
+      </article>
+
+      <div class="grid two">
+        <article class="card">
+          <h3>🚆 Pociąg bez stresu</h3>
+          <p><strong>07:47 → 08:19</strong> Pescara Centrale → S. Vito-Lanciano, pociąg 90459.</p>
+          <p><strong>18:25 → 18:55</strong> S. Vito-Lanciano → Pescara Centrale, pociąg 90486.</p>
+          <p class="small">Brak rezerwacji miejsc. Siadacie na dowolnym wolnym miejscu.</p>
+          <button class="ghost jump" data-target="info">Jak kupić bilet →</button>
+        </article>
+        <article class="card">
+          <h3>🧭 Plan w 20 sekund</h3>
+          <p><b>Piątek:</b> plaża + Pescara + ryby.</p>
+          <p><b>Sobota:</b> Costa dei Trabocchi + rowery + opactwo + arrosticini.</p>
+          <p><b>Niedziela:</b> plaża + kuchnia Abruzji + Aurum + Pineta + lot.</p>
+        </article>
+      </div>
+
+      <article class="card checklist-card">
+        <div class="section-head">
+          <div><div class="kicker">PRZED WYJAZDEM</div><h2>Rezerwacje i przygotowanie</h2></div>
+          <button id="resetChecklist" class="tiny">wyczyść</button>
+        </div>
+        <label class="check"><input type="checkbox" data-key="host"> <span>Napisać do gospodarza o wcześniejsze zostawienie plecaków / ewentualne przechowanie w niedzielę <em>(opcjonalne)</em></span></label>
+        <label class="check"><input type="checkbox" data-key="bikes"> <span>Zarezerwować 3 e-bike'i na sobotę ok. 08:30–17:30</span></label>
+        <label class="check"><input type="checkbox" data-key="fri-dinner"> <span>Zarezerwować piątek 20:00 — Chitarrina Osteria di Pesce</span></label>
+        <label class="check"><input type="checkbox" data-key="sat-dinner"> <span>Zarezerwować sobotę 19:45 — Rostelle and Co.</span></label>
+        <label class="check"><input type="checkbox" data-key="sun-lunch"> <span>Zarezerwować niedzielę 12:30 — L'Abruzzo A Tavola</span></label>
+        <label class="check"><input type="checkbox" data-key="train"> <span>Kupić bilety na sobotnie pociągi (można online, nie ma rezerwacji miejsc)</span></label>
+        <label class="check"><input type="checkbox" data-key="maps"> <span>Pobrać obszar Google Maps offline: Pescara → Ortona → San Vito → Fossacesia</span></label>
+        <label class="check"><input type="checkbox" data-key="water-shoes"> <span>Spakować buty do wody na Costa dei Trabocchi</span></label>
+      </article>
+
+      <article class="notice">
+        <strong>📱 Instalacja na iPhone</strong>
+        <p>Otwórz adres aplikacji w Safari → Udostępnij → <b>Dodaj do ekranu początkowego</b>. Przed wyjazdem otwórz wszystkie zakładki raz z internetem. Tekst, zdjęcia, plan i adresy zostaną w pamięci offline; zewnętrzne Google Maps i strony rezerwacyjne wymagają sieci.</p>
+      </article>
+    </section>
+
+    <section id="fri" class="panel">
+      <div class="day-head">
+        <div><div class="kicker">PIĄTEK · 7 SIERPNIA</div><h2>Pierwsze morze + Pescara</h2></div>
+        <span class="weather-note">lekko i bez pośpiechu</span>
+      </div>
+
+      <div class="timeline">
+        <article class="event"><time>10:40</time><div><h3>✈️ Lądowanie — Abruzzo Airport</h3><p>Tylko bagaż podręczny, więc celem jest kurs TUA4FLY o 11:10.</p><div class="actions"><a href="https://www.tuabruzzo.it/comunicazioni/tua4fly-orari-agosto/25-1514.html" target="_blank">Rozkład TUA4FLY</a><a href="https://www.google.com/maps/dir/?api=1&origin=Aeroporto+d%27Abruzzo%2C+Pescara&destination=Pescara+Centrale&travelmode=transit" target="_blank">Mapa</a></div><aside><b>Plan B:</b> jeśli lot się spóźni i 11:10 odjedzie, bierzcie taxi — kolejny autobus jest dopiero 14:05.</aside></div></article>
+
+        <article class="event"><time>11:10</time><div><h3>🚌 TUA4FLY → Pescara Centrale</h3><p>Bilet: <b>3 € / os.</b> · kupno w TuaGO lub kartą w autobusie. Dojazd do centrum mniej więcej 20 minut.</p><div class="actions"><a href="https://www.tuabruzzo.it/tua4fly/141.html" target="_blank">Bilet / zasady</a><a href="https://www.tuabruzzo.it/comunicazioni/tua4fly-orari-agosto/25-1514.html" target="_blank">Rozkład</a></div></div></article>
+
+        <article class="event"><time>11:30</time><div><h3>🎒 Dworzec → apartament</h3><p>Około 8–10 min pieszo. Jeśli gospodarz nie przyjmie plecaków wcześniej, po prostu zabieracie je dalej — nie zmieniamy planu.</p><div class="actions"><a href="https://www.google.com/maps/dir/?api=1&origin=Pescara+Centrale&destination=Corso+Vittorio+Emanuele+II+180%2C+Pescara&travelmode=walking" target="_blank">Trasa pieszo</a></div><div class="address">🏠 Corso Vittorio Emanuele II 180, Pescara</div></div></article>
+
+        <article class="event"><time>12:00</time><div><h3>🥪 Szybki lunch — Barceria delle Rose</h3><p>Panino/focaccia i coś zimnego zamiast długiego obiadu. Chodzi o to, żeby przed check-inem złapać pierwszą kąpiel.</p><div class="actions"><a href="https://sites.google.com/view/menubarceria" target="_blank">Menu</a><a href="https://www.google.com/maps/search/?api=1&query=Barceria+delle+Rose+Pescara" target="_blank">Mapa</a></div><div class="address">Corso Vittorio Emanuele II 26</div></div></article>
+
+        <article class="event event--beach"><time>12:40<br>–14:35</time><div><h3>🏖️ Plaża #1 — Pescara Centro</h3><p>Szeroki piasek, łagodne wejście do morza, pełna infrastruktura. Na 1,5–2 h wystarczą ręczniki i bezpłatny odcinek plaży.</p><div class="actions"><a href="https://www.google.com/maps/dir/?api=1&origin=Corso+Vittorio+Emanuele+II+180%2C+Pescara&destination=Piazza+Primo+Maggio%2C+Pescara&travelmode=walking" target="_blank">Mapa na plażę</a></div><aside>🎒 Z plecakami: nie zostawiajcie ich samych na ręczniku. Przy kąpieli zmieniajcie się albo wybierzcie lido z możliwością bezpiecznego zostawienia rzeczy.</aside></div></article>
+
+        <article class="event"><time>15:00</time><div><h3>🏠 Check-in + prysznic</h3><p>Odpoczynek do ok. 16:30.</p></div></article>
+
+        <article class="event"><time>16:45<br>–19:45</time><div><h3>🚶 Najlepszy spacer po Pescarze</h3><p><b>Piazza Salotto → promenada → Ponte del Mare → Piazza Garibaldi / Pescara Vecchia.</b></p><div class="photo-strip"><img src="assets/ponte.jpg" alt="Ponte del Mare"></div><p><b>Ponte del Mare:</b> 466-metrowy pieszo-rowerowy most z 2009 r.; symbol współczesnej Pescary i dobry punkt na panoramę Adriatyku oraz, przy dobrej widoczności, gór Abruzji.</p><p><b>Pescara Vecchia:</b> okolice Corso Manthonè i Via delle Caserme — mała, najstarsza część miasta, najlepsza właśnie wieczorem.</p><div class="actions"><a href="https://www.google.com/maps/dir/?api=1&origin=Corso+Vittorio+Emanuele+II+180%2C+Pescara&destination=Via+delle+Caserme+54%2C+Pescara&travelmode=walking&waypoints=Piazza+della+Rinascita%2C+Pescara%7CPonte+del+Mare%2C+Pescara%7CPiazza+Garibaldi%2C+Pescara" target="_blank">Cała trasa w Maps</a><a href="https://www.comune.pescara.it/vivere-il-comune/luoghi/ponte-del-mare/" target="_blank">Ponte — info</a></div></div></article>
+
+        <article class="event"><time>19:15</time><div><h3>🍫 Opcjonalnie: Parrozzo</h3><p>Jeśli macie ochotę, zahaczcie o okolice Piazza Garibaldi / Ritrovo del Parrozzo i kupcie lokalny deser na później.</p><div class="actions"><a href="https://www.google.com/maps/search/?api=1&query=Ritrovo+del+Parrozzo+Pescara" target="_blank">Mapa</a></div></div></article>
+
+        <article class="event event--food"><time>20:00</time><div><h3>🐟 Kolacja — Chitarrina Osteria di Pesce</h3><p>Pescara Vecchia. Polujcie na lokalne ryby i owoce morza; jeśli mają — zapytajcie o <b>brodetto pescarese</b>. Do tego Pecorino d'Abruzzo albo Cerasuolo.</p><div class="actions"><a href="https://www.google.com/maps/search/?api=1&query=Chitarrina+Osteria+di+Pesce+Pescara" target="_blank">Mapa / telefon</a></div><div class="address">Via delle Caserme 54</div></div></article>
+
+        <article class="event"><time>22:00+</time><div><h3>🍹 Pescara Vecchia</h3><p>Krótki wieczorny spacer i drink; potem pieszo do apartamentu.</p><div class="actions"><a href="https://www.google.com/maps/dir/?api=1&origin=Via+delle+Caserme+54%2C+Pescara&destination=Corso+Vittorio+Emanuele+II+180%2C+Pescara&travelmode=walking" target="_blank">Powrót pieszo</a></div></div></article>
+      </div>
+    </section>
+
+    <section id="sat" class="panel">
+      <div class="day-head">
+        <div><div class="kicker">SOBOTA · 8 SIERPNIA</div><h2>⭐ Costa dei Trabocchi</h2></div>
+        <span class="weather-note">najważniejszy dzień</span>
+      </div>
+
+      <article class="notice notice--important">
+        <strong>🚆 Bilety na pociąg</strong>
+        <p>Najwygodniej kupić wcześniej w <b>Trenitalia</b> (strona/aplikacja) albo TuaGO. Można też w kasie/automacie na stacji. Zakup u obsługi w pociągu jest awaryjny i wiąże się z dopłatą <b>+5 €</b>. <b>Nie ma numerowanych miejsc ani rezerwacji siedzeń</b> — to pociąg regionalny, siadacie tam, gdzie jest wolne.</p>
+        <div class="actions"><a href="https://www.trenitalia.com/" target="_blank">Kup w Trenitalia</a><a href="https://www.tuabruzzo.it/uploads/model_13/orari/orario-ferroviario-valido-83bis-dal-02-marzo-2026.pdf" target="_blank">Oficjalny rozkład PDF</a></div>
+      </article>
+
+      <div class="timeline">
+        <article class="event"><time>06:55</time><div><h3>☀️ Pobudka</h3><p>Espresso + cornetto w pobliżu apartamentu.</p></div></article>
+        <article class="event"><time>07:25</time><div><h3>🚶 Wyjście na Pescara Centrale</h3><p>Macie spory margines do pociągu.</p><div class="actions"><a href="https://www.google.com/maps/dir/?api=1&origin=Corso+Vittorio+Emanuele+II+180%2C+Pescara&destination=Pescara+Centrale&travelmode=walking" target="_blank">Mapa</a></div></div></article>
+
+        <article class="event event--transport"><time>07:47<br>→08:19</time><div><h3>🚆 Regionale 90459</h3><p><b>Pescara Centrale → S. Vito-Lanciano</b> · ok. 32 min.</p><p class="small">Sprawdźcie kurs jeszcze wieczorem w piątek i rano w sobotę w Trenitalia/TUA — rozkład jest planowy, a operacyjne zmiany są możliwe.</p><div class="actions"><a href="https://www.trenitalia.com/" target="_blank">Trenitalia</a><a href="https://www.tuabruzzo.it/uploads/model_13/orari/orario-ferroviario-valido-83bis-dal-02-marzo-2026.pdf" target="_blank">Rozkład TUA</a></div></div></article>
+
+        <article class="event"><time>08:30<br>–08:45</time><div><h3>🚲 Odbiór e-bike'ów — San Vito Marina</h3><p><b>Wariant 1:</b> Seaside Escape Bike Rental — łatwa rezerwacja online; e-bike full day ok. 40 €, kask i zapięcie w cenie. <b>Wariant 2:</b> La Pergamena — lokalny punkt wymieniany przez gminę przy wydarzeniach na Via Verde.</p><div class="actions"><a href="https://www.seasideescapebikerental.com/" target="_blank">Seaside Escape</a><a href="https://www.google.com/maps/search/?api=1&query=La+Pergamena+Via+Feltrino+32+San+Vito+Chietino" target="_blank">La Pergamena — mapa</a><a href="https://www.google.com/maps/dir/?api=1&origin=Stazione+S.Vito-Lanciano&destination=Via+Feltrino+32%2C+San+Vito+Chietino&travelmode=walking" target="_blank">Stacja → wypożyczalnia</a></div><aside>Rezerwujcie e-bike'i. Sama Via Verde jest łatwa, ale elektryk bardzo pomaga przy podjeździe do opactwa.</aside></div></article>
+
+        <article class="event"><time>08:45<br>–09:10</time><div><h3>🚲 Via Verde → Trabocco Turchino</h3><p>Jedziecie na południe po trasie dawnej linii kolejowej. Morze, tunele, zatoczki i kolejne trabocchi.</p><div class="photo-strip"><img src="assets/trabocco.jpg" alt="Trabocco na wybrzeżu Abruzji"></div><p><b>Trabocco:</b> historyczna drewniana platforma rybacka na palach, z długimi ramionami służącymi do opuszczania sieci.</p><div class="actions"><a href="https://www.google.com/maps/dir/?api=1&origin=Via+Feltrino+32%2C+San+Vito+Chietino&destination=Trabocco+Turchino%2C+San+Vito+Chietino&travelmode=bicycling" target="_blank">Mapa</a></div></div></article>
+
+        <article class="event event--beach"><time>09:10<br>–11:00</time><div><h3>🏖️ Plaża #2 — Calata Turchino</h3><p>Mała, kamienisto-żwirowa zatoczka i bardziej „dzikie” wybrzeże niż miejska Pescara. To dobry moment na pierwszą dłuższą kąpiel.</p><aside>👟 Buty do wody mocno wskazane.</aside></div></article>
+
+        <article class="event"><time>11:00<br>–12:15</time><div><h3>🚲 Via Verde na południe → Fossacesia Marina</h3><p>Bez ścigania. Zatrzymujcie się przy trabocchi, punktach widokowych i zejściach nad wodę.</p><div class="actions"><a href="https://www.google.com/maps/dir/?api=1&origin=Trabocco+Turchino%2C+San+Vito+Chietino&destination=Fossacesia+Marina&travelmode=bicycling" target="_blank">Mapa odcinka</a></div></div></article>
+
+        <article class="event event--food"><time>12:15<br>–13:00</time><div><h3>🥗 Lekki lunch — Fossacesia Marina</h3><p>Nie robimy długiego obiadu na restauracyjnym trabocco. Coś lekkiego przy morzu, zimny napój i ruszacie do opactwa.</p><div class="actions"><a href="https://www.google.com/maps/search/?api=1&query=Zona+le+Bistrot+Fossacesia+Marina" target="_blank">Zona le Bistrot — mapa</a></div></div></article>
+
+        <article class="event event--highlight"><time>13:00<br>–14:15</time><div><h3>⛪ Abbazia di San Giovanni in Venere</h3><div class="photo-strip"><img src="assets/abbazia.jpg" alt="Abbazia di San Giovanni in Venere"></div><p>Benedyktyńskie opactwo wysoko nad Adriatykiem. Początki średniowiecznego kompleksu wiązane są z ok. 1015 r. Największy bonus: widok z góry na Costa dei Trabocchi.</p><p><b>Godziny w sezonie:</b> sobota 08:30–20:00 · rezerwacja nie jest wymagana.</p><div class="actions"><a href="https://www.google.com/maps/dir/?api=1&origin=Fossacesia+Marina&destination=Abbazia+di+San+Giovanni+in+Venere%2C+Fossacesia&travelmode=bicycling" target="_blank">Podjazd — mapa</a><a href="https://cultura.gov.it/luogo/abbazia-di-san-giovanni-in-venere" target="_blank">Oficjalna strona</a></div></div></article>
+
+        <article class="event"><time>14:15<br>–16:15</time><div><h3>🚲 Powrót Via Verde na północ</h3><p>Wracacie do San Vito. Google Maps traktujcie orientacyjnie — na miejscu trzymajcie się oznaczeń <b>Via Verde dei Trabocchi</b>.</p><div class="actions"><a href="https://www.google.com/maps/dir/?api=1&origin=Abbazia+di+San+Giovanni+in+Venere%2C+Fossacesia&destination=San+Vito+Marina&travelmode=bicycling" target="_blank">Mapa powrotu</a></div></div></article>
+
+        <article class="event event--beach"><time>16:15<br>–17:15</time><div><h3>🏖️ Ostatnia kąpiel</h3><p>Wybierzcie zatoczkę po drodze, zamiast wracać koniecznie na tę samą plażę.</p></div></article>
+
+        <article class="event"><time>17:30</time><div><h3>🚲 Oddanie rowerów</h3><p>Potem spokojnie na stację.</p></div></article>
+
+        <article class="event event--transport"><time>18:25<br>→18:55</time><div><h3>🚆 Regionale 90486</h3><p><b>S. Vito-Lanciano → Pescara Centrale</b> · ok. 30 min.</p><div class="actions"><a href="https://www.trenitalia.com/" target="_blank">Sprawdź kurs</a></div></div></article>
+
+        <article class="event"><time>19:00<br>–19:30</time><div><h3>🛍️ Mercatino Pescara</h3><p>Dokładnie na Waszym Corso: antyki, vintage, rękodzieło i produkty lokalne. Oficjalnie <b>17:00–23:00</b> między Via Genova a Corso Umberto I.</p><div class="actions"><a href="https://www.comune.pescara.it/vivere-il-comune/eventi/il-calendario-degli-eventi-estivi-a-pescara-per-valorizzare-commercio-e-artigianato/" target="_blank">Oficjalny program</a><a href="https://www.google.com/maps/search/?api=1&query=Corso+Vittorio+Emanuele+II+Pescara" target="_blank">Mapa</a></div></div></article>
+
+        <article class="event event--food"><time>19:45<br>–21:15</time><div><h3>🐑 Arrosticini — Rostelle and Co.</h3><p>Wieczór na najbardziej charakterystyczne abruzyjskie szaszłyki z mięsa owczego, pieczone tradycyjnie na wąskiej <i>fornacella</i>.</p><div class="photo-strip"><img src="assets/arrosticini.jpg" alt="Arrosticini"></div><div class="actions"><a href="https://rostelle.it/" target="_blank">Strona / rezerwacja</a><a href="https://www.google.com/maps/search/?api=1&query=Rostelle+and+Co+Via+Leopoldo+Muzii+67+Pescara" target="_blank">Mapa</a></div><div class="address">Via Leopoldo Muzii 67</div></div></article>
+
+        <article class="event"><time>21:30<br>–23:00</time><div><h3>🌙 Mercatino + centrum</h3><p>Druga runda targu i spokojny wieczór prawie pod apartamentem.</p></div></article>
+      </div>
+    </section>
+
+    <section id="sun" class="panel">
+      <div class="day-head">
+        <div><div class="kicker">NIEDZIELA · 9 SIERPNIA</div><h2>Pescara + kuchnia Abruzji</h2></div>
+        <span class="weather-note">lot 23:20</span>
+      </div>
+
+      <article class="notice">
+        <strong>🎒 Checkout</strong>
+        <p>W planie przyjęty jest <b>checkout o 10:00</b> — do potwierdzenia z gospodarzem. Ponieważ macie tylko małe plecaki, nie potrzebujecie przechowalni: możecie zabrać je ze sobą przez resztę dnia. Jeśli gospodarz pozwoli zostawić je w apartamencie, traktujcie to tylko jako wygodny bonus.</p>
+      </article>
+
+      <div class="timeline">
+        <article class="event"><time>07:45</time><div><h3>☕ Śniadanie</h3><p>Krótko, po włosku — kawa i coś słodkiego.</p></div></article>
+        <article class="event event--beach"><time>08:30<br>–09:40</time><div><h3>🏖️ Plaża #3 — Pescara</h3><p>Ostatnia szybka kąpiel. Po sobotnim wybrzeżu nie ma sensu tracić czasu na dodatkowe transfery.</p><div class="actions"><a href="https://www.google.com/maps/dir/?api=1&origin=Corso+Vittorio+Emanuele+II+180%2C+Pescara&destination=Piazza+Primo+Maggio%2C+Pescara&travelmode=walking" target="_blank">Mapa</a></div></div></article>
+        <article class="event"><time>10:00</time><div><h3>🏠 Checkout</h3><p>Plecaki na plecy i dalej. Jeśli gospodarz je przechowa — odbierzecie je ok. 20:45.</p></div></article>
+        <article class="event"><time>10:30<br>–12:00</time><div><h3>☕ Centrum / kawa / leniwy spacer</h3><p>Bez dokładania muzeów „dla samego zaliczenia”. Zostawcie sobie spokojniejszy rytm przed obiadem.</p></div></article>
+
+        <article class="event event--food"><time>12:30<br>–14:00</time><div><h3>🍝 L'Abruzzo A Tavola</h3><p>Najbardziej regionalny obiad weekendu. Polujcie na <b>pallotte cacio e ova</b>, <b>maccheroni/spaghetti alla chitarra</b> i lokalne mięsa/sosy. Do tego Montepulciano d'Abruzzo.</p><div class="actions"><a href="https://www.facebook.com/labruzzoatavola/?locale=it_IT" target="_blank">Strona</a><a href="https://www.google.com/maps/search/?api=1&query=L%27Abruzzo+A+Tavola+Viale+Gabriele+D%27Annunzio+41+Pescara" target="_blank">Mapa</a></div><div class="address">Viale Gabriele D'Annunzio 41</div></div></article>
+
+        <article class="event"><time>14:00<br>–15:30</time><div><h3>🚶 Spacer na południe</h3><p>Powoli w stronę Aurum i Pineta Dannunziana. Jeśli jest bardzo gorąco, zatrzymajcie się na granitę i skróćcie spacer.</p></div></article>
+
+        <article class="event event--highlight"><time>16:00<br>–16:45</time><div><h3>🏛️ Aurum</h3><p>Dawny kompleks związany z produkcją lokalnego likieru Aurum, dziś centrum kultury. Latem: <b>09:00–13:00 i 16:00–19:30</b>, wstęp bezpłatny.</p><div class="actions"><a href="https://www.comune.pescara.it/approfondimenti/aurum/" target="_blank">Oficjalne info</a><a href="https://www.google.com/maps/dir/?api=1&origin=Viale+Gabriele+D%27Annunzio+41%2C+Pescara&destination=Aurum%2C+Largo+Gardone+Riviera%2C+Pescara&travelmode=walking" target="_blank">Mapa</a></div></div></article>
+
+        <article class="event"><time>16:45<br>–18:00</time><div><h3>🌳 Pineta Dannunziana</h3><p>Fragment dawnego nadmorskiego lasu piniowego — zielony kontrast dla współczesnej Pescary. 45–60 min wystarczy.</p><div class="actions"><a href="https://www.comune.pescara.it/vivere-il-comune/luoghi/riserva-naturale-pineta-dannunziana/" target="_blank">Oficjalne info</a><a href="https://www.google.com/maps/dir/?api=1&origin=Aurum%2C+Largo+Gardone+Riviera%2C+Pescara&destination=Riserva+Naturale+Pineta+Dannunziana%2C+Pescara&travelmode=walking" target="_blank">Mapa</a></div></div></article>
+
+        <article class="event"><time>18:00<br>–19:15</time><div><h3>🌊 Powrót nad morze + aperitivo</h3><p>Ostatni spokojny fragment weekendu nad Adriatykiem.</p></div></article>
+        <article class="event"><time>19:15<br>–20:20</time><div><h3>🥪 Lekka kolacja</h3><p>Bez dużego posiłku tuż przed lotem — panino, focaccia, pizza al taglio albo coś lekkiego przy centrum.</p></div></article>
+        <article class="event"><time>20:45</time><div><h3>🎒 Ewentualny odbiór plecaków</h3><p>Tylko jeśli zostawiliście je u gospodarza. W przeciwnym razie ten punkt znika.</p></div></article>
+        <article class="event event--transport"><time>21:20<br>–21:25</time><div><h3>🚕 Taxi → lotnisko</h3><p>Cel: być na lotnisku ok. 21:45–21:50, czyli około 1,5 h przed lotem.</p><p class="small">Autobus nie pasuje: niedzielny TUA4FLY ma sensowny wcześniejszy kurs o 19:50, a następny 22:00 jest za późny.</p><div class="actions"><a href="https://www.google.com/maps/dir/?api=1&origin=Corso+Vittorio+Emanuele+II+180%2C+Pescara&destination=Aeroporto+d%27Abruzzo%2C+Pescara&travelmode=driving" target="_blank">Mapa do lotniska</a><a href="https://www.tuabruzzo.it/comunicazioni/tua4fly-orari-agosto/25-1514.html" target="_blank">Rozkład TUA4FLY</a></div></div></article>
+        <article class="event"><time>23:20</time><div><h3>✈️ Wylot do Wrocławia</h3></div></article>
+      </div>
+
+      <article class="notice">
+        <strong>🏖️ Wariant B: Francavilla al Mare</strong>
+        <p>Jeśli po piątku uznacie, że w niedzielę chcecie inną piaszczystą plażę, można rano podjechać do Francavilla. Domyślnie zostajemy jednak w Pescarze, żeby nie marnować czasu na dojazdy.</p>
+        <div class="actions"><a href="https://www.google.com/maps/dir/?api=1&origin=Pescara+Centrale&destination=Francavilla+al+Mare&travelmode=transit" target="_blank">Transport — mapa</a></div>
+      </article>
+    </section>
+
+    <section id="food" class="panel">
+      <div class="day-head"><div><div class="kicker">ABRUZZO FOOD QUEST</div><h2>6 rzeczy do spróbowania</h2></div><span class="weather-note">odhaczajcie</span></div>
+      <div class="food-grid">
+        <article class="food-card"><img src="assets/arrosticini.jpg" alt="Arrosticini"><div><label class="food-check"><input type="checkbox" data-food="arrosticini"> <b>1. Arrosticini</b></label><p>Małe szaszłyki z mięsa owczego, pieczone na długiej, wąskiej <i>fornacella</i>. Jeden z kulinarnych symboli Abruzji.</p><span>Sobota · Rostelle and Co.</span></div></article>
+        <article class="food-card"><img src="assets/chitarra.png" alt="Makaron alla chitarra"><div><label class="food-check"><input type="checkbox" data-food="chitarra"> <b>2. Pasta alla chitarra</b></label><p>Jajeczny makaron cięty na metalowych strunach specjalnej „gitary”; nitki są kwadratowe i bardziej sprężyste niż spaghetti.</p><span>Niedziela · L'Abruzzo A Tavola</span></div></article>
+        <article class="food-card"><img src="assets/pallotte.jpg" alt="Pallotte cacio e ova"><div><label class="food-check"><input type="checkbox" data-food="pallotte"> <b>3. Pallotte cacio e ova</b></label><p>Kulki z sera, jaj i pieczywa, zwykle smażone, a potem duszone w pomidorach. Klasyczna abruzyjska <i>cucina povera</i>.</p><span>Niedziela · L'Abruzzo A Tavola</span></div></article>
+        <article class="food-card"><img src="assets/parrozzo.jpg" alt="Parrozzo"><div><label class="food-check"><input type="checkbox" data-food="parrozzo"> <b>4. Parrozzo</b></label><p>Pescarski deser: półkuliste ciasto migdałowe pod czekoladową polewą, silnie związane z miastem i Gabrielem D'Annunzio.</p><span>Piątek · okolice Ritrovo del Parrozzo</span></div></article>
+        <article class="food-card"><img src="assets/brodetto.jpg" alt="Brodetto rybne"><div><label class="food-check"><input type="checkbox" data-food="brodetto"> <b>5. Brodetto</b></label><p>Adriatycki gulasz/zupa rybna. Każdy odcinek wybrzeża ma własną odmianę — w Pescarze pytajcie konkretnie o <b>brodetto pescarese</b>.</p><span>Zdjęcie pokazuje wariant <i>alla vastese</i> — inną abruzyjską odmianę.</span></div></article>
+        <article class="food-card food-card--text"><div class="wine">🍷</div><div><label class="food-check"><input type="checkbox" data-food="drinks"> <b>6. Lokalne kieliszki</b></label><p><b>Cerasuolo d'Abruzzo</b> — wyraziste rosato · <b>Pecorino</b> — białe · <b>Montepulciano d'Abruzzo</b> — czerwone · <b>genziana</b> — gorzki digestivo.</p></div></article>
+      </div>
+    </section>
+
+    <section id="info" class="panel">
+      <div class="day-head"><div><div class="kicker">TRANSPORT · OFFLINE · PLAN B</div><h2>Praktyczne info</h2></div></div>
+
+      <article class="card">
+        <h2>🚆 Jak kupić bilet Pescara ↔ San Vito?</h2>
+        <ol class="steps">
+          <li><b>Najprościej online:</b> strona lub aplikacja Trenitalia; alternatywnie TuaGO.</li>
+          <li><b>Na stacji:</b> kasa lub automat samoobsługowy.</li>
+          <li><b>W pociągu:</b> możliwe awaryjnie, ale TUA przewiduje dopłatę <b>+5 €</b>.</li>
+          <li><b>Miejsca:</b> to pociągi regionalne bez rezerwacji miejsc. Wchodzicie i siadacie tam, gdzie jest wolne.</li>
+          <li><b>Walidacja:</b> papierowy bilet skasuj przed wejściem; w TuaGO aktywuj przed wejściem. Przy bilecie cyfrowym kupionym w Trenitalia kierujcie się statusem biletu w aplikacji.</li>
+        </ol>
+        <div class="actions"><a href="https://www.trenitalia.com/" target="_blank">Trenitalia</a><a href="https://www.tuabruzzo.it/faq-page/5.html" target="_blank">TUA FAQ</a><a href="https://www.tuabruzzo.it/biglietti-ferrovia/139.html" target="_blank">TUA — bilety kolejowe</a></div>
+      </article>
+
+      <article class="card">
+        <h2>🚌 TUA4FLY</h2>
+        <p><b>Piątek:</b> lotnisko 11:10 → centrum. Jeśli nie zdążycie: taxi.</p>
+        <p><b>Niedziela:</b> autobus nie pasuje do lotu 23:20 — wybieramy taxi ok. 21:20–21:25.</p>
+        <p><b>Bilet:</b> 3 €; TuaGO lub płatność kartą na pokładzie. TUA ostrzega, że rozkład nie jest przesuwany pod opóźnione loty.</p>
+        <div class="actions"><a href="https://www.tuabruzzo.it/comunicazioni/tua4fly-orari-agosto/25-1514.html" target="_blank">Sierpień 2026</a><a href="https://www.tuabruzzo.it/tua4fly/141.html" target="_blank">Bilety</a></div>
+      </article>
+
+      <article class="card">
+        <h2>🌧️ Gdyby pogoda się zepsuła</h2>
+        <h3>Museo delle Genti d'Abruzzo</h3>
+        <p>Najlepszy regionalny backup: historia i kultura mieszkańców Abruzji, a nie ogólne muzeum miejskie.</p>
+        <p><b>Wasz weekend:</b> piątek 10:00–14:00 · sobota 17:30–21:30 · niedziela zamknięte.</p>
+        <div class="actions"><a href="https://www.gentidabruzzo.com/tariffe-e-informazioni/" target="_blank">Godziny / bilety</a><a href="https://www.google.com/maps/search/?api=1&query=Museo+delle+Genti+d%27Abruzzo+Pescara" target="_blank">Mapa</a></div>
+      </article>
+
+      <article class="card">
+        <h2>📱 Jak mieć to naprawdę offline?</h2>
+        <p><b>1.</b> Aplikację opublikujcie na HTTPS (najłatwiej GitHub Pages).<br><b>2.</b> Otwórzcie ją raz w Safari przy internecie.<br><b>3.</b> Udostępnij → Dodaj do ekranu początkowego.<br><b>4.</b> Otwórzcie wszystkie zakładki raz — service worker zapisze pliki lokalnie.<br><b>5.</b> Osobno pobierzcie mapę offline w Google Maps: Pescara–Fossacesia.</p>
+        <p class="small">W aplikacji offline zostaną: harmonogram, adresy, zdjęcia, numery pociągów, opisy, checklisty i linki. Zewnętrzne strony oraz aktualna nawigacja Google Maps potrzebują internetu.</p>
+      </article>
+
+      <article class="card">
+        <h2>📍 Najważniejsze adresy</h2>
+        <div class="addresses">
+          <p><b>Apartament</b><br>Corso Vittorio Emanuele II 180, Pescara</p>
+          <p><b>Chitarrina Osteria di Pesce</b><br>Via delle Caserme 54, Pescara</p>
+          <p><b>Rostelle and Co.</b><br>Via Leopoldo Muzii 67, Pescara</p>
+          <p><b>L'Abruzzo A Tavola</b><br>Viale Gabriele D'Annunzio 41, Pescara</p>
+          <p><b>La Pergamena</b><br>Via Feltrino 32, San Vito Chietino</p>
+          <p><b>Abbazia San Giovanni in Venere</b><br>Fossacesia, CH</p>
+        </div>
+      </article>
+
+      <details class="card credits">
+        <summary>🖼️ Zdjęcia i licencje</summary>
+        <p>Aplikacja przechowuje zdjęcia lokalnie, aby były dostępne offline. Źródła: Wikimedia Commons.</p>
+        <ul>
+          <li><b>Ponte del Mare:</b> Gianni o O — CC BY-SA 4.0.</li>
+          <li><b>Trabocco:</b> Wikimedia Commons — CC BY-SA 3.0.</li>
+          <li><b>Abbazia di San Giovanni in Venere:</b> Zitumassin — Public Domain.</li>
+          <li><b>Arrosticini:</b> Superchilum — CC BY 4.0.</li>
+          <li><b>Pallotte cacio e ova:</b> Bultro — CC BY-SA 4.0.</li>
+          <li><b>Maccheroni alla chitarra:</b> Popo le Chien — CC0.</li>
+          <li><b>Parrozzo:</b> Ra Boe — CC BY-SA 2.5.</li>
+          <li><b>Brodetto alla vastese:</b> Jtorquy — CC BY-SA 4.0.</li>
+        </ul>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <span>Pescara Weekend · offline guide</span>
+    <span id="version">v1.0 · 06.08.2026</span>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

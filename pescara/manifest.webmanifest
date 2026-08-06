@@ -1,0 +1,15 @@
+{
+  "name": "Pescara Weekend 7–9.08.2026",
+  "short_name": "Pescara",
+  "description": "Offline guide for Pescara and Costa dei Trabocchi, 7–9 August 2026.",
+  "start_url": "./index.html#home",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f2eb",
+  "theme_color": "#0f3d49",
+  "icons": [
+    {"src":"assets/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"assets/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}
