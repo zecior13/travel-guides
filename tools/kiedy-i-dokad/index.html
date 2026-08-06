@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Kiedy i dokąd? — Kalendarz Kierunków</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+<meta name="theme-color" content="#142E2B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kiedy i dokąd?">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+:root{--bg:#142E2B;--bg-deep:#0E2220;--panel:#1C3D38;--line:#2E5650;--text:#F3EEE1;--muted:#9FBDB3;--amber:#E8A33D;--amber-deep:#B97E27;--sage:#74AE8E;--mustard:#D7B24E;--gray:#5C7873}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;padding:28px 16px 60px;min-height:100vh}.wrap{max-width:760px;margin:0 auto}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+h1{font-family:'Space Grotesk',sans-serif;font-size:30px;margin:0 0 6px;font-weight:700}.sub{color:var(--muted);font-size:14.5px;margin:0 0 22px;line-height:1.5}
+.tabs{display:flex;gap:8px;margin-bottom:20px}.tab{flex:1;text-align:center;padding:11px 10px;border-radius:10px;background:var(--panel);border:1px solid var(--line);color:var(--muted);font-weight:700;cursor:pointer}.tab.active{background:var(--amber);color:#1B2E1F;border-color:var(--amber)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}.field-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;display:block}
+select{width:100%;background:var(--bg-deep);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-size:15px}
+.months{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:14px}.month-chip{text-align:center;padding:9px 4px;border-radius:8px;background:var(--bg-deep);border:1px solid var(--line);font-size:12px;color:var(--muted);cursor:pointer}.month-chip.now{box-shadow:inset 0 0 0 1px var(--amber-deep)}.month-chip.active{background:var(--amber);color:#1B2E1F;border-color:var(--amber);font-weight:600}
+.result{margin-top:22px}.stamp-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.stamp{font-size:12.5px;text-transform:uppercase;padding:10px 16px;border:2px dashed currentColor;border-radius:999px;transform:rotate(-3deg)}.stamp.ideal{color:var(--sage)}.stamp.alt{color:var(--mustard)}.stamp.no{color:#C97B6B}
+.res-name{font-size:19px;font-weight:700}.res-region,.card-region{font-size:11px;color:var(--muted);text-transform:uppercase}.meta{margin-top:16px;display:grid;gap:8px;font-size:14px}.meta-row{display:flex;gap:8px}.meta-k{color:var(--muted);min-width:140px;font-size:12px;text-transform:uppercase}.meta-v{line-height:1.5}
+.col-title{font-size:13px;text-transform:uppercase;letter-spacing:.07em;margin:22px 0 10px}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}.dot.ideal{background:var(--sage)}.dot.alt{background:var(--mustard)}
+.card{background:var(--bg-deep);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:8px}.card-top{display:flex;justify-content:space-between;gap:10px}.card-name{font-weight:600}.card-note{font-size:13px;color:var(--muted);margin-top:4px;line-height:1.4}.empty{color:var(--muted);font-size:14px;padding:10px 2px}
+footer{margin-top:26px;color:var(--gray);font-size:12px;text-align:center}
+</style></head>
+<body><div class="wrap">
+<div class="eyebrow">PRZEWODNIK PODRÓŻNICZY · DANE Z ARKUSZA "WAKACJE — MIESIĄCE"</div><h1>Kiedy i dokąd?</h1>
+<p class="sub">Dwa sposoby użycia: sprawdź, czy to dobry moment na konkretny kraj, albo wskaż miesiąc i zobacz, które kierunki są wtedy w sezonie.</p>
+<div class="tabs"><div class="tab active" data-tab="country">Sprawdź kraj</div><div class="tab" data-tab="month">Który miesiąc → dokąd</div></div>
+<div class="panel" id="panel-country"><label class="field-label">Kraj / region</label><select id="countrySelect"></select><label class="field-label" style="margin-top:18px;">Miesiąc wylotu</label><div class="months" id="monthsCountry"></div><div class="result" id="countryResult"></div></div>
+<div class="panel" id="panel-month" style="display:none;"><label class="field-label">Wybierz miesiąc</label><div class="months" id="monthsMonth"></div><div id="monthResult"></div></div>
+<footer>67 kierunków · wersja offline</footer></div>
+<script>
+const MONTH_NAMES=["Sty","Lut","Mar","Kwi","Maj","Cze","Lip","Sie","Wrz","Paź","Lis","Gru"];
+const DATA=[
+["Afryka","Mauritius + Reunion",[9,10,11],[],"Wypoczynek + adrenalina (kitesurfing, canyoning)"],
+["Afryka","Gambia",[11,12,1,2],[],"Janjanbureh Kankurang Festival (1–2)"],
+["Afryka","Egipt",[10,11],[3,4],"Wzdłuż Nilu"],
+["Afryka","Uganda",[6,7,8],[12,1,2],"Gorilla Habituation Experience"],
+["Afryka","Etiopia",[10,11,12,1,2],[],"Timkat (19.01) / Meskel (27.09)"],
+["Afryka","Tanzania (Kilimandżaro) + Zanzibar",[6,7,8,9,10],[1,2,3],""],
+["Afryka","Mozambik (wybrzeże)",[6,7,8,9,10],[],"Uzupełnienie do Tanzanii – nurkowanie, Bazaruto"],
+["Afryka","Madagaskar",[9,10,11],[],""],["Afryka","RPA",[12,1,2,3],[],""],["Afryka","Botswana",[6,7,8],[],"Wodospady Wiktorii"],
+["Afryka","Namibia",[5,6,7,8,9,10],[11,12,1,2,3,4],"Sezon suchy = najlepsze safari samochodowe"],
+["Afryka","Wyspy Zielonego Przylądka",[11,12,1,2,3,4,5,6,7],[],"4–5: windsurfing dla początkujących (Sal)"],
+["Ameryka Pn","USA – pn-zach (Seattle, Montana)",[7,8],[9],"Cheyenne Frontier Days (Wyoming) – 7"],
+["Ameryka Pn","USA – środek-Pn (Chicago–Seattle)",[6,9],[5,10],"Sturgis Motorcycle Rally (Dakota) – 8"],
+["Ameryka Pn","USA – środek-Pd (Teksas, Mississippi)",[11,12],[3,4],"Mardi Gras w Nowym Orleanie – 3"],
+["Ameryka Pn","USA – wschód (Nowa Anglia)",[9,10],[6],"Salem Haunted Happenings (Massachusetts) – 10"],
+["Ameryka Pn","Kanada – zach (Góry Skaliste)",[7,8],[9],"Calgary Stampede – 7"],["Ameryka Pn","Kanada – wsch",[9,10],[6],"Carnaval de Québec – 1/2"],
+["Ameryka Pn","Kanada – pn (Jukon, Arktyka)",[8],[],""],["Ameryka Pn","Kuba",[12,1,2,3],[4,11],"Festival del Habano – 2/3"],
+["Ameryka Pn","Dominikana, Jamajka, środkowe Karaiby",[12,1,2,3,4],[5,11],"Gody Wielorybów w Samaná – 2/3; Rebel Salute – 1"],
+["Ameryka Pn","Bahamy (rejs)",[3,4],[],""],["Ameryka Pn","ABC: Aruba, Bonaire, Curaçao",[12,1,2,3,4],[8,9],""],
+["Ameryka Pn","Gwatemala, Belize",[12,1,2,3,4],[],"Semana Santa w Antigua – 3/4"],["Ameryka Pn","Panama",[1,2,3,4],[],"Karnawał w Las Tablas – 2/3"],
+["Ameryka Pd","Kolumbia",[12,1,2,3],[7,8],"Caño Cristales (Rzeka Pięciu Kolorów) – 7–11"],
+["Ameryka Pd","Ekwador + Galapagos",[1,2,3,4],[6,7,8,9],"Fiesta de la Mama Negra (Latacunga) – 11"],["Ameryka Pd","Peru",[6,7,8],[5],"Inti Raymi – 24.06"],
+["Ameryka Pd","Chile + Rapa Nui",[12,1,2,3],[],"Festiwal Tapati – 2"],["Ameryka Pd","Argentyna + Antarktyda",[1,2],[],""],
+["Europa","Mołdawia",[9,10],[],"Wino"],
+["Azja / Bliski Wschód","Socotra (Jemen)",[10,11],[2,3],"Welcome to Socotra – wypad z Abu Zabi"],
+["Azja / Bliski Wschód","Arabia Saudyjska",[11,12,1,2],[],"AlUla Skies – 9/10"],["Azja / Bliski Wschód","Oman",[11,12,1,2,3],[],"Khareef (zielony monsun) w Salalah – 7–9"],
+["Azja / Bliski Wschód","Jordania",[3,4,5],[10,11],""],["Azja / Bliski Wschód","Izrael",[4,5],[9,10],""],["Azja / Bliski Wschód","Azerbejdżan",[5,6],[9,10],"Wyścig F1 – sprawdzić terminy"],
+["Azja / Bliski Wschód","Armenia",[4,5,6],[9,10],"Festiwal Wina Areni – 10"],["Azja / Bliski Wschód","Iran",[4,5],[10,11],"Nowruz – Perski Nowy Rok (20.03)"],
+["Azja / Bliski Wschód","Kazachstan",[5,6],[9],"World Nomad Games – 9"],["Azja / Bliski Wschód","Kirgistan",[7,8],[],""],["Azja / Bliski Wschód","Uzbekistan",[4,5],[9,10],"Silk and Spices Festival – 5"],
+["Azja / Bliski Wschód","Tadżykistan",[7,8],[],""],["Azja / Bliski Wschód","Mongolia",[7,8],[],"Naadam – 11–13.07"],["Azja / Bliski Wschód","Pakistan (Karakoram Highway)",[6,7,8,9],[],"Shandur Polo Festival – 7"],
+["Indie / Himalaje","Indie Pn (Złoty Trójkąt)",[11,12,1,2],[10,3],"Festiwal Holi – 3"],["Indie / Himalaje","Indie Pd (Kerala)",[12,1,2],[],""],
+["Indie / Himalaje","Himalaje Wysokie – Tybet",[6,7,8],[],"Hemis Tsechu – 6/7"],["Indie / Himalaje","Himalaje Niskie",[3,4,5],[10,11],"Losar – Tybetański Nowy Rok – 2/3"],
+["Indie / Himalaje","Nepal",[10,11],[3,4,5],"Dashain / Tihar – 10/11"],["Indie / Himalaje","Annapurna",[10,11],[],""],["Indie / Himalaje","Everest Base Camp (EBC)",[10,11],[4,5],""],
+["Indie / Himalaje","Bhutan",[3,4,5],[9,10,11],"Paro Tshechu – 4; Thimphu Tshechu – 9/10"],
+["Chiny i okolice","Chiny – Pn i Centrum (Pekin)",[9,10],[4,5],"Święto Środka Jesieni – 9/10"],["Chiny i okolice","Chiny – Pd-Zach",[9,10,11],[],"Festiwal Smoczych Łodzi – 6"],
+["Chiny i okolice","Chiny Tybetańskie",[5,6],[9,10],""],["Chiny i okolice","Chiny – Zach",[9,10],[5,6],""],["Chiny i okolice","Szanghaj i Miasta Wodne",[10,11],[4,5],""],
+["Chiny i okolice","Hongkong i Makau",[11,12,1,2,3],[],""],["Chiny i okolice","Tajwan",[10,11,12],[],"Pingxi Sky Lantern – 2/3"],
+["Azja Pd-Wsch / Oceania","Wietnam",[3,4],[10,11],"Festiwal Lampionów w Hoi An"],["Azja Pd-Wsch / Oceania","Kambodża",[11,12,1,2],[],""],
+["Azja Pd-Wsch / Oceania","Malezja + Borneo + Brunei",[3,4,5],[6,7,8],"Trekking Mount Kinabalu (alt. tylko zachód, bez Borneo)"],
+["Azja Pd-Wsch / Oceania","Korea Pd",[9,10,11],[4,5,6],""],["Azja Pd-Wsch / Oceania","Australia (wsch)",[9,10],[4,5],"Uluru o zachodzie, Wielka Rafa"],
+["Azja Pd-Wsch / Oceania","Nowa Zelandia",[12,1,2],[],""],["Azja Pd-Wsch / Oceania","Fidżi / Polinezja",[5,6,7,8,9,10],[],"Fidżi z Australii – 3,5h"]
+];
+const now=new Date(),currentMonth=now.getMonth()+1;
+function buildMonthGrid(container,onSelect,initial){container.innerHTML="";for(let m=1;m<=12;m++){const chip=document.createElement("div");chip.className="month-chip"+(m===currentMonth?" now":"")+(m===initial?" active":"");chip.textContent=MONTH_NAMES[m-1];chip.addEventListener("click",()=>{[...container.children].forEach(c=>c.classList.remove("active"));chip.classList.add("active");onSelect(m)});container.appendChild(chip)}}
+function status(e,m){if(e[2].includes(m))return"ideal";if(e[3].includes(m))return"alt";return"no"}
+const countrySelect=document.getElementById("countrySelect");[...new Set(DATA.map(d=>d[0]))].forEach(r=>{const og=document.createElement("optgroup");og.label=r;DATA.filter(d=>d[0]===r).forEach(d=>{const o=document.createElement("option");o.value=d[1];o.textContent=d[1];og.appendChild(o)});countrySelect.appendChild(og)});
+let selectedCountryMonth=currentMonth;
+function renderCountryResult(){const name=countrySelect.value,e=DATA.find(d=>d[1]===name);if(!e)return;const [region,,ideal,alt,note]=e,st=status(e,selectedCountryMonth),stampText=st==="ideal"?"Idealny okres":st==="alt"?"Alternatywa — OK":"Nie najlepszy moment",range=a=>a.length?a.map(m=>MONTH_NAMES[m-1]).join(", "):"—";document.getElementById("countryResult").innerHTML=`<div class="stamp-row"><div><div class="res-region">${region}</div><div class="res-name">${name}</div></div><div class="stamp ${st}">${stampText}</div></div><div class="meta"><div class="meta-row"><div class="meta-k">Idealne miesiące</div><div class="meta-v">${range(ideal)}</div></div><div class="meta-row"><div class="meta-k">Alternatywne</div><div class="meta-v">${range(alt)}</div></div>${note?`<div class="meta-row"><div class="meta-k">Warto wiedzieć</div><div class="meta-v">${note}</div></div>`:""}</div>`}
+countrySelect.addEventListener("change",renderCountryResult);buildMonthGrid(document.getElementById("monthsCountry"),m=>{selectedCountryMonth=m;renderCountryResult()},currentMonth);if(countrySelect.options.length)renderCountryResult();
+function renderMonthResult(m){const ideal=DATA.filter(d=>status(d,m)==="ideal"),alt=DATA.filter(d=>status(d,m)==="alt"),card=d=>`<div class="card"><div class="card-top"><span class="card-name">${d[1]}</span><span class="card-region">${d[0]}</span></div>${d[4]?`<div class="card-note">${d[4]}</div>`:""}</div>`;document.getElementById("monthResult").innerHTML=`<div class="col-title"><span class="dot ideal"></span> Idealne (${ideal.length})</div>${ideal.map(card).join("")||'<div class="empty">Brak</div>'}<div class="col-title"><span class="dot alt"></span> Alternatywne (${alt.length})</div>${alt.map(card).join("")||'<div class="empty">Brak</div>'}`}
+buildMonthGrid(document.getElementById("monthsMonth"),renderMonthResult,currentMonth);renderMonthResult(currentMonth);
+document.querySelectorAll(".tab").forEach(tab=>tab.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));tab.classList.add("active");const w=tab.dataset.tab;document.getElementById("panel-country").style.display=w==="country"?"block":"none";document.getElementById("panel-month").style.display=w==="month"?"block":"none"}));
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"))}
+</script></body></html>

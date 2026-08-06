@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Wielka 60-tka Namibii — Gra Safari</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+<meta name="theme-color" content="#222B1D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Wielka 60-tka">
+
+<style>
+:root{
+  --bg:#F7F1E3; --bg-card:#FFFDF7; --ink:#2B2118; --ink-soft:#5B5040;
+  --header:#222B1D; --header-2:#3E4F36;
+  --terracotta:#C1652F; --terracotta-deep:#9B4E22;
+  --gold:#D9A24B; --gold-deep:#B07E2F;
+  --sage:#6E7C59; --line:#E6DCC4; --line-deep:#D8CBA8;
+  --p1:#7FAE6E; --p3:#D9B23A; --p5:#E08A3C; --p10:#C24B3A;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding-bottom:60px;}
+h1,h2,.serif{font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif;}
+
+/* ONBOARDING */
+#onboard{
+  position:fixed;inset:0;background:linear-gradient(160deg,var(--header-2),var(--header));
+  color:#F7F1E3;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  padding:30px;z-index:100;text-align:center;
+}
+#onboard .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+#onboard h1{font-size:28px;margin:0 0 8px;}
+#onboard p{color:#CFD8C4;font-size:14px;max-width:320px;margin:0 0 26px;line-height:1.5;}
+#onboard input{
+  width:100%;max-width:280px;padding:14px 16px;border-radius:10px;border:1px solid var(--line-deep);
+  font-size:16px;text-align:center;margin-bottom:14px;
+}
+#onboard button{
+  background:var(--terracotta);color:#fff;border:none;border-radius:10px;
+  padding:14px 28px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;
+}
+
+/* HEADER */
+header{
+  background:linear-gradient(160deg,var(--header-2),var(--header));color:#F7F1E3;
+  padding:18px 16px 14px;position:sticky;top:0;z-index:20;box-shadow:0 4px 14px rgba(0,0,0,0.18);
+}
+.hdr-top{display:flex;justify-content:space-between;align-items:baseline;}
+.player-name{font-family:Georgia,serif;font-size:15px;color:var(--gold);}
+.eyebrow{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#9FBDB3;}
+.score-row{display:flex;align-items:baseline;gap:10px;margin-top:8px;}
+.score-num{font-family:Georgia,serif;font-size:38px;font-weight:700;color:var(--gold);}
+.score-label{font-size:12px;color:#CFD8C4;}
+.rank-line{font-size:13px;margin-top:4px;color:#E9E2CC;}
+.rank-line b{color:#fff;}
+.progress-bar-bg{background:rgba(255,255,255,0.15);border-radius:999px;height:8px;overflow:hidden;margin-top:8px;}
+.progress-bar-fill{background:linear-gradient(90deg,var(--terracotta),var(--gold));height:100%;border-radius:999px;transition:width .3s;}
+
+/* TABS */
+.tabs{display:flex;gap:6px;padding:12px 14px 0;}
+.tab{flex:1;text-align:center;padding:10px 6px;border-radius:10px 10px 0 0;background:var(--bg-card);
+  border:1px solid var(--line-deep);border-bottom:none;color:var(--ink-soft);font-weight:700;font-size:12.5px;cursor:pointer;}
+.tab.active{background:var(--terracotta);color:#fff;border-color:var(--terracotta);}
+
+.panel{background:var(--bg-card);padding:16px;border:1px solid var(--line-deep);}
+
+/* FILTERS */
+.filters{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;}
+.chip{flex:none;padding:6px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line-deep);
+  font-size:12.5px;color:var(--ink-soft);cursor:pointer;white-space:nowrap;}
+.chip.active{background:var(--terracotta);color:#fff;border-color:var(--terracotta);font-weight:600;}
+select.regionFilter{padding:6px 10px;border-radius:8px;border:1px solid var(--line-deep);font-size:12.5px;background:#fff;}
+
+/* SECTIONS */
+.section-block{margin-bottom:18px;}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;padding:6px 2px;
+  border-bottom:2px solid var(--terracotta);margin-bottom:8px;}
+.section-title{font-size:14px;font-weight:700;color:var(--terracotta-deep);}
+.section-count{font-size:12px;color:var(--ink-soft);font-family:Georgia,serif;}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;overflow:hidden;}
+.card-row{display:flex;align-items:center;gap:10px;padding:10px;cursor:pointer;}
+.card-thumb{width:54px;height:54px;border-radius:8px;object-fit:cover;flex:none;background:var(--line);}
+.card-name{flex:1;min-width:0;}
+.card-name .pl{font-weight:600;font-size:14.5px;display:block;}
+.card-name .en{font-size:11.5px;color:var(--ink-soft);font-style:italic;}
+.pt-badge{flex:none;font-family:Georgia,serif;font-weight:700;font-size:13px;color:#fff;
+  border-radius:8px;padding:4px 9px;white-space:nowrap;}
+.pt-1{background:var(--p1);} .pt-3{background:var(--p3);} .pt-5{background:var(--p5);} .pt-10{background:var(--p10);}
+.seen-badge{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--line-deep);
+  display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent;}
+.seen-badge.on{background:var(--sage);border-color:var(--sage);color:#fff;}
+
+.card-detail{display:none;padding:0 14px 14px;border-top:1px dashed var(--line-deep);}
+.card.open .card-detail{display:block;}
+.card.open .card-row{background:#FBF6EA;}
+.detail-photo{width:100%;max-height:200px;object-fit:cover;border-radius:10px;margin:12px 0;}
+
+.field{margin:10px 0;}
+.field-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-deep);font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:5px;}
+.field-text{font-size:13.5px;line-height:1.5;color:var(--ink);}
+.field-text.fun{font-weight:600;}
+.region-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px;}
+.region-tag{font-size:11px;background:var(--bg);border:1px solid var(--line-deep);border-radius:6px;padding:2px 7px;color:var(--ink-soft);}
+
+.seen-form{margin-top:14px;padding:12px;background:#F1ECDB;border-radius:10px;}
+.seen-form label{font-size:11.5px;color:var(--ink-soft);display:block;margin:8px 0 3px;}
+.seen-form input[type=date],.seen-form input[type=text],.seen-form input[type=number],.seen-form select{
+  width:100%;padding:8px 10px;border:1px solid var(--line-deep);border-radius:7px;font-size:14px;background:#fff;}
+.btn-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+.btn{border:none;border-radius:8px;padding:10px 14px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;}
+.btn-primary{background:var(--terracotta);color:#fff;}
+.btn-secondary{background:#fff;color:var(--ink-soft);border:1px solid var(--line-deep);}
+.btn-ghost{background:transparent;color:var(--terracotta-deep);text-decoration:underline;font-weight:500;}
+.photo-preview{margin-top:10px;max-width:140px;border-radius:8px;display:block;}
+.seen-summary{font-size:12.5px;color:var(--sage);margin-top:8px;}
+
+/* BONUSES */
+.bonus-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;}
+.bonus-top{display:flex;justify-content:space-between;align-items:baseline;}
+.bonus-name{font-weight:700;font-size:14.5px;}
+.bonus-pts{font-family:Georgia,serif;color:var(--terracotta-deep);font-weight:700;}
+.bonus-desc{font-size:12.5px;color:var(--ink-soft);margin-top:4px;}
+.bonus-prog{margin-top:8px;height:7px;border-radius:999px;background:var(--bg);overflow:hidden;}
+.bonus-prog-fill{height:100%;background:var(--sage);}
+.bonus-done{color:var(--sage);font-weight:700;font-size:12.5px;margin-top:6px;}
+
+/* RESULTS */
+.results-card{background:var(--header);color:#F7F1E3;border-radius:14px;padding:18px;margin-bottom:14px;}
+.results-title{font-size:15px;font-weight:700;color:var(--gold);margin-bottom:10px;}
+.results-table{width:100%;border-collapse:collapse;font-size:13px;}
+.results-table td{padding:6px 4px;border-bottom:1px solid rgba(255,255,255,0.12);}
+.results-table td.num{text-align:right;font-family:Georgia,serif;color:var(--gold);}
+
+.leaderboard{margin-top:10px;}
+.lb-row{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:#fff;border:1px solid var(--line);margin-bottom:6px;}
+.lb-rank{font-family:Georgia,serif;font-weight:700;font-size:16px;width:26px;text-align:center;}
+.lb-name{flex:1;font-weight:600;}
+.lb-pts{font-family:Georgia,serif;font-weight:700;color:var(--terracotta-deep);}
+.lb-row.winner{border-color:var(--gold);background:#FFF8EA;}
+
+.empty{color:var(--ink-soft);font-size:13.5px;padding:10px 2px;}
+footer{padding:18px 16px 4px;text-align:center;}
+.footer-note{font-size:11px;color:var(--ink-soft);}
+</style>
+</head>
+<body>
+
+<div id="onboard">
+  <div class="eyebrow">GRA TERENOWA · NAMIBIA</div>
+  <h1>Wielka 60-tka Namibii</h1>
+  <p>Wpisz swoje imię, żeby zacząć zbierać punkty za zaobserwowane zwierzęta. Każdy gracz gra na swoim telefonie.</p>
+  <input type="text" id="nameInput" placeholder="Twoje imię" maxlength="20">
+  <button id="startBtn">Zaczynamy! 🦁</button>
+</div>
+
+<header>
+  <div class="hdr-top">
+    <div class="eyebrow">WIELKA 60-TKA</div>
+    <div class="player-name" id="playerNameDisplay"></div>
+  </div>
+  <div class="score-row">
+    <div class="score-num" id="scoreNum">0</div>
+    <div class="score-label">punktów</div>
+  </div>
+  <div class="rank-line" id="rankLine"></div>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="rankProgress" style="width:0%"></div></div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" data-tab="list">Zwierzęta</div>
+  <div class="tab" data-tab="bonus">Bonusy</div>
+  <div class="tab" data-tab="results">Wyniki</div>
+</div>
+
+<!-- LIST TAB -->
+<div class="panel" id="panel-list">
+  <div class="filters">
+    <div class="chip active" data-filter="all">Wszystkie</div>
+    <div class="chip" data-filter="unseen">Niewidziane</div>
+    <div class="chip" data-filter="seen">Widziane</div>
+  </div>
+  <div id="sections"></div>
+</div>
+
+<!-- BONUS TAB -->
+<div class="panel" id="panel-bonus" style="display:none;">
+  <div id="bonusList"></div>
+</div>
+
+<!-- RESULTS TAB -->
+<div class="panel" id="panel-results" style="display:none;">
+  <div class="results-card">
+    <div class="results-title">🏆 Twój wynik</div>
+    <table class="results-table" id="myResultsTable"></table>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" id="btnExport">💾 Eksportuj mój wynik</button>
+    <button class="btn btn-secondary" id="btnImport">📂 Wczytaj wynik innego gracza</button>
+  </div>
+  <input type="file" id="importFile" accept="application/json" multiple style="display:none;">
+
+  <div class="results-card" style="margin-top:18px;">
+    <div class="results-title">🥇 Tabela wyników</div>
+    <div class="leaderboard" id="leaderboard"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-ghost" id="btnResetCompare">Wyczyść porównanie</button>
+    <button class="btn btn-ghost" id="btnResetAll">Wyczyść wszystkie moje dane</button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-note">Działa offline. Każdy gra na swoim telefonie — porównujecie wyniki przez eksport/import plików.</div>
+</footer>
+
+<script>
+// Czyta tag orientacji EXIF z pliku JPEG (potrzebne, gdy zdjęcie pochodzi z galerii/aparatu telefonu w różnych orientacjach)
+function getExifOrientation(file, callback){
+  const reader = new FileReader();
+  reader.onload = e=>{
+    const view = new DataView(e.target.result);
+    if(view.getUint16(0,false) !== 0xFFD8){ callback(1); return; }
+    let offset = 2, length = view.byteLength;
+    while(offset < length){
+      const marker = view.getUint16(offset, false);
+      offset += 2;
+      if(marker === 0xFFE1){
+        if(view.getUint32(offset+2, false) !== 0x45786966){ callback(1); return; }
+        const little = view.getUint16(offset+8, false) === 0x4949;
+        const tiffOffset = offset+8;
+        const firstIFD = view.getUint32(tiffOffset+4, little);
+        const dirOffset = tiffOffset + firstIFD;
+        const tags = view.getUint16(dirOffset, little);
+        for(let i=0;i<tags;i++){
+          const entryOffset = dirOffset + 2 + i*12;
+          if(view.getUint16(entryOffset, little) === 0x0112){
+            callback(view.getUint16(entryOffset+8, little));
+            return;
+          }
+        }
+        callback(1); return;
+      } else if((marker & 0xFF00) !== 0xFF00){
+        break;
+      } else {
+        offset += view.getUint16(offset, false);
+      }
+    }
+    callback(1);
+  };
+  reader.onerror = ()=> callback(1);
+  reader.readAsArrayBuffer(file.slice(0, 128*1024));
+}
+
+const MONTH_NAMES = ["Sty","Lut","Mar","Kwi","Maj","Cze","Lip","Sie","Wrz","Paź","Lis","Gru"];
+
+const REGIONS = [
+  ["sesriem","Sesriem / Sossusvlei"],
+  ["swakopmund","Swakopmund / Living Desert"],
+  ["walvisbay","Walvis Bay / Pelican Point"],
+  ["capecross","Cape Cross"],
+  ["spitzkoppe","Spitzkoppe"],
+  ["damaraland","Damaraland"],
+  ["etosha","Etosha"],
+  ["mountetjo","Mount Etjo"],
+  ["daanviljoen","Daan Viljoen"],
+  ["inne","Inne / w drodze"],
+];
+const REGION_LABEL = Object.fromEntries(REGIONS);
+
+const SECTIONS = [
+  {id:1, name:"Królowie Sawanny", emoji:"🦁", range:[1,4]},
+  {id:2, name:"Sekrety Pustyni", emoji:"💎", range:[5,9]},
+  {id:3, name:"Drapieżniki", emoji:"🐾", range:[10,19]},
+  {id:4, name:"Antylopy i Kopytne", emoji:"🌿", range:[20,27]},
+  {id:5, name:"Mali i Dziwni", emoji:"🔍", range:[28,37]},
+  {id:6, name:"Ptaki Namibii", emoji:"🐦", range:[38,47]},
+  {id:7, name:"Gady i Cuda Pustyni", emoji:"🦎", range:[48,55]},
+  {id:8, name:"Wybrzeże i Morze", emoji:"🌊", range:[56,60]},
+];
+function sectionFor(num){ return SECTIONS.find(s=>num>=s.range[0]&&num<=s.range[1]); }
+
+const DIFF_LABEL = {1:"Pewniak",3:"Dobra szansa",5:"Wymaga szczęścia",10:"Jackpot"};
+
+// id, name, latin, points, diff, jak, zwyczaje, ciekawostka, gdzieSzukac, regions[]
+const RAW = [
+[1,"Słoń afrykański","African elephant",3,"Ogromna sylwetka, wielkie uszy, trąba, ciosy; w Etoshy często bardzo jasny od wapiennego pyłu.","Stada rodzinne prowadzone przez matriarchinię; w porze suchej regularnie odwiedza wodopoje.","Słonie wyczuwają drgania podłoża stopami i potrafią komunikować się infradźwiękami na duże odległości.","Etosha: szczególnie wodopoje i trasy między Olifantsrus, Okaukuejo, Halali i Namutoni; czasem Mount Etjo.",["etosha","mountetjo"]],
+[2,"Nosorożec czarny","Black rhinoceros",10,"Masywny, ciemnoszary, z hakowatą/spiczastą górną wargą do zrywania gałązek.","Zwykle samotnik; ostrożny, aktywny głównie rano, wieczorem i nocą.","Mimo masy ponad tony potrafi bardzo szybko ruszyć do szarży.","Najlepiej: Okaukuejo nocą przy oświetlonym wodopoju; możliwe też wybrane wodopoje Etoshy o świcie i zmierzchu.",["etosha"]],
+[3,"Lew","Lion",3,"Samce z grzywą, samice bez; duży kot o jasnopiaskowej sierści.","Najaktywniejszy o świcie i zmierzchu; w dzień często leży w cieniu.","Ryk lwa może nieść się na kilka kilometrów i jest używany do oznaczania terytorium.","Etosha: Olifantsrus, Okaukuejo, okolice dużych wodopojów; Mount Etjo w ramach aktywności z przewodnikiem.",["etosha","mountetjo"]],
+[4,"Hipopotam","Hippopotamus",3,"Beczkowate ciało, krótka szyja, szeroki pysk, uszy i oczy wysoko na głowie.","Dzień spędza w wodzie; nocą wychodzi żerować na trawie.","Hipopotamy są bardzo terytorialne w wodzie i należą do najbardziej niebezpiecznych ssaków Afryki.","Mount Etjo Safari Lodge — wodopój przy lodży; poza tym nie szukać na tej trasie.",["mountetjo"]],
+[5,"Oryks / Gemsbok","Gemsbok / Oryx",1,"Długie proste rogi, czarno-biała maska na pysku, szarobeżowe ciało.","Wybitnie pustynny gatunek; potrafi długo funkcjonować bez picia otwartej wody.","Oryks widnieje w godle Namibii i jest jednym z symboli kraju.","Sesriem, okolice Sossusvlei, Damaraland, Etosha, pobocza szutrowych dróg.",["sesriem","damaraland","etosha"]],
+[6,"Żyrafa","Giraffe",1,"Najwyższe zwierzę świata; długa szyja, długie nogi, plamisty wzór.","Żeruje na liściach drzew; przy piciu musi szeroko rozstawić nogi.","Każda żyrafa ma unikalny wzór plam, jak odcisk palca.","Etosha: zachodnia i centralna część, okolice drzew mopane i akacji; Mount Etjo.",["etosha","mountetjo"]],
+[7,"Słoń pustynny","Desert-adapted elephant",10,"To wciąż słoń afrykański, ale zwykle szczuplejszy, z dłuższymi wędrówkami i świetną adaptacją do pustyni.","Przemieszcza się po suchych dolinach rzecznych w poszukiwaniu wody i pożywienia.","Pustynne słonie potrafią pokonywać bardzo duże dystanse między źródłami wody.","Damaraland: suche koryta rzek, okolice Twyfelfontein/Madisa; najlepiej pytać lokalnych przewodników o świeże tropy.",["damaraland"]],
+[8,"Springbok","Springbok",1,"Niewielka, smukła antylopa: ruda grzbietem, biała pod spodem, z ciemnym pasem na boku.","Tworzy stada; często wykonuje pionowe skoki zwane pronkingiem.","Pronking może być sygnałem kondycji: pokazuje drapieżnikowi, że nie opłaca się gonić.","Sesriem, Damaraland, Etosha, pobocza dróg i otwarte równiny.",["sesriem","damaraland","etosha"]],
+[9,"Zebra stepowa","Plains zebra",1,"Szerokie pasy także na brzuchu; bardziej „klasyczna” zebra niż górska Hartmanna.","Żyje w stadach, często razem z innymi roślinożercami.","Układ pasów jest indywidualny dla każdego osobnika.","Etosha, zwłaszcza okolice wodopojów i otwarte równiny; możliwe też prywatne rezerwaty.",["etosha"]],
+[10,"Gepard","Cheetah",5,"Smukły kot, czarne „łzy” od oczu do pyska, drobne czarne plamki.","Poluje głównie za dnia, używając szybkości na krótkim dystansie.","Namibia jest jednym z najważniejszych krajów dla ochrony gepardów.","Etosha: otwarte równiny, okolice wodopojów; Mount Etjo lub prywatne rezerwaty zwiększają szansę.",["etosha","mountetjo"]],
+[11,"Lampart","Leopard",10,"Masywniejszy od geparda, rozety zamiast pełnych plamek, brak czarnych łez.","Samotny, skryty, często odpoczywa na drzewach lub w gęstych zaroślach.","Może wciągnąć zdobycz na drzewo, aby ukryć ją przed hienami i lwami.","Etosha: okolice Halali/Moringa, zadrzewione wodopoje, poranek i zmierzch; czasem prywatne rezerwaty.",["etosha"]],
+[12,"Hiena plamista","Spotted hyena",3,"Masywna głowa, wysokie barki, opadający zad, plamy na sierści.","Żyje w klanach, jest skutecznym myśliwym i padlinożercą.","U hien plamistych dominują samice, które są większe i wyżej w hierarchii.","Etosha: okolice wodopojów, rano/wieczorem; możliwe nocne odgłosy przy campach.",["etosha"]],
+[13,"Hiena brunatna","Brown hyena",5,"Długa, kudłata, brunatna sierść, jaśniejsza kryza, bardziej „szorstki” wygląd niż hiena plamista.","Nocna, skryta; na wybrzeżu szuka padliny i resztek przy koloniach fok.","Cape Cross jest znanym miejscem, gdzie hieny brunatne korzystają z kolonii fok.","Cape Cross i wybrzeże: realna raczej o świcie/zmierzchu lub po tropach; także Skeleton Coast.",["capecross"]],
+[14,"Szakal czapierzasty","Black-backed jackal",3,"Ruda sylwetka lisa z czarno-srebrnym „czaprakiem” na grzbiecie.","Żyje w parach lub małych grupach; oportunista, poluje i zjada padlinę.","Na wybrzeżu szakal potrafi korzystać z kolonii fok, kradnąc resztki i młode.","Etosha, Cape Cross, Damaraland, pobocza dróg; najłatwiej przy wodopojach i wybrzeżu.",["etosha","capecross","damaraland"]],
+[15,"Serwal","Serval",10,"Długie nogi, bardzo duże uszy, plamy i paski; wygląda jak „mini-gepard”.","Poluje na gryzonie i ptaki w wysokiej trawie.","Może wyskoczyć pionowo, aby złapać ptaka lub zlokalizować gryzonia.","Etosha: wilgotniejsze, trawiaste fragmenty i okolice wodopojów; obserwacja przypadkowa, głównie zmierzch/noc.",["etosha"]],
+[16,"Karakal","Caracal",10,"Rdzawa sierść, krótki ogon, długie czarne pędzelki na uszach.","Samotny kot, poluje głównie nocą i o zmierzchu.","Słynie ze skoków, podczas których potrafi strącać ptaki w locie.","Damaraland, Etosha, okolice suchych zarośli; najczęściej przypadkowo o świcie/zmierzchu.",["damaraland","etosha"]],
+[17,"Dzikie psy afrykańskie","African wild dog",10,"Cętkowane czarno-rudo-białe umaszczenie, wielkie okrągłe uszy, smukła sylwetka.","Żyją w watahach, są bardzo społeczne i świetnie współpracują podczas polowań.","Wataha może „głosować” przed polowaniem poprzez kichnięcia i pobudzenie społeczne.","Teoretycznie północno-wschodnia Namibia; na Waszej trasie tylko bardzo wyjątkowy przypadek.",[]],
+[18,"Otocjon / Lis uszaty","Bat-eared fox",5,"Mały lis z ogromnymi uszami, czarną maską i puszystym ogonem.","Zjada głównie termity i inne owady; uszy służą do nasłuchiwania ofiar.","Samce często aktywnie opiekują się młodymi.","Etosha i suche otwarte tereny; szukaj o świcie/zmierzchu na poboczach i równinach.",["etosha"]],
+[19,"Aardwolf / Ziemny wilk","Aardwolf",10,"Mała, pasiasta „hiena”, z grzywą na grzbiecie i spiczastym pyskiem.","Nocny termitożerca; nie jest typowym mięsożernym drapieżnikiem.","Może zjadać dziesiątki tysięcy termitów jednej nocy.","Etosha i suche trawiaste obszary; praktycznie tylko przypadkowo o zmierzchu lub nocą.",["etosha"]],
+[20,"Kudu wielkie","Greater kudu",3,"Duża szara antylopa z białymi pionowymi paskami; samce mają spiralne rogi.","Płochliwy mieszkaniec buszu; chętnie kryje się w gęstych zaroślach.","Rogi samców mogą mieć efektowne spiralne skręty.","Damaraland, Etosha, zarośla mopane i akacje; często przy drodze w bardziej zakrzaczonych miejscach.",["damaraland","etosha"]],
+[21,"Zebra Hartmanna","Hartmann's mountain zebra",3,"Węższe pasy, biały brzuch bez pasów, fałd skóry pod szyją.","Przystosowana do skalistych, suchych terenów; sprawnie porusza się po wzgórzach.","To specjalność Namibii i Angoli, bardzo związana z suchymi górami regionu.","Spitzkoppe, Damaraland, skaliste i górzyste obszary; także zachodnia Etosha.",["spitzkoppe","damaraland","etosha"]],
+[22,"Eland","Eland",3,"Największa antylopa świata, masywna jak wół, z kręconymi rogami.","Mimo masy potrafi zaskakująco wysoko skakać.","Podczas chodzenia stawy elanda mogą wydawać słyszalne kliknięcia.","Mount Etjo, Etosha i prywatne rezerwaty; otwarte sawanny i zadrzewione równiny.",["mountetjo","etosha"]],
+[23,"Gnu błękitne","Blue wildebeest",3,"Szaroniebieska sierść, duża głowa, broda, rogi wygięte na boki.","Żyje w stadach; w Etoshy populacje są lokalne, nie tworzą migracji jak w Serengeti.","Nazwa „gnu” nawiązuje do charakterystycznego, niskiego odgłosu.","Etosha: otwarte równiny i wodopoje; często w grupach z zebrami i springbokami.",["etosha"]],
+[24,"Impala","Impala",3,"Smukła rdzawa antylopa; samce mają lirowate rogi; ciemne znaki na zadzie.","Tworzy stada, żyje na granicy otwartej przestrzeni i buszu.","Potrafi skakać bardzo wysoko i daleko, aby uciekać przed drapieżnikami.","Etosha, zwłaszcza okolice bardziej zadrzewione i wodopoje; prywatne rezerwaty.",["etosha"]],
+[25,"Dik-dik Damara","Damara dik-dik",3,"Miniaturowa antylopa z dużymi oczami, delikatnymi nogami i spiczastym pyskiem.","Żyje zwykle w parach na stałym terytorium.","Nazwa „dik-dik” pochodzi od alarmowego, piskliwego głosu.","Etosha i Damaraland; zarośla, pobocza, okolice krzewów — patrzeć nisko przy drodze.",["etosha","damaraland"]],
+[26,"Guziec","Warthog",1,"Szara „świnka” z kłami, brodawkami na pysku i pionowo sterczącym ogonem podczas biegu.","Często klęka na przednich nogach, gdy żeruje na trawie.","Do nory często wchodzi tyłem, zostawiając kły skierowane do wejścia.","Etosha, campy, pobocza, okolice wodopojów; czasem Mount Etjo.",["etosha","mountetjo"]],
+[27,"Steenbok","Steenbok",3,"Mała rdzawa antylopa z dużymi uszami; samce mają krótkie proste rogi.","Zwykle samotny lub w parach; często zastyga nieruchomo, zanim ucieknie.","Steenbok potrafi chować się tak skutecznie w trawie, że łatwo przejechać obok bez zauważenia.","Etosha, Damaraland, suche zarośla i pobocza; zwykle pojedynczo.",["etosha","damaraland"]],
+[28,"Surykatka","Meerkat / Suricate",5,"Mały mangustowaty, brązowo-szary, często stoi pionowo na tylnych łapach.","Żyje w grupach z wartownikiem obserwującym okolicę.","Surykatki uczą młode radzenia sobie ze skorpionami, stopniowo podając im mniej lub bardziej „trudne” ofiary.","Damaraland, okolice suchych równin i nor; łatwiej w prywatnych rezerwatach.",["damaraland"]],
+[29,"Ratel / Miodożer","Honey badger",10,"Krępy, czarno-biały, z jasnym pasem na grzbiecie.","Samotny, bardzo silny i oportunistyczny; poluje i plądruje gniazda.","Ratel ma opinię jednego z najbardziej nieustępliwych zwierząt Afryki.","Etosha, Damaraland, campy i okolice terenów kempingowych; najczęściej nocą.",["etosha","damaraland"]],
+[30,"Pangolin / Łuskowiec","Ground pangolin",10,"Ciało pokryte łuskami jak szyszka; długi ogon; przy zagrożeniu zwija się w kulę.","Nocny samotnik, żywi się mrówkami i termitami.","Pangoliny są jednymi z najczęściej nielegalnie przemycanych ssaków świata.","Teoretycznie Damaraland, Etosha, Mount Etjo; praktycznie tylko ogromne szczęście nocą.",["damaraland","etosha","mountetjo"]],
+[31,"Mrównik","Aardvark",10,"Długi ryjek, królicze uszy, masywne pazury, różowoszara skóra.","Nocny; kopie nory i rozbija termitiery.","Potrafi bardzo szybko kopać w twardej ziemi, znikając pod powierzchnią.","Etosha, Damaraland, Mount Etjo; nocą, często raczej ślady/nory niż samo zwierzę.",["etosha","damaraland","mountetjo"]],
+[32,"Wiewiórka ziemna","Cape ground squirrel",1,"Rudawoszara, z białym paskiem na boku i puszystym ogonem trzymanym jak parasol.","Żyje w koloniach i kopie systemy nor.","Ogon służy jako cień przed słońcem podczas upału.","Sesriem, Damaraland, campy, suche tereny przy drogach i parkingach.",["sesriem","damaraland"]],
+[33,"Jeżozwierz","Cape porcupine",10,"Duży gryzoń z długimi czarno-białymi kolcami.","Nocny roślinożerca; w razie zagrożenia stroszy kolce i cofa się w stronę napastnika.","Jeżozwierz nie strzela kolcami — kolce wbijają się przy kontakcie.","Campy w Damaralandzie, Etosha i Mount Etjo; głównie nocą, czasem przy drogach po zmroku.",["damaraland","etosha","mountetjo"]],
+[34,"Postrzałka kafryjska (Skocznik antylopi)","Springhare",10,"Wygląda jak mały kangur: długie tylne nogi, długi ogon, duże oczy.","Nocny gryzoń, porusza się skokami, mieszka w norach.","Nie jest spokrewniony z kangurem — podobieństwo wynika z podobnego trybu poruszania.","Nocą na drogach i w suchych otwartych terenach; możliwe podczas przejazdów po zmroku.",[]],
+[35,"Mangusta przylądkowa","Cape mongoose",3,"Mała szarobrązowa mangusta z wydłużonym ciałem i krótkimi nogami.","Poluje na owady, małe kręgowce i jaja; porusza się szybko i nisko przy ziemi.","Mangusty mają częściową odporność na jad niektórych węży.","Etosha, campy, Damaraland, okolice krzaków i skał; często przemyka szybko przy drogach.",["etosha","damaraland"]],
+[36,"Pawian czakma","Chacma baboon",3,"Duża małpa o psiej kufie, długich kończynach i ogonie noszonym łukiem.","Żyje w stadach z wyraźną hierarchią; bardzo inteligentny i oportunistyczny.","Pawiany potrafią szybko nauczyć się otwierać torby, drzwi i pojemniki z jedzeniem.","Damaraland, okolice skaliste, pobocza i campy; możliwe też Daan Viljoen i rezerwaty.",["damaraland","daanviljoen"]],
+[37,"Góralka skalna","Rock hyrax",3,"Małe, krępe, brązowoszare zwierzę wyglądające trochę jak świnka morska bez ogona.","Żyje w koloniach na skałach; wygrzewa się na słońcu i szybko chowa w szczelinach.","Najbliższymi żyjącymi krewnymi góralek są słonie i manaty, mimo zupełnie innego wyglądu.","Spitzkoppe, Damaraland, skalne okolice, czasem przy lodżach i punktach widokowych.",["spitzkoppe","damaraland"]],
+[38,"Struś","Ostrich",1,"Największy ptak świata, długie nogi i szyja; samce czarno-białe, samice brązowawe.","Nie lata, ale szybko biega; żywi się roślinami, nasionami i drobnymi zwierzętami.","Jajo strusia waży około 1,5 kg i jest największą pojedynczą komórką jajową.","Sesriem, Damaraland, Etosha, otwarte równiny i pobocza.",["sesriem","damaraland","etosha"]],
+[39,"Drop olbrzymi","Kori bustard",3,"Bardzo duży, szarobrązowy ptak naziemny, masywna sylwetka i długa szyja.","Większość czasu chodzi po ziemi, startuje niechętnie i ciężko.","Należy do najcięższych ptaków zdolnych do lotu.","Etosha i otwarte równiny; wypatrywać dużego ptaka chodzącego po trawie.",["etosha"]],
+[40,"Sekretarz","Secretarybird",3,"Długonogi ptak drapieżny z czarnymi piórami na głowie przypominającymi pióra za uchem pisarza.","Poluje chodząc pieszo, często na węże i jaszczurki.","Uderzenia nóg sekretarza są niezwykle silne i precyzyjne.","Etosha, otwarte sawanny i trawiaste równiny; zwykle widoczny z daleka jako wysoki ptak kroczący.",["etosha"]],
+[41,"Toko czerwonodzioby","Red-billed hornbill",1,"Średni ptak z dużym czerwonym dziobem, biało-czarno-szarym upierzeniem.","Żeruje na ziemi i w krzewach; podczas lęgów samica bywa zamurowana w dziupli.","Postać Zazu z „Króla Lwa” była inspirowana dzioborożcami/toko.","Etosha, Damaraland, campy, zadrzewione miejsca i pobocza.",["etosha","damaraland"]],
+[42,"Bielik afrykański","African fish eagle",3,"Biała głowa i pierś, rdzawy brzuch, ciemne skrzydła; duży ptak drapieżny nad wodą.","Poluje na ryby, chwyta zdobycz szponami z powierzchni wody.","Jego głos często używany jest w filmach jako symbol „dźwięku Afryki”.","Walvis Bay Lagoon, okolice większej wody; ewentualnie Mount Etjo przy wodopoju.",["walvisbay","mountetjo"]],
+[43,"Flaming mniejszy","Lesser flamingo",1,"Różowy ptak z długimi nogami i szyją, dziób ciemniejszy niż u flaminga większego.","Żeruje w płytkiej wodzie, filtrując drobny pokarm.","Różowy kolor pochodzi od karotenoidów w pożywieniu.","Walvis Bay Lagoon; także czasem solniska i laguny w rejonie wybrzeża.",["walvisbay"]],
+[44,"Orzeł bojowy","Martial eagle",10,"Duży orzeł, ciemny z wierzchu, jasny spód z plamkowaniem.","Poluje na ptaki, ssaki i gady; patroluje ogromne terytoria.","Ma znakomity wzrok i potrafi dostrzec zdobycz z dużej odległości.","Etosha, Damaraland, otwarte obszary z wysokimi drzewami lub słupami.",["etosha","damaraland"]],
+[45,"Wikłacz czerwonodzioby","Red-billed quelea",1,"Mały ptak wróblowy; czerwony dziób, u samców barwna maska w sezonie lęgowym.","Tworzy wielkie stada i kolonie lęgowe.","Uważany za jeden z najliczniejszych dzikich gatunków ptaków na świecie.","Etosha, Damaraland, okolice traw, krzewów i wodopojów.",["etosha","damaraland"]],
+[46,"Stepówka Namaqua","Namaqua sandgrouse",3,"Ptak wielkości gołębia, piaskowobrązowy, z długim spiczastym ogonem.","Lata daleko do wodopojów; samce mogą przenosić wodę w specjalnych piórach brzucha.","Pióra brzucha samca działają jak gąbka dla piskląt.","Etosha: wodopoje rano; suche otwarte tereny i drogi.",["etosha"]],
+[47,"Perliczka hełmiasta","Helmeted guineafowl",1,"Szare ciało w białe kropki, niebieska głowa i kostny „hełm”.","Chodzi w grupach, hałaśliwa, często ucieka pieszo przed autem.","Jej głośne alarmy ostrzegają też inne zwierzęta.","Etosha, Damaraland, campy, pobocza i okolice lodży.",["etosha","damaraland"]],
+[48,"Kameleon Namaqua","Namaqua chameleon",3,"Duży pustynny kameleon, masywna głowa, krótki ogon, zmienny kolor.","Aktywny za dnia; rano ciemnieje, by szybciej się ogrzać.","Kolor zmienia głównie dla termoregulacji i komunikacji, nie tylko dla kamuflażu.","Living Desert Tour pod Swakopmund; pustynne okolice Namibu z przewodnikiem.",["swakopmund"]],
+[49,"Gekon palmato","Palmato gecko",10,"Mały, jasny, z wielkimi oczami i błoniastymi stopami do poruszania się po piasku.","Nocny; dzień spędza ukryty w piasku.","Nie ma powiek, więc czyści oczy językiem.","Living Desert Tour, wydmy Namibu; najłatwiej z przewodnikiem.",["swakopmund"]],
+[50,"Kobra mozambicka","Mozambique spitting cobra",10,"Brązowawa/szarawa kobra; w pozycji obronnej unosi przód ciała i może rozpostrzeć kaptur.","Aktywna często o zmierzchu/nocą; broni się plując jadem w oczy.","W razie oplucia oczu najważniejsze jest natychmiastowe płukanie wodą i pomoc medyczna.","Przypadkowe spotkanie w suchych terenach, campach lub przy drogach; nie szukać aktywnie.",[]],
+[51,"Mamba czarna","Black mamba",10,"Smukły długi wąż; kolor zwykle oliwkowo-brązowy lub szary, czarne wnętrze pyska.","Dzienna, szybka, unika ludzi, ale jest bardzo jadowita.","Nazwa pochodzi od czarnego wnętrza pyska, a nie od koloru ciała.","Teoretycznie północne, bardziej zadrzewione obszary; na Waszej trasie przypadkowo, nie szukać.",[]],
+[52,"Żółw lamparci","Leopard tortoise",3,"Duży żółw z żółto-czarnym wzorem na karapaksie.","Roślinożerny, powolny, aktywniejszy po deszczu.","Może żyć bardzo długo; wzór pancerza przypomina cętki lamparta.","Mount Etjo, Daan Viljoen, Etosha po deszczu lub w wilgotniejszych miejscach; pobocza dróg.",["mountetjo","daanviljoen","etosha"]],
+[53,"Waran nilowy","Nile monitor",10,"Duża jaszczurka z długim ogonem, żółtawymi plamami i rozwidlonym językiem.","Świetnie pływa, zjada jaja, małe zwierzęta i padlinę.","Używa rozwidlonego języka do „wąchania” otoczenia podobnie jak węże.","Mount Etjo i okolice trwałej wody; nie jest głównym gatunkiem trasy.",["mountetjo"]],
+[54,"Żaba bycza afrykańska","African bullfrog",10,"Duża oliwkowozielona żaba, masywna, samce mogą być żółtawe pod spodem.","Większość suchego czasu spędza zakopana; pojawia się masowo po deszczu.","Samce pilnują kijanek i potrafią aktywnie odpędzać drapieżniki.","Tylko po opadach i w efemerycznych kałużach; w czerwcu/lipcu bardzo mało prawdopodobna.",[]],
+[55,"Agama skalna Damara","Damara ground agama",3,"Kolorowa jaszczurka; samce często z pomarańczowo-czerwonymi i niebieskawymi tonami, na skałach.","Wygrzewa się na kamieniach, szybko ucieka w szczeliny.","Kolory samców są najbardziej efektowne w okresach aktywności terytorialnej.","Spitzkoppe, Damaraland, granitowe skały i nagrzane kamienie; wypatrywać w słońcu.",["spitzkoppe","damaraland"]],
+[56,"Lew morski przylądkowy / uchatka","Cape fur seal",1,"Brązowe, głośne uchatki w ogromnych koloniach; długie wąsy i płetwy.","Tworzą wielkie kolonie rozrodcze na wybrzeżu.","To nie jest „prawdziwy lew morski” — poprawniej: kotik/uchatka przylądkowa.","Cape Cross Seal Reserve; także Walvis Bay/Pelican Point podczas kajaków.",["capecross","walvisbay"]],
+[57,"Pelikan biały","Great white pelican",1,"Ogromny biały ptak z wielkim dziobem i workiem gardłowym.","Często żeruje w grupach, zagarniając ryby na płycizny.","Worek pod dziobem może pomieścić wiele litrów wody, którą ptak potem odcedza.","Walvis Bay Lagoon, Pelican Point, okolice portu i płytkich wód.",["walvisbay"]],
+[58,"Kormoran przylądkowy","Cape cormorant",1,"Ciemny, smukły ptak morski; często siedzi z rozłożonymi skrzydłami.","Nurkuje po ryby; po nurkowaniu suszy pióra.","Kormorany mają mniej wodoodporne pióra niż wiele ptaków wodnych, co pomaga im nurkować.","Walvis Bay, Cape Cross, wybrzeże między Swakopmund i Cape Cross.",["walvisbay","capecross"]],
+[59,"Chrząszcz mgły Namib","Fog-basking beetle",10,"Mały czarny chrząszcz pustynny; na piasku często widoczny jako drobny, ciemny punkt.","Ustawia ciało tak, by krople mgły skraplały się i spływały ku pyskowi.","Zainspirował technologie zbierania wody z mgły.","Living Desert Tour / wydmy Namibu; szukać z przewodnikiem, najlepiej gdy była mgła.",["swakopmund"]],
+[60,"Szakal nadbrzeżny","Coastal black-backed jackal",3,"Ten sam gatunek co szakal czapierzasty, ale w kontekście wybrzeża; rudy z czarnym grzbietem.","Na wybrzeżu korzysta z kolonii fok: padlina, resztki, czasem młode.","Zachowania przy koloniach fok są jednym z najbardziej charakterystycznych spektakli wybrzeża Namibii.","Cape Cross i okolice kolonii fok; wybrzeże Skeleton Coast, pobocza dróg.",["capecross"]],
+];
+
+const ANIMALS = RAW.map(a=>({
+  id:a[0], name:a[1], latin:a[2], points:a[3],
+  jak:a[4], zwy:a[5], fun:a[6], gdzie:a[7], regions:a[8],
+  diff: DIFF_LABEL[a[3]]
+}));
+
+const BONUSES = [
+  {key:"big4", name:"Wielka Czwórka Namibii", pts:20, need:[1,2,3,11], desc:"Słoń afrykański, nosorożec czarny, lew, lampart."},
+  {key:"desert5", name:"Pustynny komplet", pts:15, need:[5,8,48,49,59], desc:"Oryks, springbok, kameleon Namaqua, gekon palmato, chrząszcz mgły Namib."},
+  {key:"coast5", name:"Wybrzeże komplet", pts:15, need:[43,56,57,58,60], desc:"Flaming mniejszy, uchatka, pelikan, kormoran, szakal nadbrzeżny."},
+  {key:"night3", name:"Nocny jackpot", pts:20, need:null, tenList:[2,7,11,15,16,17,19,29,30,31,33,34,44,49,50,51,53,54,59], minCount:3, desc:"Dowolne 3 zwierzęta z kategorii 10 pkt."},
+  {key:"etosha10", name:"Mistrz wodopojów Etoshy", pts:20, region:"etosha", minCount:10, desc:"Minimum 10 gatunków zaobserwowanych w Etoshy."},
+];
+
+const RANKS = [
+  {min:221, emoji:"👑", title:"Legenda Namibii", desc:"Wynik rodzinnej wyprawy życia."},
+  {min:141, emoji:"🏆", title:"Mistrz Safari", desc:"Bardzo mocny wynik."},
+  {min:81,  emoji:"⭐", title:"Strażnik Etoshy", desc:"Świetny obserwator/obserwatorka."},
+  {min:31,  emoji:"🦁", title:"Tropiciel Sawanny", desc:"Masz oko do zwierząt."},
+  {min:0,   emoji:"🌱", title:"Turysta Pustyni", desc:"Dobry start — oczy już pracują."},
+];
+function rankFor(pts){ return RANKS.find(r=>pts>=r.min); }
+function nextRankThreshold(pts){
+  const sorted = [...RANKS].sort((a,b)=>a.min-b.min);
+  const next = sorted.find(r=>r.min>pts);
+  return next ? next.min : null;
+}
+
+// ===== STORAGE =====
+const KEY_PLAYER = "n60-player";
+const KEY_SIGHT = "n60-sightings";
+const KEY_OTHERS = "n60-others";
+
+let player = localStorage.getItem(KEY_PLAYER) || "";
+let sightings = {};
+try{ sightings = JSON.parse(localStorage.getItem(KEY_SIGHT)||"{}"); }catch(e){ sightings = {}; }
+let others = [];
+try{ others = JSON.parse(localStorage.getItem(KEY_OTHERS)||"[]"); }catch(e){ others = []; }
+
+function saveSightings(){
+  try{ localStorage.setItem(KEY_SIGHT, JSON.stringify(sightings)); }
+  catch(e){ alert("Brak miejsca w pamięci — zrób eksport i ewentualnie usuń stare zdjęcia."); }
+}
+function saveOthers(){ localStorage.setItem(KEY_OTHERS, JSON.stringify(others)); }
+
+function isSeen(id){ return !!(sightings[id] && sightings[id].seen); }
+
+// ===== SCORING =====
+function computeMyScore(){
+  let base = 0;
+  const seenIds = [];
+  ANIMALS.forEach(a=>{ if(isSeen(a.id)){ base += a.points; seenIds.push(a.id); } });
+
+  let bonusTotal = 0;
+  const bonusStatus = BONUSES.map(b=>{
+    let have, need, done;
+    if(b.need){
+      have = b.need.filter(id=>seenIds.includes(id)).length;
+      need = b.need.length;
+      done = have===need;
+    } else if(b.tenList){
+      have = b.tenList.filter(id=>seenIds.includes(id)).length;
+      need = b.minCount;
+      done = have>=need;
+    } else if(b.region){
+      have = seenIds.filter(id=>{
+        const s = sightings[id];
+        return s && s.region===b.region;
+      }).length;
+      need = b.minCount;
+      done = have>=need;
+    }
+    if(done) bonusTotal += b.pts;
+    return {...b, have, need, done};
+  });
+
+  return { base, bonusTotal, total: base+bonusTotal, seenCount: seenIds.length, bonusStatus, seenIds };
+}
+
+// ===== RENDER: HEADER =====
+function renderHeader(){
+  const s = computeMyScore();
+  document.getElementById("scoreNum").textContent = s.total;
+  const rank = rankFor(s.total);
+  document.getElementById("rankLine").innerHTML = `${rank.emoji} <b>${rank.title}</b> — ${s.seenCount}/60 gatunków`;
+  const next = nextRankThreshold(s.total);
+  const prevMin = rank.min;
+  let pct = 100;
+  if(next!==null){ pct = Math.min(100, Math.round((s.total-prevMin)/(next-prevMin)*100)); }
+  document.getElementById("rankProgress").style.width = pct+"%";
+  document.getElementById("playerNameDisplay").textContent = player;
+  return s;
+}
+
+// ===== RENDER: LIST =====
+let currentFilter = "all";
+
+function renderSections(){
+  const container = document.getElementById("sections");
+  container.innerHTML = "";
+  SECTIONS.forEach(sec=>{
+    let animals = ANIMALS.filter(a=>a.id>=sec.range[0]&&a.id<=sec.range[1]);
+    if(currentFilter==="seen") animals = animals.filter(a=>isSeen(a.id));
+    if(currentFilter==="unseen") animals = animals.filter(a=>!isSeen(a.id));
+    if(animals.length===0) return;
+
+    const seenCount = ANIMALS.filter(a=>a.id>=sec.range[0]&&a.id<=sec.range[1]&&isSeen(a.id)).length;
+    const totalCount = sec.range[1]-sec.range[0]+1;
+
+    const block = document.createElement("div");
+    block.className = "section-block";
+    block.innerHTML = `
+      <div class="section-head">
+        <div class="section-title">${sec.emoji} ${sec.name}</div>
+        <div class="section-count">${seenCount}/${totalCount}</div>
+      </div>
+      <div class="cards"></div>`;
+    const cardsWrap = block.querySelector(".cards");
+    animals.forEach(a=> cardsWrap.appendChild(renderCard(a)) );
+    container.appendChild(block);
+  });
+}
+
+function renderCard(a){
+  const data = sightings[a.id] || {};
+  const card = document.createElement("div");
+  card.className = "card";
+  const photoSrc = `photos/${String(a.id).padStart(2,"0")}.jpg`;
+  const regionOptions = REGIONS.map(([k,label])=>
+    `<option value="${k}" ${data.region===k?'selected':''}>${label}</option>`
+  ).join("");
+  card.innerHTML = `
+    <div class="card-row">
+      <img class="card-thumb" src="${photoSrc}" loading="lazy">
+      <div class="card-name">
+        <span class="pl">${a.id}. ${a.name}</span>
+        <span class="en">${a.latin}</span>
+      </div>
+      <div class="pt-badge pt-${a.points}">${a.points} pkt</div>
+      <div class="seen-badge ${data.seen?'on':''}">✓</div>
+    </div>
+    <div class="card-detail">
+      <img class="detail-photo" src="${photoSrc}">
+      <div class="field"><div class="field-label">🔍 Jak rozpoznać</div><div class="field-text">${a.jak}</div></div>
+      <div class="field"><div class="field-label">🌿 Zwyczaje</div><div class="field-text">${a.zwy}</div></div>
+      <div class="field"><div class="field-label">⭐ Ciekawostka</div><div class="field-text fun">${a.fun}</div></div>
+      <div class="field"><div class="field-label">📍 Gdzie szukać</div><div class="field-text">${a.gdzie}</div>
+        <div class="region-tags">${a.regions.map(r=>`<span class="region-tag">${REGION_LABEL[r]}</span>`).join("")}</div>
+      </div>
+
+      <div class="seen-form">
+        <label><input type="checkbox" class="seenCheck" ${data.seen?'checked':''}> Widziane! (+${a.points} pkt, ${a.diff})</label>
+        <label>Data</label>
+        <input type="date" class="dateInput" value="${data.date||""}">
+        <label>Region</label>
+        <select class="regionInput"><option value="">— wybierz —</option>${regionOptions}</select>
+        <label>Dokładne miejsce (opcjonalnie)</label>
+        <input type="text" class="placeInput" placeholder="np. Okaukuejo waterhole" value="${data.place||""}">
+        <label>Ile osobników?</label>
+        <input type="number" class="countInput" min="1" value="${data.count||""}">
+        <div class="btn-row">
+          <label class="btn btn-secondary" style="margin:0;">
+            🖼️ Zdjęcie-trofeum
+            <input type="file" accept="image/*" class="photoInput" style="display:none;">
+          </label>
+        </div>
+        ${data.photo ? `<img class="photo-preview" src="${data.photo}">` : ""}
+        <div class="btn-row">
+          <button class="btn btn-primary btnSave">Zapisz</button>
+        </div>
+        ${data.seen ? `<div class="seen-summary">Zaznaczone: ${data.date||"brak daty"} ${data.region?(' · '+REGION_LABEL[data.region]):''}</div>` : ""}
+      </div>
+    </div>
+  `;
+
+  card.querySelector(".card-row").addEventListener("click", ()=> card.classList.toggle("open") );
+  card.querySelectorAll(".card-detail input, .card-detail label, .card-detail select").forEach(el=>{
+    el.addEventListener("click", e=>e.stopPropagation());
+  });
+
+  const photoInput = card.querySelector(".photoInput");
+  photoInput.addEventListener("change", e=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    getExifOrientation(file, orientation=>{
+      const reader = new FileReader();
+      reader.onload = ev=>{
+        const img = new Image();
+        img.onload = ()=>{
+          const maxW = 640;
+          const scale = Math.min(1, maxW/img.width);
+          let w = img.width*scale, h = img.height*scale;
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          if(orientation>=5 && orientation<=8){
+            canvas.width = h; canvas.height = w;
+          } else {
+            canvas.width = w; canvas.height = h;
+          }
+          switch(orientation){
+            case 2: ctx.transform(-1,0,0,1,w,0); break;
+            case 3: ctx.transform(-1,0,0,-1,w,h); break;
+            case 4: ctx.transform(1,0,0,-1,0,h); break;
+            case 5: ctx.transform(0,1,1,0,0,0); break;
+            case 6: ctx.transform(0,1,-1,0,h,0); break;
+            case 7: ctx.transform(0,-1,-1,0,h,w); break;
+            case 8: ctx.transform(0,-1,1,0,0,w); break;
+          }
+          ctx.drawImage(img,0,0,w,h);
+          const dataUrl = canvas.toDataURL("image/jpeg", 0.6);
+          sightings[a.id] = sightings[a.id] || {};
+          sightings[a.id].photo = dataUrl;
+          saveSightings(); refreshAll();
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  });
+
+  card.querySelector(".btnSave").addEventListener("click", ()=>{
+    const seen = card.querySelector(".seenCheck").checked;
+    const date = card.querySelector(".dateInput").value;
+    const region = card.querySelector(".regionInput").value;
+    const place = card.querySelector(".placeInput").value;
+    const count = card.querySelector(".countInput").value;
+    sightings[a.id] = Object.assign({}, sightings[a.id], {seen, date, region, place, count});
+    saveSightings();
+    refreshAll();
+  });
+
+  return card;
+}
+
+// ===== RENDER: BONUSES =====
+function renderBonuses(s){
+  const wrap = document.getElementById("bonusList");
+  wrap.innerHTML = s.bonusStatus.map(b=>`
+    <div class="bonus-card">
+      <div class="bonus-top">
+        <div class="bonus-name">${b.done?'✅ ':''}${b.name}</div>
+        <div class="bonus-pts">+${b.pts}</div>
+      </div>
+      <div class="bonus-desc">${b.desc}</div>
+      <div class="bonus-prog"><div class="bonus-prog-fill" style="width:${Math.min(100,b.have/b.need*100)}%"></div></div>
+      <div class="${b.done?'bonus-done':'bonus-desc'}" style="margin-top:6px;">${b.have}/${b.need} ${b.done?'— zdobyty!':''}</div>
+    </div>
+  `).join("");
+}
+
+// ===== RENDER: RESULTS =====
+function renderResults(s){
+  const rank = rankFor(s.total);
+  document.getElementById("myResultsTable").innerHTML = `
+    <tr><td>Gatunki zaobserwowane</td><td class="num">${s.seenCount}/60</td></tr>
+    <tr><td>Punkty za gatunki</td><td class="num">${s.base}</td></tr>
+    <tr><td>Bonusy</td><td class="num">${s.bonusTotal}</td></tr>
+    <tr><td><b>ŁĄCZNIE</b></td><td class="num"><b>${s.total}</b></td></tr>
+    <tr><td>Ranga</td><td class="num">${rank.emoji} ${rank.title}</td></tr>
+  `;
+  renderLeaderboard(s);
+}
+
+function renderLeaderboard(s){
+  const all = [{name:player+" (Ty)", total:s.total, isMe:true}, ...others.map(o=>({name:o.name, total:o.total}))];
+  all.sort((a,b)=>b.total-a.total);
+  const wrap = document.getElementById("leaderboard");
+  if(all.length===1){
+    wrap.innerHTML = `<div class="empty">Wczytaj wyniki innych graczy, żeby zobaczyć tabelę.</div>`;
+    return;
+  }
+  wrap.innerHTML = all.map((p,i)=>`
+    <div class="lb-row ${i===0?'winner':''}">
+      <div class="lb-rank">${i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)}</div>
+      <div class="lb-name">${p.name}</div>
+      <div class="lb-pts">${p.total} pkt</div>
+    </div>
+  `).join("");
+}
+
+function refreshAll(){
+  const s = renderHeader();
+  renderSections();
+  renderBonuses(s);
+  renderResults(s);
+}
+
+// ===== TABS / FILTERS =====
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+    ["list","bonus","results"].forEach(t=>{
+      document.getElementById("panel-"+t).style.display = (t===tab.dataset.tab) ? "block":"none";
+    });
+  });
+});
+document.querySelectorAll(".chip").forEach(chip=>{
+  chip.addEventListener("click", ()=>{
+    document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
+    chip.classList.add("active");
+    currentFilter = chip.dataset.filter;
+    renderSections();
+  });
+});
+
+// ===== EXPORT / IMPORT =====
+document.getElementById("btnExport").addEventListener("click", ()=>{
+  const s = computeMyScore();
+  const payload = {
+    name: player, total: s.total, base: s.base, bonusTotal: s.bonusTotal,
+    seenCount: s.seenCount, exportedAt: new Date().toISOString(),
+  };
+  const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = `wynik-${player.replace(/\s+/g,'_')}.json`;
+  a.click(); URL.revokeObjectURL(url);
+});
+
+document.getElementById("btnImport").addEventListener("click", ()=> document.getElementById("importFile").click());
+document.getElementById("importFile").addEventListener("change", e=>{
+  [...e.target.files].forEach(file=>{
+    const reader = new FileReader();
+    reader.onload = ev=>{
+      try{
+        const data = JSON.parse(ev.target.result);
+        others = others.filter(o=>o.name!==data.name);
+        others.push(data);
+        saveOthers();
+        refreshAll();
+      }catch(err){ alert("Nieprawidłowy plik wyniku: "+file.name); }
+    };
+    reader.readAsText(file);
+  });
+});
+
+document.getElementById("btnResetCompare").addEventListener("click", ()=>{
+  if(confirm("Usunąć wczytane wyniki innych graczy z tabeli porównawczej?")){
+    others = []; saveOthers(); refreshAll();
+  }
+});
+document.getElementById("btnResetAll").addEventListener("click", ()=>{
+  if(confirm("Na pewno wyczyścić WSZYSTKIE Twoje zaznaczenia, zdjęcia i wynik? Tego nie można odwrócić.")){
+    sightings = {}; saveSightings(); refreshAll();
+  }
+});
+
+// ===== ONBOARDING =====
+function startApp(){
+  document.getElementById("onboard").style.display = "none";
+  refreshAll();
+}
+if(player){
+  startApp();
+} else {
+  document.getElementById("startBtn").addEventListener("click", ()=>{
+    const val = document.getElementById("nameInput").value.trim();
+    if(!val){ alert("Wpisz imię, żeby zacząć."); return; }
+    player = val;
+    localStorage.setItem(KEY_PLAYER, player);
+    startApp();
+  });
+}
+</script>
+  if(player){
+  startApp();
+} else {
+  document.getElementById("startBtn").addEventListener("click", ()=>{
+    const val = document.getElementById("nameInput").value.trim();
+    if(!val){ alert("Wpisz imię, żeby zacząć."); return; }
+    player = val;
+    localStorage.setItem(KEY_PLAYER, player);
+    startApp();
+  });
+}
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js");
+  });
+}
+</script>
+</body>
+</html>
+</body>
+</html>

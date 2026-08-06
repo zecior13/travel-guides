@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Namibia – interaktywna lista pakowania</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="theme-color" content="#222B1D">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Packing Namibia">
+</head>
+<body>
+<header>
+  <h1>Namibia – interaktywna lista pakowania</h1>
+  <div class="sub">Rodzinna wyprawa 4×4: pustynia, wybrzeże, Damaraland i Etosha. Postęp zapisuje się lokalnie w przeglądarce.</div>
+  <div class="controls">
+    <input id="search" placeholder="Szukaj, np. polar, dokumenty, Etosha">
+    <select id="stageFilter"><option value="">Wszystkie etapy</option></select>
+    <select id="priorityFilter"><option value="">Wszystkie priorytety</option></select>
+  </div>
+</header>
+<section class="stats">
+  <div class="card"><div class="big" id="doneCount">0</div><div>spakowane / odhaczone</div></div>
+  <div class="card"><div class="big" id="totalCount">0</div><div>wszystkie pozycje</div></div>
+  <div class="card"><div class="big" id="percentCount">0%</div><div>postęp</div></div>
+  <div class="card"><button class="secondary" onclick="resetAll()">Wyczyść odhaczenia</button><button onclick="window.print()">Drukuj / PDF</button></div>
+</section>
+<main id="app"></main>
+<footer>Wersja offline. Odhaczenia są zapisywane lokalnie na urządzeniu w pamięci przeglądarki.</footer>
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js"));
+}
+</script>
+</body>
+</html>
