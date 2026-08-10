@@ -4,70 +4,78 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#123c43">
-  <title>Travel Guides</title>
-  <style>
-    :root{--bg:#f4f1e9;--ink:#14272b;--muted:#68777a}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}
-    header{background:linear-gradient(145deg,#0e343a,#17616b);color:white;padding:60px 20px 44px}
-    .wrap{max-width:1050px;margin:auto}
-    .eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;opacity:.75}
-    h1{font-size:clamp(42px,8vw,72px);line-height:.95;margin:10px 0 14px}
-    header p{max-width:650px;font-size:17px;line-height:1.5;opacity:.85}
-    main{max-width:1050px;margin:auto;padding:28px 16px 60px}
-    h2{margin:8px 0 14px;font-size:23px}
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-    .card{min-height:250px;border-radius:24px;padding:22px;display:flex;flex-direction:column;justify-content:flex-end;text-decoration:none;color:white;box-shadow:0 12px 28px #123c431a}
-    .namibia{background:linear-gradient(145deg,#9b6531,#485d3f)}
-    .pescara{background:linear-gradient(145deg,#0e7180,#d2953d)}
-    .tools{background:linear-gradient(145deg,#142e2b,#536d50);min-height:175px}
-    .flag{font-size:38px}
-    .card h3{font-size:27px;margin:4px 0}
-    .meta{font-size:13px;opacity:.82;line-height:1.4}
-    .button{margin-top:13px;align-self:flex-start;padding:8px 11px;border:1px solid #ffffff55;border-radius:999px;font-size:12px;font-weight:800;background:#ffffff15}
-    .tools-section{margin-top:34px}
-    footer{max-width:1050px;margin:auto;padding:0 16px 36px;color:var(--muted);font-size:12px}
-    @media(max-width:720px){.grid{grid-template-columns:1fr}.card{min-height:205px}}
-  </style>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Guides">
+  <title>Guides · nasze podróże</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./tools/kiedy-i-dokad/icon-192.png">
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-<header>
-  <div class="wrap">
-    <div class="eyebrow">NASZE PRZEWODNIKI PODRÓŻNICZE</div>
-    <h1>🌍 Travel Guides</h1>
-    <p>Plany wypraw, przewodniki offline, mapy i praktyczne narzędzia używane podczas naszych podróży.</p>
-  </div>
-</header>
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow">NASZE PRZEWODNIKI PODRÓŻNICZE</div>
+      <h1><span aria-hidden="true">🌍</span> Guides</h1>
+      <p>Jedna aplikacja, wszystkie wyprawy. Pobierz wybrany przewodnik przed podróżą i korzystaj z niego bez internetu.</p>
+      <div class="connection" id="connectionStatus" role="status">Sprawdzam połączenie…</div>
+    </div>
+  </header>
 
-<main>
-  <h2>Podróże</h2>
-  <div class="grid">
-    <a class="card namibia" href="./namibia/">
-      <div class="flag">🇳🇦</div>
-      <h3>Namibia</h3>
-      <div class="meta">2026 · road trip · safari · plan · animals · packing</div>
-      <div class="button">OTWÓRZ →</div>
-    </a>
+  <main class="wrap main">
+    <section class="install-panel" id="installPanel">
+      <div>
+        <strong>Jedna ikona na telefonie</strong>
+        <p>Dodaj aplikację Guides do ekranu początkowego. Poszczególne podróże pobierzesz później tutaj.</p>
+      </div>
+      <button class="install-button" id="installButton" type="button">Jak zainstalować</button>
+    </section>
 
-    <a class="card pescara" href="./pescara/">
-      <div class="flag">🇮🇹</div>
-      <h3>Pescara</h3>
-      <div class="meta">7–9.08.2026 · Abruzzo Weekend</div>
-      <div class="button">OTWÓRZ →</div>
-    </a>
-  </div>
+    <div class="section-heading">
+      <div>
+        <div class="eyebrow dark">PAKIETY OFFLINE</div>
+        <h2>Podróże</h2>
+      </div>
+      <div class="storage" id="storageStatus"></div>
+    </div>
 
-  <section class="tools-section">
-    <h2>🧰 Narzędzia podróżnicze</h2>
-    <a class="card tools" href="./tools/kiedy-i-dokad/">
-      <div class="flag">🌦️</div>
-      <h3>Kiedy i dokąd?</h3>
-      <div class="meta">Kalendarz najlepszych miesięcy dla kierunków podróży</div>
-      <div class="button">OTWÓRZ →</div>
-    </a>
-  </section>
-</main>
+    <div class="guide-grid" id="guideGrid" aria-live="polite">
+      <div class="loading-card">Wczytuję przewodniki…</div>
+    </div>
 
-<footer>Travel Guides · family travel toolkit</footer>
+    <section class="tools-section">
+      <div class="eyebrow dark">ZAWSZE DOSTĘPNE OFFLINE</div>
+      <h2>Narzędzia</h2>
+      <a class="tool-card" href="./tools/kiedy-i-dokad/">
+        <span class="tool-icon" aria-hidden="true">🌦️</span>
+        <span><strong>Kiedy i dokąd?</strong><small>Kalendarz najlepszych miesięcy dla kierunków podróży</small></span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </section>
+
+    <section class="help">
+      <h2>Jak działa tryb offline?</h2>
+      <ol>
+        <li>Połącz się z Wi‑Fi i wybierz „Pobierz”.</li>
+        <li>Poczekaj na komunikat „Gotowy offline”.</li>
+        <li>Po podróży użyj „Usuń”, aby odzyskać miejsce. Twoje odhaczenia i notatki pozostaną zapisane.</li>
+      </ol>
+    </section>
+  </main>
+
+  <dialog id="installDialog">
+    <button class="dialog-close" id="closeDialog" type="button" aria-label="Zamknij">×</button>
+    <h2>Dodaj Guides do iPhone’a</h2>
+    <ol>
+      <li>Otwórz tę stronę w Safari.</li>
+      <li>Dotknij przycisku Udostępnij <span aria-hidden="true">□↑</span>.</li>
+      <li>Wybierz „Dodaj do ekranu początkowego”.</li>
+      <li>Potwierdź przyciskiem „Dodaj”.</li>
+    </ol>
+    <p>Na ekranie telefonu pojawi się tylko jedna ikona: Guides.</p>
+  </dialog>
+
+  <footer class="wrap">Guides · family travel toolkit</footer>
+  <script src="./app.js" defer></script>
 </body>
 </html>

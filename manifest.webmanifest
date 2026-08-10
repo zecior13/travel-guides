@@ -1,0 +1,16 @@
+{
+  "name": "Guides · nasze podróże",
+  "short_name": "Guides",
+  "description": "Rodzinne przewodniki podróżnicze dostępne offline.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f1e9",
+  "theme_color": "#123c43",
+  "lang": "pl",
+  "icons": [
+    {"src":"tools/kiedy-i-dokad/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"tools/kiedy-i-dokad/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}

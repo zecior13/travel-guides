@@ -50,7 +50,7 @@ document.getElementById('resetChecklist')?.addEventListener('click', () => {
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js');
+      const reg = await navigator.serviceWorker.register('../sw.js', { scope: '../', updateViaCache: 'none' });
       document.getElementById('cacheStatus').textContent = 'Offline cache aktywny · plan zapisany lokalnie.';
       reg.update().catch(()=>{});
     } catch (err) {

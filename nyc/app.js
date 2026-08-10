@@ -1650,20 +1650,17 @@ function renderPrepare() {
       <article class="offline-download-card">
         <span class="offline-icon" aria-hidden="true">↓</span>
         <span class="mini-kicker">Pakiet podróżny</span>
-        <h3>Zdjęcia i przewodnik bez internetu</h3>
-        <p>Pobierz całą paczkę przy dobrym Wi‑Fi. Zostaw aplikację otwartą i ekran włączony aż pojawi się potwierdzenie zapisania całego pakietu — razem z mapą metra.</p>
-        <div class="offline-progress" aria-hidden="true"><span id="offlineProgressBar"></span></div>
-        <strong id="offlineProgressText" class="offline-status">Sprawdzam zawartość telefonu…</strong>
-        <button id="offlineDownloadButton" class="offline-download-button" type="button">Pobierz pakiet offline</button>
-        <small>Po zakończeniu włącz tryb samolotowy, zamknij aplikację i uruchom ją ponownie. Nie usuwaj danych witryn Safari — usunęłoby to także zapisane zdjęcia.</small>
+        <h3>Pakiet offline jest zarządzany w Guides</h3>
+        <p>Wróć do głównej aplikacji Guides, aby pobrać, zaktualizować albo usunąć cały Nowy Jork razem ze zdjęciami i mapą metra.</p>
+        <button id="offlineDownloadButton" class="offline-download-button" type="button">Otwórz Guides</button>
+        <small>Po pobraniu pojawi się komunikat „Gotowy offline”. Nie usuwaj danych witryn Safari — usunęłoby to także zapisane odhaczenia.</small>
       </article>
     </section>`;
   document.querySelectorAll("[data-prepare-panel]").forEach(button => button.addEventListener("click", () => showPreparePanel(button.dataset.preparePanel)));
   document.querySelectorAll("[data-media-panel]").forEach(button => button.addEventListener("click", () => showMediaPanel(button.dataset.mediaPanel)));
   bindLinkedDayActions();
   bindSavedChecks();
-  document.getElementById("offlineDownloadButton")?.addEventListener("click", downloadOfflineMedia);
-  checkOfflineMedia();
+  document.getElementById("offlineDownloadButton")?.addEventListener("click", () => { window.location.href = "../#nyc"; });
 }
 
 function renderWallet() {
@@ -1903,7 +1900,7 @@ if ("serviceWorker" in navigator) {
     reloadingForUpdate = true;
     window.location.reload();
   });
-  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js", { updateViaCache:"none" }));
+  window.addEventListener("load", () => navigator.serviceWorker.register("../sw.js", { scope:"../", updateViaCache:"none" }));
 }
 
 setView(currentView);
