@@ -26,14 +26,15 @@ const DAYS = [
   },
   {
     id: "2026-08-23", day: 2, date: "23.08", weekday: "niedziela",
-    title: "Gospel, Guggenheim, Village i Hiromi",
-    subtitle: "Brooklyn Tabernacle → sztuka → lokalny Manhattan → Blue Note",
+    title: "Guggenheim, Village i Hiromi",
+    subtitle: "Opcjonalne gospel → sztuka → lokalny Manhattan → Blue Note",
     accent: "brick", tags: ["gospel", "Guggenheim", "Village", "jazz"],
-    story: "Dzień zaczyna się od porannego nabożeństwa z gospel w Brooklyn Tabernacle. Potem Radek i Gosia mają pełne dwie i pół godziny w Guggenheimie, skrócony historyczny spacer przez Village bez adresów serialowych oraz wieczór z Hiromi. Na koncert i opcjonalny drink na dachu idą z Anią; Matylda spędza wieczór w hotelu ze znajomymi.",
+    story: "Plan główny chroni sen po przylocie i zaczyna się od bezpośredniego przejazdu do Guggenheimu. Brooklyn Tabernacle pozostaje poranną opcją tylko wtedy, gdy wszyscy obudzą się naturalnie i będą mieli energię. Potem Radek i Gosia mają pełne dwie i pół godziny w muzeum, historyczny spacer przez Village oraz wieczór z Hiromi. Na koncert i opcjonalny drink na dachu idą z Anią; Matylda spędza wieczór w hotelu ze znajomymi.",
     items: [
-      { time: "08:10", title: "Hotel → Brooklyn Tabernacle", note: "Lekki posiłek przed wyjazdem; przy kościele jesteście około 08:40–08:45.", type: "plan" },
-      { time: "09:00–10:25", title: "Brooklyn Tabernacle · gospel", note: "Usiądźcie z tyłu lub przy wyjściu po uzgodnieniu z usherem. Bez zdjęć i nagrywania; wychodzicie podczas naturalnej przerwy.", type: "fixed" },
-      { time: "10:25–11:20", title: "Brooklyn → Guggenheim", note: "Metro 4/5 z Borough Hall do 86 St i spacer; zostaje około 10 minut rezerwy na wejście.", type: "plan" },
+      { time: "08:10 · opcja", title: "Hotel → Brooklyn Tabernacle", note: "Tylko jeśli wszyscy obudzicie się wypoczęci; nie nastawiamy budzika specjalnie na gospel.", type: "option" },
+      { time: "09:00–10:25 · opcja", title: "Brooklyn Tabernacle · gospel", note: "Usiądźcie z tyłu lub przy wyjściu po uzgodnieniu z usherem. Bez zdjęć i nagrywania; wychodzicie podczas naturalnej przerwy.", type: "option" },
+      { time: "10:25–11:20 · opcja", title: "Brooklyn → Guggenheim", note: "Metro 4/5 z Borough Hall do 86 St i spacer; ten odcinek dotyczy tylko wariantu z gospel.", type: "option" },
+      { time: "10:30", title: "Hotel → Guggenheim", note: "Plan główny po spokojnym poranku: bezpośredni przejazd i przyjazd około 11:15.", type: "plan" },
       { time: "11:30–14:00", title: "Guggenheim", note: "Pełne 2,5 godziny: architektura Wrighta, Pop, europejski modernizm i Thannhauser.", type: "fixed" },
       { time: "14:00–14:45", title: "Guggenheim → Greenwich Village", note: "Metro lub taxi/Uber zależnie od bieżącego czasu; twardy start lunchu najpóźniej 14:50.", type: "plan" },
       { time: "14:45–15:10", title: "Szybki lunch w Village", note: "Mamoun’s albo inny lekki posiłek bez kolejki i bez pełnego brunchu.", type: "plan" },
@@ -43,7 +44,7 @@ const DAYS = [
       { time: "20:00", title: "Hiromi · The Piano Quintet", note: "3 bilety kupione · Radek, Gosia i Ania. Matylda zostaje w hotelu ze znajomymi.", type: "fixed" },
       { time: "około 22:00", title: "M Social Rooftop · drink dla dorosłych", note: "Opcjonalny nocny finał Radka, Gosi i Ani po koncercie; bar nie wpuszcza osób poniżej 18 lat.", type: "option" }
     ],
-    essentials: ["Brooklyn Tabernacle: przyjazd do 08:45, miejsce przy wyjściu uzgodnić z usherem", "Bilet Guggenheim na 11:30 i twarde wyjście 14:00", "Village bez adresów serialowych; z Caffè Reggio wyjście o 17:10", "Blue Note: 3 bilety kupione dla Radka, Gosi i Ani", "M Social tylko dla dorosłych; przed wyjściem potwierdzić plan Matyldy i kontakt ze znajomymi w hotelu"]
+    essentials: ["Gospel tylko przy dobrej energii po przylocie; decyzja rano, bez budzika na siłę", "Bilet Guggenheim na 11:30 i twarde wyjście 14:00", "Village bez adresów serialowych; z Caffè Reggio wyjście o 17:10", "Blue Note: 3 bilety kupione dla Radka, Gosi i Ani", "M Social tylko dla dorosłych; przed wyjściem potwierdzić plan Matyldy i kontakt ze znajomymi w hotelu"]
   },
   {
     id: "2026-08-24", day: 3, date: "24.08", weekday: "poniedziałek",
@@ -54,12 +55,13 @@ const DAYS = [
     items: [
       { time: "10:30", title: "MoMA", note: "Trasa kuratorska: kolekcja, Frida i Diego oraz „It’s Alive!”.", type: "fixed" },
       { time: "13:30", title: "Lunch w Midtown", note: "Godzina na posiłek bez długiego oczekiwania; wybór zależy od energii i budżetu.", type: "plan" },
-      { time: "14:30", title: "Rockefeller Center i sklepy", note: "Maksymalnie dwa duże sklepy i jeden krótki.", type: "plan" },
+      { time: "14:30", title: "Katedra św. Patryka", note: "Krótka, 15–20-minutowa wizyta po drodze z MoMA do Rockefeller Center.", type: "plan" },
+      { time: "15:00", title: "Rockefeller Center i sklepy", note: "Maksymalnie dwa duże sklepy i jeden krótki.", type: "plan" },
       { time: "17:00", title: "Powrót po koc i bluzę", note: "Krótki reset w hotelu, toaleta, ładowanie telefonu i przygotowanie pikniku.", type: "plan" },
       { time: "17:30", title: "Piknik w Bryant Parku", note: "Trawnik otwiera się o 17:00; koc materiałowy, bez krzeseł i plastikowych podkładów.", type: "fixed" },
       { time: "20:00", title: "King Creole", note: "Paramount+ Movie Nights, projekcja z napisami.", type: "fixed" }
     ],
-    essentials: ["Bilet MoMA i słuchawki do Bloomberg Connects", "Maksymalnie dwa duże sklepy", "Rano sprawdzić pogodę i status filmu"]
+    essentials: ["Bilet MoMA i słuchawki do Bloomberg Connects", "W katedrze zachowujemy ciszę i sprawdzamy, czy nie trwa msza", "Maksymalnie dwa duże sklepy", "Rano sprawdzić pogodę i status filmu"]
   },
   {
     id: "2026-08-25", day: 4, date: "25.08", weekday: "wtorek",
@@ -90,7 +92,7 @@ const DAYS = [
       { time: "07:00", title: "Szybkie śniadanie", note: "Bajgiel i kawa po drodze — ten poranek zaczyna się wcześniej.", type: "plan" },
       { time: "07:40", title: "Empire State i Fifth Avenue", note: "Empire State Building z zewnątrz i spacer Fifth Avenue w stronę Grand Central.", type: "plan" },
       { time: "08:30", title: "SUMMIT One Vanderbilt", note: "Pierwszy poranny slot i około 90 minut na trzy poziomy instalacji oraz panoramę.", type: "fixed" },
-      { time: "10:05", title: "Grand Central i katedra św. Patryka", note: "Krótki Main Concourse, spacer na Fifth Avenue i 15–20 minut wewnątrz katedry.", type: "plan" },
+      { time: "10:05", title: "Grand Central", note: "Spokojne przejście przez Main Concourse i Whispering Gallery przed metrem do Queens.", type: "plan" },
       { time: "11:20", title: "Gantry Plaza State Park", note: "Suwnice, znak Pepsi i panorama Midtown oglądanego rano z góry.", type: "plan" },
       { time: "14:20", title: "Kulinarne Flushing", note: "Kilka małych dań zamiast jednej ciężkiej kolacji.", type: "plan" },
       { time: "16:35", title: "Unisphere", note: "Opcja mocno rekomendowana, pomijana przy upale lub opóźnieniu.", type: "option" },
@@ -253,13 +255,13 @@ const DAY_GUIDES = {
   "2026-08-23": {
     kind: "village",
     checked: "10.08.2026",
-    timelineTargets: ["gospel", "gospel", "gospel", "guggenheim", "route", "food", "route", "route", "bluenote", "bluenote", "rooftop"],
+    timelineTargets: ["gospel", "gospel", "gospel", "guggenheim", "guggenheim", "route", "food", "route", "route", "bluenote", "bluenote", "rooftop"],
     gospel: {
-      status: "Plan główny · niedziela 09:00",
+      status: "Opcja zależna od jetlagu · niedziela 09:00",
       title: "Brooklyn Tabernacle · poranne gospel",
       address: "17 Smith Street, Brooklyn, NY 11201",
-      intro: "Duża, wielokulturowa wspólnota przyzwyczajona do gości. To prawdziwe nabożeństwo, nie koncert: uczestniczycie z szacunkiem i uprzedzacie ushera, że około 10:25 musicie dyskretnie wyjść.",
-      schedule: ["08:10 · wyjazd z hotelu", "08:40–08:45 · przyjazd i rozmowa z usherem", "09:00 · początek nabożeństwa", "około 10:20 · oceńcie naturalny moment na wyjście", "najpóźniej 10:25 · wyjście w stronę Borough Hall"],
+      intro: "To prawdziwe nabożeństwo, nie koncert, ale po dniu przylotu pozostaje wyłącznie opcją. Nie nastawiacie budzika specjalnie na gospel: jedziecie tylko wtedy, gdy wszyscy obudzicie się naturalnie, wypoczęci i gotowi na długi dzień zakończony Blue Note oraz możliwym barem.",
+      schedule: ["07:30 · decyzja tylko przy naprawdę dobrej energii", "08:10 · opcjonalny wyjazd z hotelu", "08:40–08:45 · przyjazd i rozmowa z usherem", "09:00 · początek nabożeństwa", "około 10:20 · oceńcie naturalny moment na wyjście", "najpóźniej 10:25 · wyjście w stronę Borough Hall"],
       etiquette: ["Poproście o miejsca z tyłu lub przy bocznym wyjściu", "Nie fotografujcie i nie nagrywajcie nabożeństwa", "Telefony pozostają wyciszone i schowane", "Nie wychodźcie w trakcie modlitwy, kazania ani solowego występu — wybierzcie naturalne przejście", "Jeśli usher wskaże inne rozwiązanie, stosujecie się do jego prośby"],
       phrase: "We’re visiting from Poland and may need to leave around 10:25 for a timed museum reservation. Could we please sit near an exit so we don’t disturb the service?",
       officialUrl: "https://www.brooklyntabernacle.org/bt-join-us/",
@@ -326,7 +328,8 @@ const DAY_GUIDES = {
       { category: "Kawa i historia", name: "Caffè Reggio", price: "$–$$", address: "119 MacDougal Street", note: "Stały przystanek 16:40–17:10: Original Cappuccino, ekspres z 1902 roku i wnętrze wpisane w historię Village.", url: "https://www.caffereggio.com/", image: { src: "assets/photos/131.webp", alt: "Zielona fasada Caffè Reggio przy MacDougal Street", credit: "zdjęcie orientacyjne" } }
     ],
     variants: [
-      { title: "Wersja podstawowa", text: "Brooklyn Tabernacle → Guggenheim 2,5 godziny → szybki lunch → historyczne Village → Blue Note → opcjonalnie M Social dla dorosłych." },
+      { title: "Wersja podstawowa", text: "Spokojny poranek → bezpośrednio z hotelu do Guggenheimu na 11:30 → szybki lunch → historyczne Village → Blue Note → opcjonalnie M Social dla dorosłych." },
+      { title: "Wariant z energią", text: "Brooklyn Tabernacle → Guggenheim 2,5 godziny → szybki lunch → historyczne Village → Blue Note. Wybieracie go wyłącznie po naturalnym, dobrym przebudzeniu." },
       { title: "Opóźnienie po muzeum", text: "Washington Square → MacDougal → Stonewall → Caffè Reggio → Blue Note. Pomijamy Jefferson Market i Commerce Street, ale nie skracamy zapasu przed klubem." },
       { title: "Pełny spacer historyczny", text: "Washington Square → MacDougal → Jefferson Market → Commerce Street → Stonewall → kawiarnia → Blue Note." },
       { title: "Deszcz", text: "Najważniejsze punkty Village krótkimi odcinkami → wcześniejsza kolejka → Blue Note. M Social tylko, jeśli taras jest dostępny i nadal macie energię." }
@@ -334,6 +337,7 @@ const DAY_GUIDES = {
     after: "Po koncercie decyzja w 30 sekund: M Social z Anią albo bezpośredni powrót do hotelu. Nie dokładacie już spaceru po Village.",
     returnUrl: "https://www.google.com/maps/dir/?api=1&origin=Blue+Note+Jazz+Club,+131+W+3rd+St,+New+York&destination=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave&travelmode=transit",
     links: [
+      { label: "Plan główny · hotel → Guggenheim", url: "https://www.google.com/maps/dir/?api=1&origin=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave,+New+York&destination=Solomon+R.+Guggenheim+Museum,+1071+5th+Ave,+New+York&travelmode=transit" },
       { label: "Hotel → Brooklyn Tabernacle", url: "https://www.google.com/maps/dir/?api=1&origin=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave,+New+York&destination=Brooklyn+Tabernacle,+17+Smith+St,+Brooklyn,+NY&travelmode=transit" },
       { label: "Brooklyn Tabernacle → Guggenheim", url: "https://www.google.com/maps/dir/?api=1&origin=Brooklyn+Tabernacle,+17+Smith+St,+Brooklyn,+NY&destination=Solomon+R.+Guggenheim+Museum,+1071+5th+Ave,+New+York&travelmode=transit" },
       { label: "Guggenheim → Washington Square", url: "https://www.google.com/maps/dir/?api=1&origin=Solomon+R.+Guggenheim+Museum,+1071+5th+Ave,+New+York&destination=Washington+Square+Arch,+New+York&travelmode=transit" },
@@ -353,7 +357,7 @@ const DAY_GUIDES = {
   "2026-08-24": {
     kind: "moma",
     checked: "16.07.2026",
-    timelineTargets: ["museum", "food", "shopping", "movie", "movie", "movie"],
+    timelineTargets: ["museum", "food", "shopping", "shopping", "movie", "movie", "movie"],
     museum: {
       address: "11 West 53rd Street · wejście główne między Fifth i Sixth Avenue",
       practical: ["Poniedziałek: 10:30–17:30", "Dorośli: 30 USD · osoby poniżej 16 lat: bezpłatnie", "Bilet obejmuje kolekcję i wystawy czasowe", "Duże plecaki i torby mogą wymagać kontroli; idźcie lekko"],
@@ -381,6 +385,11 @@ const DAY_GUIDES = {
       { title: "Gertie, Felix i Koko", text: "Gertie the Dinosaur z 1914 roku pokazała, że rysunkowa postać może mieć osobowość. Felix the Cat i Koko the Clown rozwijały język gagów i transformacji, których kamera aktorska nie potrafiła wtedy wykonać." },
       { title: "Moduł Matyldy · wybierz własnego bohatera", text: "Zadanie nie polega na czytaniu wszystkich podpisów. Wybierz jedną postać albo technikę, zrób zdjęcie podpisu i odpowiedz: co twórca musiał narysować lub zbudować, zanim obraz zaczął się ruszać?" }
     ],
+    midtown: {
+      title: "Katedra św. Patryka · po drodze do Rockefeller Center",
+      text: "Po lunchu przejdźcie najpierw do katedry przy Fifth Avenue. Wystarczy 15–20 minut: zobaczcie neogotycką bryłę, rozetę, sklepienia i kontrast z Rockefeller Center po drugiej stronie ulicy. Potem zaczyna się blok Rockefeller Center i zakupów.",
+      practical: ["Wejście bez pośpiechu około 14:30", "W środku zachowujemy ciszę i nie używamy lampy", "Jeśli trwa nabożeństwo, oglądamy wnętrze dyskretnie albo pozostajemy przy fasadzie", "Katedra nie wydłuża dnia — leży bezpośrednio na trasie do Rockefeller Center"]
+    },
     shopping: [
       { category: "Najbardziej nowojorskie", name: "Nintendo NY", address: "10 Rockefeller Plaza", hours: "codziennie 11:00–19:00", note: "Dwa poziomy i około 930 m². Dobry kandydat na jeden z dwóch głównych sklepów: gry, ekspozycje i duże figury bohaterów.", url: "https://www.nintendo.com/us/new-york/" },
       { category: "Efekt wow", name: "LEGO Store Fifth Avenue", address: "636 Fifth Avenue", hours: "codziennie 10:00–20:00", note: "Tu sklep jest również atrakcją. Wejdźcie dla instalacji i modeli, nawet bez planu zakupów.", url: "https://www.lego.com/en-us/stores/store/fifth-avenue" },
@@ -405,7 +414,7 @@ const DAY_GUIDES = {
       returnUrl: "https://www.google.com/maps/dir/?api=1&origin=Bryant+Park,+New+York&destination=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave&travelmode=walking"
     },
     variants: [
-      { title: "Pełny dzień", text: "MoMA 3 godziny → lunch → maksymalnie dwa duże sklepy i jeden szybki → hotel → Bryant Park." },
+      { title: "Pełny dzień", text: "MoMA 3 godziny → lunch → katedra św. Patryka → maksymalnie dwa duże sklepy i jeden szybki → hotel → Bryant Park." },
       { title: "Muzeum zaczyna męczyć", text: "Wybierzcie trasę 90 minut i dłuższy lunch. Nie próbujcie odzyskiwać czasu kolejnymi salami — zachowajcie energię na kino." },
       { title: "Zakupy są ważniejsze", text: "Kończymy MoMA około 13:00, wybieramy dwa sklepy Matyldy bez poczucia winy i wracamy do hotelu najpóźniej o 17:00." },
       { title: "Deszcz lub odwołany film", text: "MoMA można wydłużyć do 16:00, potem Rockefeller Center i spokojna kolacja. Bryant Park publikuje decyzję pogodową w swoich kanałach — nie jedziemy z kocem bez sprawdzenia." },
@@ -413,7 +422,7 @@ const DAY_GUIDES = {
     ],
     links: [
       { label: "Start dnia · hotel → MoMA", url: "https://www.google.com/maps/dir/?api=1&origin=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave,+New+York&destination=The+Museum+of+Modern+Art,+11+W+53rd+St,+New+York&travelmode=transit" },
-      { label: "Cała trasa dzienna · hotel → MoMA → Rockefeller → hotel", url: "https://www.google.com/maps/dir/?api=1&origin=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave,+New+York&destination=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave,+New+York&waypoints=The+Museum+of+Modern+Art,+11+W+53rd+St,+New+York%7CRockefeller+Center,+45+Rockefeller+Plaza,+New+York&travelmode=walking" },
+      { label: "Cała trasa dzienna · hotel → MoMA → katedra → Rockefeller → hotel", url: "https://www.google.com/maps/dir/?api=1&origin=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave,+New+York&destination=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave,+New+York&waypoints=The+Museum+of+Modern+Art,+11+W+53rd+St,+New+York%7CSt.+Patrick%27s+Cathedral,+New+York%7CRockefeller+Center,+45+Rockefeller+Plaza,+New+York&travelmode=walking" },
       { label: "Wieczór · hotel → Bryant Park", url: "https://www.google.com/maps/dir/?api=1&origin=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave,+New+York&destination=Bryant+Park,+New+York&travelmode=walking" },
       { label: "MoMA · godziny i bilety", url: "https://www.moma.org/visit/" },
       { label: "Mapa i przewodnik po piętrach MoMA", url: "https://www.moma.org/visit/guide" },
@@ -512,16 +521,14 @@ const DAY_GUIDES = {
         { time: "07:00–07:30", title: "Szybkie śniadanie", text: "Best Bagel & Coffee przy 35th Street pasuje do kierunku spaceru. Zamówcie do ręki, zamiast zaczynać dzień od długiego śniadania przy stoliku.", look: "Nowojorski poranny rytm: kolejka przesuwa się szybko, a bajgiel można zjeść przed Empire State." },
         { time: "07:40–08:15", title: "Empire State Building i Fifth Avenue", text: "Empire State oglądacie z zewnątrz. Następnie idźcie na północ Fifth Avenue do 42nd Street — to krótki przekrój przez klasyczny Midtown.", look: "Art déco, cofające się ku górze kondygnacje Empire State i widok wieży między fasadami Fifth Avenue.", related: [{ key:"mstory-0" }] },
         { time: "08:30–10:20", title: "SUMMIT One Vanderbilt i Grand Central", text: "Po około 90 minutach na trzech poziomach SUMMIT zejdźcie bezpośrednio do Main Concourse Grand Central. Te dwa miejsca tworzą jeden przystanek bez dodatkowego dojazdu.", look: "W SUMMIT porównajcie Chrysler Building, Central Park, East River i Empire State; w terminalu znajdźcie turkusowy sufit i zegar nad informacją.", related: [{ key:"mstory-1" }, { key:"mstory-2" }] },
-        { time: "10:30–10:50", title: "Katedra św. Patryka", text: "Podejdźcie Madison Avenue na 50th Street i zajrzyjcie do środka na kilkanaście minut. To neogotycki kontrapunkt dla Rockefeller Center po drugiej stronie Fifth Avenue.", look: "Białe marmurowe iglice, rozeta, sklepienia i ołtarz wciśnięte między komercyjne wieżowce Midtown.", related: [{ key:"mstory-3" }] },
-        { time: "10:50–11:20", title: "Przejazd do Long Island City", text: "Z okolic Rockefeller Center jedźcie metrem do Vernon Boulevard–Jackson Avenue, a następnie podejdźcie do Gantry Plaza.", look: "Po wyjściu z metra zmienia się skala zabudowy i odsłania panorama Manhattanu po drugiej stronie East River." }
+        { time: "10:30–11:00", title: "Przejazd do Long Island City", text: "Z Grand Central jedźcie linią 7 do Vernon Boulevard–Jackson Avenue, a następnie podejdźcie do Gantry Plaza.", look: "Po wyjściu z metra zmienia się skala zabudowy i odsłania panorama Manhattanu po drugiej stronie East River." }
       ],
       stories: [
         { title:"Empire State · wyścig ku niebu", text:"Wieżowiec powstał w latach 1930–1931 w czasie rywalizacji o tytuł najwyższego budynku świata. Charakterystyczne uskoki nie są wyłącznie ozdobą: wynikały z nowojorskich przepisów, które miały dopuszczać światło do ulic. Aluminiowa iglica miała pierwotnie służyć jako maszt dla sterowców, lecz pomysł okazał się niepraktyczny." },
         { title:"One Vanderbilt i SUMMIT", text:"One Vanderbilt otwarto w 2020 roku jako współczesnego sąsiada Grand Central. Wieża przekazuje część przestrzeni i inwestycji na poprawę komunikacji wokół terminalu. SUMMIT nie jest tylko tarasem: instalacja AIR Kenzo Digital wykorzystuje lustra, światło i odbicia ludzi, aby panorama stała się częścią dzieła." },
-        { title:"Grand Central · terminal, którego o mało nie zburzono", text:"Obecny terminal otwarto w 1913 roku. W latach 60. i 70. planowano zastąpić go wieżowcem, lecz kampania obrońców zabytków — wspierana między innymi przez Jacqueline Kennedy Onassis — pomogła go uratować. Gwiazdozbiory na suficie Main Concourse przedstawiono w lustrzanym, odwróconym układzie." },
-        { title:"Katedra między wieżowcami", text:"Budowę neogotyckiej katedry rozpoczęto w 1858 roku według projektu Jamesa Renwicka Jr.; po przerwie spowodowanej wojną secesyjną otwarto ją w 1879 roku. Gdy powstawała, okolica była daleko od dzisiejszego centrum. Dziś jasny marmur i strzeliste iglice świadomie kontrastują z Rockefeller Center." }
+        { title:"Grand Central · terminal, którego o mało nie zburzono", text:"Obecny terminal otwarto w 1913 roku. W latach 60. i 70. planowano zastąpić go wieżowcem, lecz kampania obrońców zabytków — wspierana między innymi przez Jacqueline Kennedy Onassis — pomogła go uratować. Gwiazdozbiory na suficie Main Concourse przedstawiono w lustrzanym, odwróconym układzie." }
       ],
-      practical: ["SUMMIT rekomenduje około 90 minut", "Weźcie okulary przeciwsłoneczne — lustrzane powierzchnie są bardzo jasne", "Najlepiej spodnie lub szorty; lustrzane podłogi nie sprzyjają spódnicom", "W katedrze zachowujemy ciszę i sprawdzamy, czy nie trwa msza"]
+      practical: ["SUMMIT rekomenduje około 90 minut", "Weźcie okulary przeciwsłoneczne — lustrzane powierzchnie są bardzo jasne", "Najlepiej spodnie lub szorty; lustrzane podłogi nie sprzyjają spódnicom"]
     },
     route: [
       { time: "11:20–12:40", title: "Gantry Plaza · przemysłowa rama panoramy", text: "Zacznijcie przy dwóch monumentalnych suwnicach przeładunkowych i idźcie nabrzeżem na północ. Park ma około 12 akrów, a po drugiej stronie rzeki widać ONZ i Empire State Building.", look: "Ustawcie sylwetkę Manhattanu między nogami suwnicy. Zobaczcie, że Queens było zapleczem portowym i kolejowym, zanim stało się dzielnicą apartamentowców.", related: [{ key: "qstory-0", label: "Po co były suwnice?" }] },
@@ -565,15 +572,14 @@ const DAY_GUIDES = {
       { category: "Na stadionie", name: "US Open concessions", price: "$$–$$$", address: "National Tennis Center", note: "Wygodnie, lecz drożej. Po Flushing wystarczy napój lub przekąska zamiast kolejnej pełnej kolacji.", url: "https://www.usopen.org/en_US/visit/at_the_open.html" }
     ],
     variants: [
-      { title: "Wersja pełna", text: "Empire State z zewnątrz → SUMMIT → Grand Central i katedra → Gantry i Pepsi → Flushing → Unisphere → tenis." },
+      { title: "Wersja pełna", text: "Empire State z zewnątrz → SUMMIT → Grand Central → Gantry i Pepsi → Flushing → Unisphere → tenis." },
       { title: "Upał", text: "Skróćcie nabrzeże do 45 minut, zjedzcie w klimatyzowanym New World Mall i jedźcie bezpośrednio do stadionu. Unisphere tylko przy zapasie energii." },
       { title: "Zmęczenie po Broadwayu", text: "Późniejszy start → Gantry i Pepsi → jedno miejsce w Flushing → stadion. Pomijamy Unisphere, choć jest blisko kompleksu." },
       { title: "Deszcz", text: "Krótki Gantry lub pominięcie nabrzeża → dłuższy moduł kulinarny pod dachem → wcześniejsze wejście. Stała sesja tenisowa pozostaje." }
     ],
     links: [
       { label: "Poranek · hotel → Best Bagel → Empire State → SUMMIT", url: "https://www.google.com/maps/dir/?api=1&origin=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave,+New+York&destination=SUMMIT+One+Vanderbilt,+New+York&waypoints=Best+Bagel+and+Coffee,+225+W+35th+St,+New+York%7CEmpire+State+Building,+New+York&travelmode=walking" },
-      { label: "SUMMIT → Grand Central → St. Patrick’s Cathedral", url: "https://www.google.com/maps/dir/?api=1&origin=SUMMIT+One+Vanderbilt,+New+York&destination=St.+Patrick%27s+Cathedral,+New+York&waypoints=Grand+Central+Terminal,+New+York&travelmode=walking" },
-      { label: "St. Patrick’s → Gantry Plaza", url: "https://www.google.com/maps/dir/?api=1&origin=St.+Patrick%27s+Cathedral,+New+York&destination=Gantry+Plaza+State+Park,+Queens,+NY&travelmode=transit" },
+      { label: "Grand Central → Gantry Plaza", url: "https://www.google.com/maps/dir/?api=1&origin=Grand+Central+Terminal,+New+York&destination=Gantry+Plaza+State+Park,+Queens,+NY&travelmode=transit" },
       { label: "SUMMIT · oficjalna strona i bilety", url: "https://summitov.com/" },
       { label: "Spacer · Gantry → Pepsi-Cola Sign", url: "https://www.google.com/maps/dir/?api=1&origin=40.74738,-73.95682&destination=40.74855,-73.95763&travelmode=walking" },
       { label: "Pepsi Sign → stacja Vernon Blvd–Jackson Av · pieszo", url: "https://www.google.com/maps/dir/?api=1&origin=40.74855,-73.95763&destination=40.74270,-73.95370&travelmode=walking" },
@@ -1028,15 +1034,15 @@ const TO_BUY = [
   { title: "Whitney Museum", status: "Do rezerwacji", kind: "todo", when: "27.08 · 13:30", text: "Wybrać wejście czasowe po zatwierdzeniu dnia. Dla Matyldy również dodać właściwy bilet, nawet jeśli będzie bezpłatny.", action: "Bilety Whitney", url: "https://whitney.org/tickets" },
   { title: "NYC Ferry · Pier 79 → St. George", status: "W dniu rejsu", kind: "dayof", when: "27.08 · rano", text: "Nie kupować wiele miesięcy wcześniej. Kupić i aktywować w aplikacji tuż przed wejściem. Staten Island Ferry w drodze powrotnej jest bezpłatny.", action: "Rozkład i bilety", url: "https://www.ferry.nyc/routes-and-schedules/st-george/" },
   { title: "Bargemusic", status: "Po publikacji programu", kind: "later", when: "29.08", text: "Sprawdzić dokładny koncert i zasady rezerwacji, gdy organizator opublikuje pełny kalendarz na sierpień.", action: "Sprawdź program", url: "https://www.bargemusic.org/" },
-  { title: "SUMMIT One Vanderbilt", status: "Do rezerwacji", kind: "todo", when: "26.08 · pierwszy poranny slot", text: "Kupić bilet czasowy na około 8:30. Rano przeznaczamy około 90 minut, a następnie jedziemy przez katedrę św. Patryka do Gantry Plaza.", action: "Oficjalna strona", url: "https://summitov.com/" }
-  ,{ title: "Guggenheim", status: "Do kupienia", kind: "todo", when: "23.08 · 11:30", text: "Plan główny po Brooklyn Tabernacle. Rezerwacja na 11:30 i twarde wyjście o 14:00 po 2,5 godzinach.", action: "Godziny i bilety", url: "https://www.guggenheim.org/buy-tickets" }
+  { title: "SUMMIT One Vanderbilt", status: "Do rezerwacji", kind: "todo", when: "26.08 · pierwszy poranny slot", text: "Kupić bilet czasowy na około 8:30. Rano przeznaczamy około 90 minut, oglądamy Grand Central i jedziemy linią 7 do Gantry Plaza.", action: "Oficjalna strona", url: "https://summitov.com/" }
+  ,{ title: "Guggenheim", status: "Do kupienia", kind: "todo", when: "23.08 · 11:30", text: "Plan główny prowadzi bezpośrednio z hotelu; Brooklyn Tabernacle jest opcją przy dobrej energii. Rezerwacja na 11:30 i twarde wyjście o 14:00 po 2,5 godzinach.", action: "Godziny i bilety", url: "https://www.guggenheim.org/buy-tickets" }
   ,{ title: "Tenement Museum", status: "Wybrana trasa · kupić", kind: "todo", when: "30.08 · 10:45", text: "7A: Rogarshevskys & Baldizzis. Po zakupie zapisać potwierdzenie offline; w Visitor Center jesteście o 10:30.", action: "Kup bilety", url: "https://www.tenement.org/tour/7a-rogarshevskys-baldizzis/" }
 ];
 
 const PLACES = [
   { id:"times-square", title:"Times Square", icon:"●", category:"ikona miasta", text:"Pierwsze światła, dawne Longacre Square i najlepszy punkt wejścia w energię Midtown.", meta:"22.08 · wieczór", dayId:"2026-08-22", panel:"evening", map:"https://www.google.com/maps/search/?api=1&query=Times+Square+New+York" },
   { id:"bryant-park", title:"Bryant Park i NYPL", icon:"◆", category:"lokalnie", text:"Miejski salon za biblioteką: pierwszy spacer i film pod gwiazdami.", meta:"22 i 24.08", dayId:"2026-08-24", panel:"movie", map:"https://www.google.com/maps/search/?api=1&query=Bryant+Park+New+York" },
-  { id:"brooklyn-tabernacle", title:"Brooklyn Tabernacle", icon:"♫", category:"gospel", text:"Poranne nabożeństwo w dużej, wielokulturowej wspólnocie znanej z chóru gospel.", meta:"23.08 · 09:00", dayId:"2026-08-23", panel:"gospel", map:"https://www.google.com/maps/search/?api=1&query=Brooklyn+Tabernacle+17+Smith+Street+Brooklyn" },
+  { id:"brooklyn-tabernacle", title:"Brooklyn Tabernacle", icon:"♫", category:"gospel", text:"Opcjonalne poranne nabożeństwo w dużej, wielokulturowej wspólnocie znanej z chóru gospel.", meta:"23.08 · 09:00 · tylko przy dobrej energii", dayId:"2026-08-23", panel:"gospel", map:"https://www.google.com/maps/search/?api=1&query=Brooklyn+Tabernacle+17+Smith+Street+Brooklyn" },
   { id:"village", title:"Greenwich Village", icon:"♟", category:"historia", text:"Bohema, Stonewall, brownstones i muzyka — bez objazdu po adresach serialowych.", meta:"23.08 · 14:45", dayId:"2026-08-23", panel:"route", map:"https://www.google.com/maps/search/?api=1&query=Washington+Square+Park+New+York", image:"assets/photos/127.jpg" },
   { id:"bluenote", title:"Blue Note", icon:"♪", category:"muzyka", text:"Kameralny klub jazzowy i koncert Hiromi przy stoliku.", meta:"23.08 · 20:00", dayId:"2026-08-23", panel:"bluenote", map:"https://www.google.com/maps/search/?api=1&query=Blue+Note+Jazz+Club+NYC", image:"assets/places/blue-note.jpg" },
   { id:"caffe-reggio", title:"Caffè Reggio", icon:"☕", category:"historia i kawa", text:"Original Cappuccino, ekspres z 1902 roku i artystyczne wnętrze Greenwich Village.", meta:"23.08 · 16:40", dayId:"2026-08-23", panel:"route", map:"https://www.google.com/maps/search/?api=1&query=Caffe+Reggio+119+MacDougal+Street+New+York", image:"assets/photos/131.webp" },
@@ -1046,7 +1052,7 @@ const PLACES = [
   { id:"met", title:"Museum Mile", icon:"◉", category:"sztuka", text:"Guggenheim, The Met i Fifth Avenue przy Central Parku.", meta:"25.08", dayId:"2026-08-25", panel:"museum", map:"https://www.google.com/maps/search/?api=1&query=Metropolitan+Museum+of+Art" },
   { id:"central-park", title:"Central Park na rowerach", icon:"↻", category:"lokalnie", text:"Pełna jednokierunkowa pętla, Reservoir, spokojniejsza północ, Strawberry Fields i zasady rodzinnego wynajmu.", meta:"25.08 · 14:35", dayId:"2026-08-25", panel:"park", map:"https://www.google.com/maps/search/?api=1&query=Grand+Army+Plaza+Fifth+Avenue+60th+Street+New+York" },
   { id:"empire-state", title:"Empire State Building", icon:"▴", category:"architektura", text:"Ikona art déco oglądana o poranku z ulicy przed wejściem do SUMMIT.", meta:"26.08 · 07:40", dayId:"2026-08-26", panel:"morning", map:"https://www.google.com/maps/search/?api=1&query=Empire+State+Building+New+York" },
-  { id:"st-patrick", title:"Katedra św. Patryka", icon:"†", category:"architektura", text:"Neogotycka katedra przy Fifth Avenue — kilkanaście minut wewnątrz przed przejazdem do Queens.", meta:"26.08 · 10:30", dayId:"2026-08-26", panel:"morning", map:"https://www.google.com/maps/search/?api=1&query=St.+Patrick%27s+Cathedral+New+York" },
+  { id:"st-patrick", title:"Katedra św. Patryka", icon:"†", category:"architektura", text:"Neogotycka katedra przy Fifth Avenue — kilkanaście minut wewnątrz przed Rockefeller Center.", meta:"24.08 · 14:30", dayId:"2026-08-24", panel:"shopping", map:"https://www.google.com/maps/search/?api=1&query=St.+Patrick%27s+Cathedral+New+York" },
   { id:"queens", title:"Queens", icon:"◎", category:"lokalnie", text:"Przemysłowe LIC, migracyjne Flushing, World’s Fair i US Open.", meta:"26.08", dayId:"2026-08-26", panel:"route", map:"https://www.google.com/maps/search/?api=1&query=Gantry+Plaza+State+Park" },
   { id:"us-open", title:"US Open", icon:"◉", category:"sport", text:"Wieczorny mikst na kortach we Flushing Meadows oraz krótki przewodnik po zasadach i zachowaniu publiczności.", meta:"26.08 · 19:00", dayId:"2026-08-26", panel:"tennis", map:"https://www.google.com/maps/search/?api=1&query=USTA+Billie+Jean+King+National+Tennis+Center" },
   { id:"liberty", title:"Port i Statua Wolności", icon:"★", category:"zdjęcia", text:"Dwa promy i instrukcja wspólnego ikonicznego zdjęcia.", meta:"27.08 · rano", dayId:"2026-08-27", panel:"photos", map:"https://www.google.com/maps/search/?api=1&query=Whitehall+Terminal+New+York" },

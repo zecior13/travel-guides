@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-10T20:08:55.575Z",
+  "generatedAt": "2026-08-10T21:31:18.752Z",
   "shell": [
     "./",
     "index.html",
@@ -148,8 +148,8 @@
       "flag": "🇺🇸",
       "theme": "nyc",
       "startUrl": "nyc/",
-      "version": "40f3b4eb1fb5",
-      "size": 61452730,
+      "version": "fcf8860eefad",
+      "size": 61454607,
       "assets": [
         "nyc/app.js",
         "nyc/assets/maps/nyc-illustrated-master-v1.png",
