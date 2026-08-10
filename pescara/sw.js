@@ -1,8 +1,8 @@
 const CACHE_PREFIX = 'pescara-weekend-';
-const CACHE = 'pescara-weekend-v1.0.1';
+const CACHE = 'pescara-weekend-v1.0.2';
 
 const ASSETS = [
-  './','./index.html','./styles.css','./app.js','./manifest.webmanifest',
+  './','./index.html','./styles.css','./app.js','./manifest.webmanifest','../shared/common.css',
   './assets/icon-192.png','./assets/icon-512.png',
   './assets/ponte.jpg','./assets/trabocco.jpg','./assets/abbazia.jpg',
   './assets/arrosticini.jpg','./assets/pallotte.jpg','./assets/chitarra.png',

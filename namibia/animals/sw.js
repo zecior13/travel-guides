@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "namibia-animals-";
-const CACHE_NAME = "namibia-animals-v2";
+const CACHE_NAME = "namibia-animals-v3";
 
 const PHOTO_FILES = Array.from({ length: 60 }, (_, i) =>
   `./photos/${String(i + 1).padStart(2, "0")}.jpg`
@@ -13,6 +13,7 @@ const FILES_TO_CACHE = [
   "./icons/icon-512.png",
   "./icons/apple-touch-icon.png",
   "./icons/favicon-32.png",
+  "../../shared/common.css",
   ...PHOTO_FILES
 ];
 

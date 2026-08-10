@@ -1,0 +1,44 @@
+.travel-guides-home {
+  position: fixed;
+  z-index: 10000;
+  top: max(10px, env(safe-area-inset-top));
+  left: max(10px, env(safe-area-inset-left));
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(18, 39, 43, 0.86);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font: 700 12px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.travel-guides-home:hover,
+.travel-guides-home:focus-visible {
+  background: rgba(23, 97, 107, 0.96);
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+.travel-guides-home--needs-space ~ header {
+  padding-top: max(56px, calc(env(safe-area-inset-top) + 46px)) !important;
+}
+
+.travel-guides-home--needs-space + .wrap {
+  padding-top: 48px;
+}
+
+@media (max-width: 520px) {
+  .travel-guides-home {
+    min-height: 34px;
+    padding: 7px 10px;
+    font-size: 11px;
+  }
+}

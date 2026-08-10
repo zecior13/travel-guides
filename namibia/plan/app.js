@@ -1,5 +1,5 @@
 // ============ KONFIG ============
-const ANIMAL_APP_URL = "https://zecior13.github.io/Namibia-animals/";
+const ANIMAL_APP_URL = "../animals/";
 document.getElementById("animalAppLink").href = ANIMAL_APP_URL;
 
 const MONTH_NAMES_SHORT = {"06":"cze","07":"lip"};
