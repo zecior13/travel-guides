@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "nyc-2026-";
-const CACHE = "nyc-2026-v92";
+const CACHE = "nyc-2026-v100";
 
 const CORE_ASSETS = [
   "./",
@@ -9,6 +9,8 @@ const CORE_ASSETS = [
   "./museum-data.js",
   "./met-on-view-data.js",
   "./museum-expanded-data.js",
+  "./museum-gosia-expansion-data.js",
+  "./museum-on-view-audit-data.js",
   "./museum-education-data.js",
   "./app.js",
   "./manifest.json",
@@ -22,8 +24,11 @@ const MEDIA_ASSETS = [
   "./assets/maps/nyc-illustrated-master-v1.png",
   "./assets/maps/nyc-subway-map-2025.svg",
   "./assets/places/blue-note.jpg",
+  "./assets/places/brooklyn-tabernacle.jpg",
   "./assets/places/jefferson-market.jpg",
+  "./assets/places/mercer-labs.jpg",
   "./assets/places/stonewall.jpg",
+  "./assets/places/the-shed.jpg",
   "./assets/places/washington-square.jpg",
   ...Array.from({ length: 130 }, (_, index) =>
     `./assets/photos/${String(index + 1).padStart(3, "0")}.jpg`
@@ -41,7 +46,7 @@ const MEDIA_ASSETS = [
   "./assets/photos/141.webp",
   "./assets/photos/142.jpg",
   "./assets/photos/143.jpg",
-  ...Array.from({ length: 105 }, (_, index) =>
+  ...Array.from({ length: 155 }, (_, index) =>
     `./assets/photos/${String(index + 144).padStart(3, "0")}.jpg`
   ),
   ...[436123,436138,436139,436140,436141,436150,436152,436153,436168,436524,436525,436526,436527,436529,436530,436531,436532,436533,436534,436535,436536,436945,436946,436952,436960,437385,437387,437388,437390,437392,437393,437395,437396,437397,437399,437402,437406,437424,437425,437426,437428,437429,437430,437432,437436,437437,437980,437984,437998,438002,438010,438011,438012,438013,438014,438722,438815,438817,438819,438857,441104,459082,459098,459123,782304]

@@ -103,10 +103,10 @@ const DAYS = [
   },
   {
     id: "2026-08-27", day: 6, date: "27.08", weekday: "czwartek",
-    title: "Statua, Downtown i High Line",
-    subtitle: "Promy → Wall Street → Whitney → Hudson Yards",
-    accent: "steel", tags: ["promy", "Downtown", "sztuka"],
-    story: "Najbardziej przekrojowy dzień prowadzi od portu i Statuy Wolności przez finansowe Downtown oraz pamięć o 11 września, a potem przez sztukę, dawną linię towarową i współczesny Hudson Yards.",
+    title: "Statua, Downtown, High Line i The Shed",
+    subtitle: "Promy → Wall Street → Whitney → High Line → immersyjny wieczór",
+    accent: "steel", tags: ["promy", "Downtown", "sztuka", "immersja"],
+    story: "Najbardziej przekrojowy dzień prowadzi od portu i Statuy Wolności przez finansowe Downtown oraz pamięć o 11 września, a potem przez Whitney, dawną linię towarową i dwa zupełnie różne doświadczenia obrazu oraz dźwięku w The Shed.",
     items: [
       { time: "08:15", title: "Hotel → Pier 79", note: "Dojście lub krótki przejazd do przystani NYC Ferry przy West 39th Street.", type: "plan" },
       { time: "08:50", title: "Prom do St. George", note: "NYC Ferry wzdłuż West Side i pierwsza sesja zdjęciowa ze Statuą Wolności.", type: "fixed" },
@@ -114,10 +114,13 @@ const DAYS = [
       { time: "10:30", title: "Lower Manhattan", note: "Charging Bull, Wall Street i bezpłatny 9/11 Memorial bez muzeum.", type: "plan" },
       { time: "12:15", title: "Lunch", note: "W Downtown albo po przejeździe do Meatpacking.", type: "plan" },
       { time: "13:30", title: "Whitney Museum", note: "Skrócona trasa 90–120 minut: Mabel Dwight, Warhol, kolekcja i tarasy.", type: "fixed" },
-      { time: "15:45", title: "High Line → Hudson Yards", note: "Galerie opcjonalnie; Vessel i zachód słońca nad Hudsonem.", type: "plan" },
-      { time: "18:30+", title: "Kolacja i letni wieczór", note: "Hudson Yards, nabrzeże albo Koreatown — bez obowiązkowego powrotu o 17:00.", type: "option" }
+      { time: "15:45", title: "High Line → Hudson Yards", note: "Spacer bez zejścia do galerii; po drodze 10th Avenue Square, Rail Yards i Vessel.", type: "plan" },
+      { time: "17:20", title: "Doug Aitken: Lightscape", note: "Pełna 65-minutowa pętla siedmioekranowej instalacji w formule Choose What You Pay.", type: "fixed" },
+      { time: "18:25", title: "Przerwa w The Shed", note: "35 minut na toalety, napoje i spokojne przygotowanie do wejścia czasowego.", type: "plan" },
+      { time: "19:00", title: "The Black Mirror Experience", note: "60 minut: fizyczna scenografia, grupowe VR i opowieść zmieniana wspólnymi decyzjami.", type: "fixed" },
+      { time: "20:10+", title: "Kolacja", note: "Hudson Yards albo Hell’s Kitchen; po dwóch atrakcjach nie dokładamy już kolejnego biletu.", type: "plan" }
     ],
-    essentials: ["Rano sprawdzić rozkłady obu promów", "Whitney Biennial kończy się 23.08", "Telefon naładowany i miejsce na serię zdjęć"]
+    essentials: ["Rano sprawdzić rozkłady obu promów", "Whitney Biennial kończy się 23.08", "Zarezerwować Lightscape i Black Mirror na 19:00", "Świadomie zaakceptować zdjęcie i próbkę głosu używane w Black Mirror", "Telefon naładowany i miejsce na serię zdjęć"]
   },
   {
     id: "2026-08-28", day: 7, date: "28.08", weekday: "piątek",
@@ -594,8 +597,8 @@ const DAY_GUIDES = {
     ]
   },
   "2026-08-27": {
-    kind: "westside", checked: "16.07.2026",
-    timelineTargets: ["ferry", "photos", "photos", "downtown", "food", "museum", "route", "evening"],
+    kind: "westside", checked: "15.08.2026",
+    timelineTargets: ["ferry", "photos", "photos", "downtown", "food", "museum", "route", "evening", "evening", "evening", "food"],
     ferry: {
       schedule: ["08:15 · wyjście z hotelu", "około 08:50 · NYC Ferry z Midtown West/Pier 79", "około 09:30 · St. George i przejście do terminalu miejskiego", "około 10:00 · bezpłatny Staten Island Ferry", "około 10:25 · Whitehall Terminal na Manhattanie"],
       notes: ["NYC Ferry jest płatne i ma mniejsze jednostki; bilet kupujemy w oficjalnej aplikacji", "Staten Island Ferry jest bezpłatny — nie kupujcie żadnych biletów od naganiaczy", "Rozkłady mogą się zmienić; aplikacja pokazuje plan, ale rano sprawdzamy odjazdy na żywo", "Po dopłynięciu do St. George trzeba wyjść z pierwszego promu i przejść do właściwej hali Staten Island Ferry"]
@@ -644,12 +647,11 @@ const DAY_GUIDES = {
       { title: "Jak czytać 9/11 Memorial", text: "Baseny North Pool i South Pool wyznaczają obrysy wież, ale nie stoją dokładnie na fundamentach konstrukcyjnych. Nazwiska rozmieszczono według relacji i wspólnot, a nie alfabetu. Puste niebo nad basenami jest równie ważne jak spadająca woda." }
     ],
     route: [
-      { time: "13:00", title: "Lunch i Meatpacking", text: "Zjedzcie przed High Line. Gansevoort Street pokazuje bruk, dawne magazyny i dzisiejsze butiki.", look: "Zadaszenia dawnych zakładów i ślady infrastruktury towarowej.", related: [{ key: "wstory-4", label: "Od mięsa do luksusu" }, { panel: "food", label: "Wybierz lunch" }] },
-      { time: "14:00", title: "High Line przy Gansevoort", text: "Park prowadzi po dawnym wiadukcie, więc wysokość i zakręty wynikają z obsługi magazynów.", look: "Tory wtopione w nasadzenia i budynki, przez które jechał pociąg.", related: [{ key: "wstory-3", label: "Historia High Line" }] },
-      { time: "14:40", title: "Chelsea Market i 15th Street", text: "Kompleks mieścił fabrykę Nabisco, gdzie produkowano między innymi Oreo.", look: "Przejście przez budynek i widok na dawne magazyny portowe." },
-      { time: "15:15", title: "Galerie Chelsea · opcjonalnie", text: "Zejdźcie między 20th a 24th Street tylko przy ochocie na więcej sztuki. Wystawy sprawdzimy tuż przed podróżą.", look: "Wielkie białe sale w dawnych budynkach przemysłowych." },
-      { time: "16:00", title: "10th Avenue Square", text: "Drewniana widownia z wielkim oknem na ruch uliczny. Dziesięć minut siedzenia jest częścią trasy.", look: "Samochody i piesi jako miejski spektakl." },
-      { time: "16:30", title: "Hudson Yards i Vessel", text: "Wieżowce stoją na platformie nad czynną stacją postojową kolei. Vessel oglądacie z zewnątrz.", look: "Kontrast niskiej Chelsea z nową dzielnicą nad torami." }
+      { time: "15:45", title: "High Line przy Gansevoort", text: "Po Whitney wchodzicie na południowy początek parku i idziecie jednym ciągiem na północ. Nie schodzimy już do galerii Chelsea — chronimy wejście do The Shed.", look: "Tory wtopione w nasadzenia i budynki, przez które jechał pociąg.", related: [{ key: "wstory-3", label: "Historia High Line" }] },
+      { time: "16:05", title: "Chelsea Thicket i dawne magazyny", text: "Zielony odcinek pokazuje, jak samosiejki dawnej linii kolejowej stały się inspiracją dla projektu parku.", look: "Rośliny wyrastające pomiędzy szynami i fasady dawnych zakładów." },
+      { time: "16:25", title: "10th Avenue Square", text: "Drewniana widownia z wielkim oknem na ruch uliczny. Dziesięć minut siedzenia jest częścią trasy, ale przy opóźnieniu skracacie postój do zdjęcia.", look: "Samochody i piesi jako miejski spektakl." },
+      { time: "16:45", title: "Rail Yards", text: "Ostatni odcinek zakręca nad czynnymi torami i prowadzi bezpośrednio pod The Shed.", look: "Stary wiadukt, nowe wieżowce i kolej ukryta pod platformą Hudson Yards." },
+      { time: "17:00", title: "Hudson Yards i Vessel", text: "Vessel oglądacie z zewnątrz. Macie około 20 minut na zdjęcia, wodę i wejście do The Shed obok północnego końca High Line.", look: "Kontrast niskiej Chelsea z nową dzielnicą nad torami." }
     ],
     food: [
       { category: "Lunch · Downtown", name: "Hudson Eats at Brookfield Place", price: "$–$$$", address: "230 Vesey St", note: "Duży wybór i widok na Hudson; logistycznie najłatwiejszy po memoriale 9/11 przed przejazdem do Whitney.", url: "https://bfplny.com/directory/food/" },
@@ -658,35 +660,41 @@ const DAY_GUIDES = {
       { category: "Wiele opcji", name: "Chelsea Market", price: "$–$$$", address: "75 9th Ave", note: "Łatwy wybór przy różnych apetytach, ale w porze lunchu tłoczny. Ustalcie punkt spotkania.", url: "https://www.chelseamarket.com/" },
       { category: "Szybko", name: "Los Mariscos", price: "$$", address: "Chelsea Market", note: "Tacos i ceviche z owocami morza; sprawniej niż pełny posiłek przy stoliku.", url: "https://www.losmariscos1.com/" },
       { category: "Drożej", name: "Pastis", price: "$$$", address: "52 Gansevoort St", note: "Nowojorska brasserie; tylko z rezerwacją i gdy chcecie spokojniejszy lunch.", url: "https://pastisnyc.com/" },
-      { category: "Wieczór", name: "Koreatown food crawl", price: "$–$$$", address: "W 32nd St", note: "Koreański fried chicken, barbecue albo deser — zależnie od energii.", url: "https://www.google.com/maps/search/?api=1&query=Koreatown+restaurants+West+32nd+Street+New+York" }
+      { category: "Po The Shed · najłatwiej", name: "Hudson Yards", price: "$–$$$", address: "10th Ave / W 30th–34th St", note: "Kolacja od 20:10 bez dodatkowego przejazdu; wybór zależy od energii po VR.", url: "https://www.google.com/maps/search/?api=1&query=restaurants+near+The+Shed+New+York" },
+      { category: "Po The Shed · większy wybór", name: "Hell’s Kitchen", price: "$–$$$", address: "9th Ave / W 42nd–50th St", note: "Kilkunastominutowy spacer lub krótki przejazd; wiele kuchni i łatwy powrót do hotelu.", url: "https://www.google.com/maps/search/?api=1&query=restaurants+Hell%27s+Kitchen+New+York" }
     ],
     evening: [
-      { title: "Domyślnie · spokojna kolacja", text: "Koreatown albo Hell’s Kitchen bez biletu, kolejki i presji dobrej pogody." },
-      { title: "Little Island i Hudson", text: "Bezpłatny zachód słońca, ale wymaga powrotu na południe. Lepiej połączyć z wcześniejszym końcem High Line." },
-      { title: "Koreatown dla Matyldy", text: "K-beauty, przekąski, photobooth albo karaoke — najbardziej współczesny i najmniej muzealny wariant." }
+      { title: "17:20–18:25 · Doug Aitken: Lightscape", text: "Siedem ekranów, przestrzenny dźwięk i muzyka m.in. Philipa Glassa, Steve’a Reicha, Meredith Monk i Becka. Bilet jest w formule Choose What You Pay, a przy opóźnieniu można zobaczyć krótszy fragment 65-minutowej pętli." },
+      { title: "18:25–19:00 · bezpieczny bufor", text: "Obie atrakcje są w tym samym budynku. 35 minut wystarcza na toalety, napoje i spokojne stawienie się przed slotem 19:00." },
+      { title: "19:00–20:00 · The Black Mirror Experience", text: "Interaktywna historia dla grupy: fizyczne dekoracje, VR i wspólne decyzje wpływające na zakończenie. Wariant grupowy dla 3–6 osób kosztuje obecnie 33,35 USD za osobę z opłatą serwisową." },
+      { title: "Prywatność i komfort", text: "Do personalizacji doświadczenie prosi o zdjęcie i próbkę głosu; organizator deklaruje usunięcie danych po czterech tygodniach. Minimalny wiek to 7 lat, ale klimat Black Mirror może być niepokojący." },
+      { title: "Plan B · tylko jeśli rezygnujecie z VR", text: "Edge pozostaje pogodową alternatywą na panoramę. Mercer Labs zapisujemy w Extra, ale nie cofamy się wieczorem do Financial District." }
     ],
     variants: [
-      { title: "Nowy plan pełny", text: "Dwa promy → Downtown → lunch → Whitney 90–120 minut → High Line → Hudson Yards i kolacja." },
+      { title: "Plan główny · pełny", text: "Dwa promy → Downtown → lunch → Whitney 90–120 minut → High Line → Lightscape → Black Mirror → kolacja." },
       { title: "Spokojniejsza wersja pierwotna", text: "Późny start → Whitney 2:15 → lunch → High Line → Hudson Yards. Pomijamy promy i Downtown." },
-      { title: "Upał", text: "Promy → krótki Downtown → lunch pod dachem → Whitney → tylko wybrany odcinek High Line." },
-      { title: "Deszcz", text: "Rezygnujemy z fotograficznej części promowej albo płyniemy wewnątrz → Downtown → Whitney → Chelsea Market i metro." }
+      { title: "Upał lub opóźnienie", text: "Promy → krótki Downtown → lunch pod dachem → Whitney → skrócony High Line od W 23rd St → The Shed. Black Mirror o 19:00 pozostaje nienaruszone." },
+      { title: "Deszcz", text: "Promy oglądacie z wnętrza albo skracacie część fotograficzną → Downtown → Whitney → przejazd bezpośrednio do The Shed. Oba wieczorne punkty są pod dachem." }
     ],
     links: [
       { label: "Start · hotel → Midtown West/Pier 79", url: "https://www.google.com/maps/dir/?api=1&origin=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave,+New+York&destination=Midtown+West+NYC+Ferry+Landing,+West+39th+Street,+New+York&travelmode=walking" },
       { label: "Lower Manhattan · Whitehall → Bull → Wall St → 9/11", url: "https://www.google.com/maps/dir/?api=1&origin=Whitehall+Terminal,+New+York&destination=9%2F11+Memorial,+New+York&waypoints=Charging+Bull,+New+York%7CNew+York+Stock+Exchange,+New+York&travelmode=walking" },
       { label: "9/11 Memorial → Whitney", url: "https://www.google.com/maps/dir/?api=1&origin=9%2F11+Memorial,+New+York&destination=Whitney+Museum,+99+Gansevoort+St,+New+York&travelmode=transit" },
-      { label: "Cała trasa · Whitney → High Line → Hudson Yards", url: "https://www.google.com/maps/dir/?api=1&origin=Whitney+Museum,+99+Gansevoort+St,+New+York&destination=Vessel,+Hudson+Yards,+New+York&waypoints=Chelsea+Market,+New+York%7CHigh+Line+10th+Avenue+Square,+New+York&travelmode=walking" },
-      { label: "Powrót · Hudson Yards → hotel", url: "https://www.google.com/maps/dir/?api=1&origin=Vessel,+Hudson+Yards,+New+York&destination=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave,+New+York&travelmode=walking" },
+      { label: "Cała trasa · Whitney → High Line → Vessel → The Shed", url: "https://www.google.com/maps/dir/?api=1&origin=Whitney+Museum,+99+Gansevoort+St,+New+York&destination=The+Shed,+545+W+30th+St,+New+York&waypoints=High+Line+10th+Avenue+Square,+New+York%7CVessel,+Hudson+Yards,+New+York&travelmode=walking" },
+      { label: "Powrót · The Shed → hotel", url: "https://www.google.com/maps/dir/?api=1&origin=The+Shed,+545+W+30th+St,+New+York&destination=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave,+New+York&travelmode=walking" },
       { label: "Whitney · wizyta i bilety", url: "https://whitney.org/visit" },
       { label: "Whitney · aktualne wystawy", url: "https://whitney.org/exhibitions" },
       { label: "Mabel Dwight", url: "https://whitney.org/exhibitions/mabel-dwight" },
       { label: "Andy Warhol Family Album", url: "https://whitney.org/exhibitions/andy-warhol-family-album" },
       { label: "High Line · oficjalna strona", url: "https://www.thehighline.org/visit/" },
+      { label: "The Shed · Doug Aitken: Lightscape", url: "https://www.theshed.org/program/521-doug-aitken-lightscape" },
+      { label: "The Shed · The Black Mirror Experience", url: "https://www.theshed.org/program/563-the-black-mirror-experience" },
+      { label: "Black Mirror · bilety na 27.08", url: "https://events.leapevents.com/tickets/the-black-mirror-experience-atzc4uo" },
       { label: "NYC Ferry · St. George", url: "https://www.ferry.nyc/routes-and-schedules/st-george/" },
       { label: "Staten Island Ferry · rozkład", url: "https://www.nyc.gov/html/dot/html/ferrybus/siferryschedule.shtml" },
       { label: "9/11 Memorial · oficjalne informacje", url: "https://www.911memorial.org/visit" },
       { label: "Zdjęcie z brzegu · Louis Valentino Park", url: "https://www.google.com/maps/search/?api=1&query=Louis+Valentino+Jr+Park+and+Pier+Brooklyn" },
-      { label: "Hotel → Koreatown", url: "https://www.google.com/maps/dir/?api=1&origin=Holiday+Inn+New+York+City+Times+Square,+585+8th+Ave,+New+York&destination=Koreatown,+West+32nd+Street,+New+York&travelmode=walking" }
+      { label: "Kolacja · restauracje obok The Shed", url: "https://www.google.com/maps/search/?api=1&query=restaurants+near+The+Shed+New+York" }
     ]
   },
   "2026-08-28": {
@@ -1032,6 +1040,8 @@ const TO_BUY = [
   { title: "MoMA", status: "Do kupienia", kind: "todo", when: "24.08 · 10:30", text: "Bilety na ustaloną godzinę. Przed zakupem potwierdzić aktualne wystawy i dostępność.", action: "Bilety MoMA", url: "https://visit.moma.org/select" },
   { title: "The Met", status: "Do zaplanowania", kind: "todo", when: "25.08 · 10:00", text: "Kupić bilety online, gdy plan Gosi będzie zaakceptowany. Bilet wstępu i nasza krótka trasa wystarczą.", action: "Wizyta i bilety", url: "https://www.metmuseum.org/plan-your-visit" },
   { title: "Whitney Museum", status: "Do rezerwacji", kind: "todo", when: "27.08 · 13:30", text: "Wybrać wejście czasowe po zatwierdzeniu dnia. Dla Matyldy również dodać właściwy bilet, nawet jeśli będzie bezpłatny.", action: "Bilety Whitney", url: "https://whitney.org/tickets" },
+  { title: "The Shed · Lightscape", status: "Zarezerwować", kind: "todo", when: "27.08 · 17:20", text: "Bilet Choose What You Pay. Wejście ogólne; pełna pętla trwa 65 minut, ale przy opóźnieniu można wyjść wcześniej.", action: "Lightscape", url: "https://www.theshed.org/program/521-doug-aitken-lightscape" },
+  { title: "The Black Mirror Experience", status: "Zarezerwować konkretny slot", kind: "todo", when: "27.08 · 19:00", text: "Wybrać bilet Family / Group dla 3–6 osób. Aktualna cena 33,35 USD za osobę z opłatą; przed zakupem zaakceptować wykorzystanie zdjęcia i próbki głosu.", action: "Bilety 27.08", url: "https://events.leapevents.com/tickets/the-black-mirror-experience-atzc4uo" },
   { title: "NYC Ferry · Pier 79 → St. George", status: "W dniu rejsu", kind: "dayof", when: "27.08 · rano", text: "Nie kupować wiele miesięcy wcześniej. Kupić i aktywować w aplikacji tuż przed wejściem. Staten Island Ferry w drodze powrotnej jest bezpłatny.", action: "Rozkład i bilety", url: "https://www.ferry.nyc/routes-and-schedules/st-george/" },
   { title: "Bargemusic", status: "Po publikacji programu", kind: "later", when: "29.08", text: "Sprawdzić dokładny koncert i zasady rezerwacji, gdy organizator opublikuje pełny kalendarz na sierpień.", action: "Sprawdź program", url: "https://www.bargemusic.org/" },
   { title: "SUMMIT One Vanderbilt", status: "Do rezerwacji", kind: "todo", when: "26.08 · pierwszy poranny slot", text: "Kupić bilet czasowy na około 8:30. Rano przeznaczamy około 90 minut, oglądamy Grand Central i jedziemy linią 7 do Gantry Plaza.", action: "Oficjalna strona", url: "https://summitov.com/" }
@@ -1042,7 +1052,7 @@ const TO_BUY = [
 const PLACES = [
   { id:"times-square", title:"Times Square", icon:"●", category:"ikona miasta", text:"Pierwsze światła, dawne Longacre Square i najlepszy punkt wejścia w energię Midtown.", meta:"22.08 · wieczór", dayId:"2026-08-22", panel:"evening", map:"https://www.google.com/maps/search/?api=1&query=Times+Square+New+York" },
   { id:"bryant-park", title:"Bryant Park i NYPL", icon:"◆", category:"lokalnie", text:"Miejski salon za biblioteką: pierwszy spacer i film pod gwiazdami.", meta:"22 i 24.08", dayId:"2026-08-24", panel:"movie", map:"https://www.google.com/maps/search/?api=1&query=Bryant+Park+New+York" },
-  { id:"brooklyn-tabernacle", title:"Brooklyn Tabernacle", icon:"♫", category:"gospel", text:"Opcjonalne poranne nabożeństwo w dużej, wielokulturowej wspólnocie znanej z chóru gospel.", meta:"23.08 · 09:00 · tylko przy dobrej energii", dayId:"2026-08-23", panel:"gospel", map:"https://www.google.com/maps/search/?api=1&query=Brooklyn+Tabernacle+17+Smith+Street+Brooklyn" },
+  { id:"brooklyn-tabernacle", title:"Brooklyn Tabernacle", icon:"♫", category:"gospel", text:"Opcjonalne poranne nabożeństwo w dużej, wielokulturowej wspólnocie znanej z chóru gospel.", meta:"23.08 · 09:00 · tylko przy dobrej energii", dayId:"2026-08-23", panel:"gospel", map:"https://www.google.com/maps/search/?api=1&query=Brooklyn+Tabernacle+17+Smith+Street+Brooklyn", image:"assets/places/brooklyn-tabernacle.jpg" },
   { id:"village", title:"Greenwich Village", icon:"♟", category:"historia", text:"Bohema, Stonewall, brownstones i muzyka — bez objazdu po adresach serialowych.", meta:"23.08 · 14:45", dayId:"2026-08-23", panel:"route", map:"https://www.google.com/maps/search/?api=1&query=Washington+Square+Park+New+York", image:"assets/photos/127.jpg" },
   { id:"bluenote", title:"Blue Note", icon:"♪", category:"muzyka", text:"Kameralny klub jazzowy i koncert Hiromi przy stoliku.", meta:"23.08 · 20:00", dayId:"2026-08-23", panel:"bluenote", map:"https://www.google.com/maps/search/?api=1&query=Blue+Note+Jazz+Club+NYC", image:"assets/places/blue-note.jpg" },
   { id:"caffe-reggio", title:"Caffè Reggio", icon:"☕", category:"historia i kawa", text:"Original Cappuccino, ekspres z 1902 roku i artystyczne wnętrze Greenwich Village.", meta:"23.08 · 16:40", dayId:"2026-08-23", panel:"route", map:"https://www.google.com/maps/search/?api=1&query=Caffe+Reggio+119+MacDougal+Street+New+York", image:"assets/photos/131.webp" },
@@ -1057,7 +1067,9 @@ const PLACES = [
   { id:"us-open", title:"US Open", icon:"◉", category:"sport", text:"Wieczorny mikst na kortach we Flushing Meadows oraz krótki przewodnik po zasadach i zachowaniu publiczności.", meta:"26.08 · 19:00", dayId:"2026-08-26", panel:"tennis", map:"https://www.google.com/maps/search/?api=1&query=USTA+Billie+Jean+King+National+Tennis+Center" },
   { id:"liberty", title:"Port i Statua Wolności", icon:"★", category:"zdjęcia", text:"Dwa promy i instrukcja wspólnego ikonicznego zdjęcia.", meta:"27.08 · rano", dayId:"2026-08-27", panel:"photos", map:"https://www.google.com/maps/search/?api=1&query=Whitehall+Terminal+New+York" },
   { id:"downtown", title:"Lower Manhattan", icon:"$", category:"historia", text:"Charging Bull, Wall Street oraz 9/11 Memorial bez muzeum.", meta:"27.08 · rano", dayId:"2026-08-27", panel:"downtown", map:"https://www.google.com/maps/search/?api=1&query=Charging+Bull+New+York" },
-  { id:"westside", title:"Whitney i High Line", icon:"↗", category:"sztuka", text:"Sztuka amerykańska, Meatpacking, dawna kolej i Hudson Yards.", meta:"27.08 · popołudnie", dayId:"2026-08-27", panel:"museum", map:"https://www.google.com/maps/search/?api=1&query=Whitney+Museum+New+York" },
+  { id:"westside", title:"Whitney, High Line i The Shed", icon:"↗", category:"sztuka i immersja", text:"Sztuka amerykańska, dawna kolej oraz wieczór Lightscape + Black Mirror bez dodatkowego przejazdu.", meta:"27.08 · popołudnie i wieczór", dayId:"2026-08-27", panel:"evening", map:"https://www.google.com/maps/search/?api=1&query=The+Shed+545+West+30th+Street+New+York" },
+  { id:"the-shed", title:"The Shed", icon:"◈", category:"tylko w Nowym Jorku", status:"Plan główny · dwa wejścia", text:"Lightscape o 17:20 i grupowe The Black Mirror Experience o 19:00 — dokładnie przy końcu High Line.", meta:"27.08 · 17:20–20:00", dayId:"2026-08-27", panel:"evening", map:"https://www.google.com/maps/search/?api=1&query=The+Shed+545+West+30th+Street+New+York", image:"assets/places/the-shed.jpg" },
+  { id:"mercer-labs", title:"Mercer Labs", icon:"∞", category:"Extra · tylko w Nowym Jorku", status:"Plan B · nie dokładamy do dnia głównego", text:"Piętnaście eksperymentalnych przestrzeni sztuki i technologii w Financial District. Rezerwa na deszcz lub osobny wolny wieczór, nie po High Line.", meta:"Extra · około 60–90 minut · 21 Dey St", dayId:"2026-08-27", panel:"evening", map:"https://www.google.com/maps/search/?api=1&query=Mercer+Labs+21+Dey+Street+New+York", image:"assets/places/mercer-labs.jpg" },
   { id:"summit", title:"SUMMIT One Vanderbilt", icon:"△", category:"zdjęcia", status:"Plan główny · rezerwacja czasowa", text:"Poranna panorama Manhattanu i trzy poziomy lustrzanych instalacji przed wyjazdem do Queens.", meta:"26.08 · 08:30", dayId:"2026-08-26", panel:"morning", map:"https://www.google.com/maps/search/?api=1&query=SUMMIT+One+Vanderbilt+New+York" },
   { id:"soho", title:"SoHo i Nolita", icon:"◇", category:"dla Matyldy", text:"Żeliwne fasady, streetwear, kosmetyki i niezależne butiki.", meta:"28.08 · rano", dayId:"2026-08-28", panel:"route", map:"https://www.google.com/maps/search/?api=1&query=Greene+Street+SoHo+New+York" },
   { id:"pier-35", title:"Pier 35", icon:"≈", category:"widok i odpoczynek", text:"Huśtawki nad East River, Manhattan Bridge i ostatni spokojny widok przed powrotem po bagaże.", meta:"30.08 · około 12:45", dayId:"2026-08-30", panel:"pier35", map:"https://www.google.com/maps/search/?api=1&query=Pier+35+FDR+Drive+Jefferson+Street+New+York", image:"assets/photos/133.jpg" },
