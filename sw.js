@@ -64,7 +64,6 @@ async function packageStatus(catalog) {
 
 async function downloadPackage(pkg, port) {
   const cacheName = `${PACKAGE_PREFIX}${pkg.id}-${pkg.version}`;
-  await caches.delete(cacheName);
   const cache = await caches.open(cacheName);
   let done = 0;
   const total = pkg.assets.length;
@@ -73,6 +72,12 @@ async function downloadPackage(pkg, port) {
       const batch = pkg.assets.slice(start, start + 4);
       await Promise.all(batch.map(async path => {
         const url = absolute(path);
+        const cached = await cache.match(url);
+        if (cached) {
+          done += 1;
+          port.postMessage({ type: "PROGRESS", done, total });
+          return;
+        }
         const response = await fetch(new Request(url, { cache: "reload" }));
         if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
         await cache.put(url, response);
@@ -84,7 +89,6 @@ async function downloadPackage(pkg, port) {
     const keys = await caches.keys();
     await Promise.all(keys.filter(key => key.startsWith(`${PACKAGE_PREFIX}${pkg.id}-`) && key !== cacheName).map(key => caches.delete(key)));
   } catch (error) {
-    await caches.delete(cacheName);
     throw error;
   }
 }
