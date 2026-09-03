@@ -8,6 +8,7 @@ Rodzinna aplikacja PWA skupiająca przewodniki podróżnicze pod jednym adresem 
 - Namibia — plan, safari i pakowanie
 - Nowy Jork — plan dzień po dniu, mapy, muzea i zdjęcia
 - Kiedy i dokąd? — małe narzędzie dołączone na stałe do aplikacji
+- Planer — wybór lotnisk, elastyczne terminy, zapisane wyszukiwania i linki do porównania lotów; bez cen w samej aplikacji
 
 Ekran główny pozwala pobrać, zaktualizować i usunąć każdy przewodnik osobno. Usunięcie pakietu kasuje pliki offline, ale nie czyści zapisów użytkownika w `localStorage` (np. odhaczeń).
 

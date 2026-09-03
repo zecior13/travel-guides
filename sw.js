@@ -1,4 +1,5 @@
-const SHELL_CACHE = "guides-shell-v3";
+const SHELL_CACHE = "guides-shell-v4-planer";
+// Planner shell includes local saved searches and bounded, price-free search handoffs.
 const PACKAGE_PREFIX = "guides-package-";
 const MARKER = "__guides_package_complete__";
 const CATALOG_URL = new URL("./offline-catalog.json", self.registration.scope).href;

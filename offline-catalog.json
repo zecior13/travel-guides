@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T14:20:28.895Z",
+  "generatedAt": "2026-09-03T20:10:00.000Z",
   "shell": [
     "./",
     "index.html",
@@ -22,7 +22,11 @@
     "tools/kiedy-i-dokad/icons/icon-192.png",
     "tools/kiedy-i-dokad/icons/icon-512.png",
     "tools/kiedy-i-dokad/index.html",
-    "tools/kiedy-i-dokad/manifest.json"
+    "tools/kiedy-i-dokad/manifest.json",
+    "tools/planer/index.html",
+    "tools/planer/planer.css",
+    "tools/planer/core.js",
+    "tools/planer/planer.js"
   ],
   "packages": [
     {

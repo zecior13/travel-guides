@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#173f45">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Planer podróży · Guides</title>
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../kiedy-i-dokad/icon-192.png">
+  <link rel="icon" href="../kiedy-i-dokad/favicon-32.png">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="./planer.css">
+  <script src="./core.js" defer></script>
+  <script src="./planer.js" defer></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="wrap header-row"><a class="brand" href="../../">🌍 Guides</a><span class="connection" id="networkStatus">Planer podróży</span></div>
+    <nav class="wrap app-tabs" aria-label="Główne sekcje">
+      <a class="app-tab" href="../../">Podróże</a><a class="app-tab" href="../../#by%C5%82em">Byłem</a><a class="app-tab" href="../kiedy-i-dokad/">Kiedy i dokąd?</a><a class="app-tab is-active" href="./" aria-current="page">Planer</a>
+    </nav>
+  </header>
+  <main class="wrap planner">
+    <div class="planner-heading"><div class="eyebrow dark">NAJPIERW WOLNE. POTEM KIERUNEK.</div><h1>Zrób miejsce na podróż.</h1><p>Kilka lotnisk, elastyczne daty i jeden plan poszukiwań.</p></div>
+    <div class="notice"><strong>Generator wyszukiwań · bez cen w Guides</strong><p>Przygotujemy terminy i linki. Ceny, dostępność połączeń i godziny sprawdzisz w Skyscannerze lub Google Flights. To nie jest lista znalezionych lotów.</p></div>
+    <div class="preset-row" aria-label="Pomysły na wyszukiwanie"><button type="button" data-preset="weekend">↗ Weekend po pracy</button><button type="button" data-preset="week">☀ Tydzień w przyszłym miesiącu</button><a href="../kiedy-i-dokad/">◷ Sprawdź ferie i dni wolne</a></div>
+    <div class="planner-layout">
+      <form id="plannerForm" novalidate>
+        <section class="planner-card">
+          <div class="step-title"><span>01</span><h2>Skąd i dokąd?</h2></div>
+          <fieldset><legend>Lotniska startowe</legend><p class="hint">Pierwsze jest główne. Kolejne porównamy osobno w tym samym planie.</p><div id="originChips" class="chips"></div><div class="add-airport"><input id="originInput" list="airports" placeholder="Miasto lub kod, np. WRO" aria-label="Dodaj lotnisko startowe" autocomplete="off"><button type="button" data-add="origins">Dodaj</button></div><div class="quick-airports" id="nearbyAirports"></div></fieldset>
+          <label class="field">Cel podróży<select id="destinationMode"><option value="anywhere">Gdziekolwiek</option><option value="airports">Wybrane lotniska</option></select></label>
+          <div id="continentPanel"><label class="field">Kontynent<select id="continent"><option value="all">Cały świat</option><option value="EU">Europa</option><option value="AF">Afryka</option><option value="AS">Azja</option><option value="NA">Ameryka Północna</option><option value="SA">Ameryka Południowa</option><option value="OC">Oceania</option></select></label><p class="hint">Lista kierunków to katalog inspiracji, nie pełna mapa połączeń. Filtr kontynentu dotyczy lotnisk w tym katalogu. Dla całego świata dodamy też link „Gdziekolwiek” w Skyscannerze. Liczy się położenie lotniska, nie państwo: Wyspy Kanaryjskie i Madera są tu w Afryce, Cypr w Azji.</p></div>
+          <fieldset id="destinationPanel" hidden><legend>Lotniska docelowe</legend><div id="destinationChips" class="chips"></div><div class="add-airport"><input id="destinationInput" list="airports" placeholder="Miasto lub kod, np. TIA" aria-label="Dodaj lotnisko docelowe" autocomplete="off"><button type="button" data-add="destinations">Dodaj</button></div></fieldset>
+          <p class="hint">Nie ma lotniska na liście? Wpisz jego 3-literowy kod IATA. Własne kody wymagają potwierdzenia w wyszukiwarce. Powrót domyślnie do tego samego lotniska startowego.</p>
+          <datalist id="airports"></datalist>
+        </section>
+        <section class="planner-card">
+          <div class="step-title"><span>02</span><h2>Kiedy masz czas?</h2></div>
+          <label class="field">Sposób wyboru terminu<select id="dateMode"><option value="exact">Konkretne daty</option><option value="range">Przedział dat</option><option value="month">Miesiąc i długość podróży</option></select></label>
+          <div id="exactPanel" class="fields-two"><label class="field">Data wylotu<input id="departDate" type="date" required></label><label class="field">Data powrotu — lądowania<input id="returnDate" type="date" required></label></div>
+          <div id="rangePanel" hidden><div class="fields-two"><label class="field">Wylot od<input id="departFrom" type="date"></label><label class="field">Wylot do<input id="departTo" type="date"></label><label class="field">Lądowanie po powrocie od<input id="returnFrom" type="date"></label><label class="field">Lądowanie po powrocie do<input id="returnTo" type="date"></label></div></div>
+          <div id="monthPanel" class="fields-two" hidden><label class="field">Miesiąc wylotu<input id="departMonth" type="month"></label><label class="field">Miesiąc powrotu<input id="returnMonth" type="month"></label></div>
+          <div id="durationPanel" hidden><div class="fields-two"><label class="field">Długość minimum<input id="minDays" type="number" min="1" max="90" step="1"></label><label class="field">Długość maksimum<input id="maxDays" type="number" min="1" max="90" step="1"></label></div><p class="hint">Liczba dni między datami: piątek → poniedziałek = 3. Wpisz tę samą liczbę w obu polach, aby ustalić dokładną długość.</p></div>
+          <div id="weekdaysPanel" hidden><fieldset><legend>Dni tygodnia — wylot</legend><div id="departDays" class="weekdays"></div></fieldset><fieldset><legend>Dni tygodnia — lądowanie po powrocie</legend><div id="returnDays" class="weekdays"></div></fieldset><p class="hint">Wszystkie zaznaczone = dowolny dzień. Terminy liczymy według dat lokalnych lotnisk.</p></div>
+          <fieldset><legend>Godziny — opcjonalnie</legend><div class="fields-two"><label class="field">Start pierwszego lotu<select id="departTimeRule"><option value="any">Dowolna godzina</option><option value="after">Po godzinie</option><option value="before">Przed godziną</option></select></label><label class="field">Godzina wylotu<input id="departTime" type="time" value="16:00" disabled></label><label class="field">Lądowanie po powrocie<select id="returnTimeRule"><option value="any">Dowolna godzina</option><option value="before">Przed godziną</option><option value="after">Po godzinie</option></select></label><label class="field">Godzina lądowania<input id="returnTime" type="time" value="08:00" disabled></label></div><p class="hint">To warunki do sprawdzenia w zewnętrznej wyszukiwarce, nie potwierdzone godziny lotów. Link domyślnie ustawia start lotu powrotnego na dzień powrotu. Przy nocnych lotach sprawdź także start dzień wcześniej.</p></fieldset>
+        </section>
+        <section class="planner-card">
+          <div class="step-title"><span>03</span><h2>Jak lecimy?</h2></div>
+          <label class="check-field"><input id="directOnly" type="checkbox"> Tylko loty bezpośrednie</label>
+          <div class="fields-two"><label class="field">Dorośli (18+)<input id="adults" type="number" min="1" max="9" value="1"></label><label class="field">Wiek dzieci, oddzielony przecinkami<input id="children" placeholder="np. 8, 14" inputmode="numeric"></label></div><p class="hint">Dzieci: 2–17 lat, maksymalnie 8. Niemowlęta, bagaż i szczegóły taryfy ustaw na stronie wyszukiwarki. Ceny porównuj dla całej grupy i tego samego bagażu.</p>
+          <div id="formError" role="alert" tabindex="-1" hidden></div>
+          <div class="form-actions"><button class="pill-button dark" type="submit">Przygotuj wyszukiwania ↗</button><button class="pill-button" type="button" id="resetForm">Wyczyść</button></div>
+        </section>
+      </form>
+      <aside class="planner-aside">
+        <section class="planner-card plan-note"><div class="eyebrow">TWÓJ SPOSÓB NA WYJAZD</div><h2>Wolny weekend?<br>Niech kierunek poczeka.</h2><p>Zaznacz lotniska, wybierz termin i porównaj pomysły. Jedna lista, bez przepisywania dat za każdym razem.</p><div class="note-line">01 · Ustal warunki</div><div class="note-line">02 · Wybierz kraj i termin</div><div class="note-line">03 · Sprawdź cenę u dostawcy</div></section>
+        <section class="planner-card"><h2>Zapisane plany</h2><p class="hint">Tylko w tej przeglądarce, bez konta i synchronizacji. Usunięcie danych aplikacji usuwa też plany.</p><div id="savedPlans"></div><label class="field">Nazwa planu<input id="planName" maxlength="70" placeholder="np. Jesienny weekend z Wrocławia"></label><button id="savePlan" class="pill-button" type="button">＋ Zapisz ustawienia</button><p id="saveStatus" role="status" class="hint"></p></section>
+      </aside>
+    </div>
+    <section id="results" class="planner-card results-section" hidden aria-labelledby="resultsTitle">
+      <div class="eyebrow dark">TERMINY I KIERUNKI DO SPRAWDZENIA</div><h2 id="resultsTitle" tabindex="-1">Twój plan poszukiwań</h2><p id="resultSummary" aria-live="polite"></p><p id="dirtyNotice" class="notice" hidden>Ustawienia formularza zmieniły się. Wybierz „Przygotuj wyszukiwania”, aby zastąpić poniższy plan.</p>
+      <p class="hint">Kraje i miasta są alfabetycznie, terminy chronologicznie. Bez danych cenowych nie wskazujemy „najtańszego”. Link do Skyscannera prosi o sortowanie od najniższej ceny — potwierdź ustawienia po otwarciu.</p>
+      <div class="results-filters"><label class="field">Zawęź kraj / miasto / kod<input id="resultSearch" type="search" placeholder="np. Włochy, Tirana, TIA"></label><label class="field">Lotnisko startowe<select id="resultOrigin"></select></label><label class="field">Para dat<select id="resultDates"></select></label></div>
+      <div id="transferNote" class="transfer-note"></div><div id="globalLinks"></div><div id="countryResults"></div>
+    </section>
+    <noscript><p>Planer wymaga włączonego JavaScript.</p></noscript>
+  </main>
+  <footer class="wrap">Guides · Planer · ustawienia offline, ceny online</footer>
+</body>
+</html>
