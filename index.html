@@ -3,79 +3,82 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#123c43">
+  <meta name="theme-color" content="#173f45">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Guides">
-  <title>Guides · nasze podróże</title>
+  <title>Guides · podróże i Twój świat</title>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./tools/kiedy-i-dokad/icon-192.png">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <header class="hero">
-    <div class="wrap">
-      <div class="eyebrow">NASZE PRZEWODNIKI PODRÓŻNICZE</div>
-      <h1><span aria-hidden="true">🌍</span> Guides</h1>
-      <p>Jedna aplikacja, wszystkie wyprawy. Pobierz wybrany przewodnik przed podróżą i korzystaj z niego bez internetu.</p>
+  <header class="app-header">
+    <div class="wrap header-row">
+      <button class="brand" type="button" data-view-target="trips" aria-label="Guides — strona główna"><span aria-hidden="true">🌍</span> Guides</button>
       <div class="connection" id="connectionStatus" role="status">Sprawdzam połączenie…</div>
     </div>
+    <nav class="wrap app-tabs" aria-label="Główne sekcje">
+      <button class="app-tab is-active" type="button" data-view-target="trips" aria-pressed="true">Podróże</button>
+      <button class="app-tab" type="button" data-view-target="been" aria-pressed="false">Byłem</button>
+      <a class="app-tab" href="./tools/kiedy-i-dokad/">Kiedy i dokąd?</a>
+    </nav>
   </header>
 
-  <main class="wrap main">
-    <section class="install-panel" id="installPanel">
-      <div>
-        <strong>Jedna ikona na telefonie</strong>
-        <p>Dodaj aplikację Guides do ekranu początkowego. Poszczególne podróże pobierzesz później tutaj.</p>
+  <main>
+    <section class="app-view" data-view="trips">
+      <div class="wrap trips-intro">
+        <div><div class="eyebrow">NASZE PRZEWODNIKI</div><h1>Dokąd ruszamy?</h1><p>Wszystkie wyprawy w jednym miejscu — gotowe także wtedy, gdy zniknie internet.</p></div>
+        <div class="hero-orbit" aria-hidden="true"><span>✦</span><span>⌁</span><span>●</span></div>
       </div>
-      <button class="install-button" id="installButton" type="button">Jak zainstalować</button>
+      <div class="wrap trips-content">
+        <section class="install-panel" id="installPanel">
+          <div><strong>Jedna ikona na telefonie</strong><p>Dodaj Guides do ekranu początkowego, a przewodniki pobieraj tutaj.</p></div>
+          <button class="pill-button" id="installButton" type="button">Jak zainstalować</button>
+        </section>
+        <div class="section-heading"><div><div class="eyebrow dark">PAKIETY OFFLINE</div><h2>Podróże</h2></div><div class="storage" id="storageStatus"></div></div>
+        <div class="guide-grid" id="guideGrid" aria-live="polite"><div class="loading-card">Wczytuję przewodniki…</div></div>
+        <section class="travel-tool-card"><span class="travel-tool-icon" aria-hidden="true">🌦️</span><span><span class="eyebrow">PLANOWANIE</span><strong>Kiedy i dokąd?</strong><small>Kalendarz najlepszych miesięcy dla kierunków podróży.</small></span><a href="./tools/kiedy-i-dokad/" aria-label="Otwórz Kiedy i dokąd">→</a></section>
+        <section class="help"><h2>Jak działa tryb offline?</h2><ol><li>Połącz się z Wi‑Fi i wybierz „Pobierz”.</li><li>Poczekaj na komunikat „Gotowy offline”.</li><li>Po podróży użyj „Usuń”, aby odzyskać miejsce. Twoje odhaczenia i notatki pozostaną zapisane.</li></ol></section>
+      </div>
     </section>
 
-    <div class="section-heading">
-      <div>
-        <div class="eyebrow dark">PAKIETY OFFLINE</div>
-        <h2>Podróże</h2>
+    <section class="app-view" data-view="been" hidden>
+      <div class="wrap been-heading">
+        <div><div class="eyebrow dark">PASZPORT PODRÓŻNIKA</div><h1>Twój świat</h1><p>Kraje, wspomnienia i następne małe cele.</p></div>
+        <div class="been-tools"><button class="icon-button" id="exportBeen" type="button" title="Eksportuj kopię danych" aria-label="Eksportuj kopię danych">⇧</button><button class="icon-button" id="importBeen" type="button" title="Importuj kopię danych" aria-label="Importuj kopię danych">⇩</button><input id="importBeenFile" type="file" accept="application/json" hidden></div>
       </div>
-      <div class="storage" id="storageStatus"></div>
-    </div>
-
-    <div class="guide-grid" id="guideGrid" aria-live="polite">
-      <div class="loading-card">Wczytuję przewodniki…</div>
-    </div>
-
-    <section class="tools-section">
-      <div class="eyebrow dark">ZAWSZE DOSTĘPNE OFFLINE</div>
-      <h2>Narzędzia</h2>
-      <a class="tool-card" href="./tools/kiedy-i-dokad/">
-        <span class="tool-icon" aria-hidden="true">🌦️</span>
-        <span><strong>Kiedy i dokąd?</strong><small>Kalendarz najlepszych miesięcy dla kierunków podróży</small></span>
-        <span aria-hidden="true">→</span>
-      </a>
-    </section>
-
-    <section class="help">
-      <h2>Jak działa tryb offline?</h2>
-      <ol>
-        <li>Połącz się z Wi‑Fi i wybierz „Pobierz”.</li>
-        <li>Poczekaj na komunikat „Gotowy offline”.</li>
-        <li>Po podróży użyj „Usuń”, aby odzyskać miejsce. Twoje odhaczenia i notatki pozostaną zapisane.</li>
-      </ol>
+      <div class="wrap stats-grid" id="beenStats" aria-live="polite"></div>
+      <div class="wrap scope-row">
+        <div class="scope-buttons" id="scopeButtons" aria-label="Zakres mapy"></div>
+        <label class="country-search"><span aria-hidden="true">⌕</span><input id="countrySearch" type="search" placeholder="Znajdź kraj" autocomplete="off" aria-label="Znajdź kraj"><span class="search-count" id="searchCount"></span></label>
+      </div>
+      <div class="wrap search-results" id="searchResults" hidden></div>
+      <div class="wrap globe-layout">
+        <section class="globe-card">
+          <div class="globe-toolbar"><span>Przeciągnij globus · dotknij kraju</span><button id="spinToggle" class="small-button" type="button">Ⅱ Zatrzymaj obrót</button></div>
+          <div class="globe-wrap"><svg id="worldGlobe" role="img" aria-label="Interaktywny globus z odwiedzonymi krajami"></svg><div class="map-loading" id="mapLoading">Ładuję mapę…</div></div>
+          <div class="map-legend"><span><i></i> do odkrycia</span><span><i class="visited"></i> odwiedzone</span><span><i class="selected"></i> wybrane</span></div>
+        </section>
+        <aside class="country-panel" id="countryPanel"><div class="country-empty"><span>◎</span><h2>Wybierz kraj</h2><p>Dotknij go na globusie albo znajdź po nazwie.</p></div></aside>
+      </div>
+      <section class="wrap passport-strip" id="passportStrip"></section>
+      <section class="wrap challenges-section">
+        <div class="section-heading"><div><div class="eyebrow dark">MAŁE CELE, WIELKIE WYPRAWY</div><h2>Wyzwania</h2></div><button class="pill-button dark" id="openChallengeBuilder" type="button">＋ Stwórz własne</button></div>
+        <div class="challenge-grid" id="challengeGrid"></div>
+      </section>
+      <section class="wrap privacy-note"><span aria-hidden="true">◉</span><div><strong>To jest Twój prywatny paszport</strong><p>Zaznaczenia są zapisywane wyłącznie w tej przeglądarce. Eksportuj kopię, jeśli zmieniasz telefon lub usuwasz dane aplikacji.</p></div></section>
     </section>
   </main>
 
-  <dialog id="installDialog">
-    <button class="dialog-close" id="closeDialog" type="button" aria-label="Zamknij">×</button>
-    <h2>Dodaj Guides do iPhone’a</h2>
-    <ol>
-      <li>Otwórz tę stronę w Safari.</li>
-      <li>Dotknij przycisku Udostępnij <span aria-hidden="true">□↑</span>.</li>
-      <li>Wybierz „Dodaj do ekranu początkowego”.</li>
-      <li>Potwierdź przyciskiem „Dodaj”.</li>
-    </ol>
-    <p>Na ekranie telefonu pojawi się tylko jedna ikona: Guides.</p>
-  </dialog>
-
+  <dialog id="installDialog"><button class="dialog-close" data-dialog-close type="button" aria-label="Zamknij">×</button><h2>Dodaj Guides do iPhone’a</h2><ol><li>Otwórz tę stronę w Safari.</li><li>Dotknij przycisku Udostępnij <span aria-hidden="true">□↑</span>.</li><li>Wybierz „Dodaj do ekranu początkowego”.</li><li>Potwierdź przyciskiem „Dodaj”.</li></ol><p>Na ekranie telefonu pojawi się tylko jedna ikona: Guides.</p></dialog>
+  <dialog id="visitDialog" class="form-dialog"><button class="dialog-close" data-dialog-close type="button" aria-label="Zamknij">×</button><div class="eyebrow dark">NOWA WIZYTA</div><h2 id="visitDialogTitle">Dodaj rok</h2><form id="visitForm"><label>Rok wizyty<input id="visitYear" name="year" type="number" min="1900" max="2100" required></label><div class="dialog-actions"><button class="pill-button ghost" data-dialog-close type="button">Anuluj</button><button class="pill-button dark" type="submit">Zapisz</button></div></form></dialog>
+  <dialog id="challengeDialog" class="form-dialog challenge-dialog"><button class="dialog-close" data-dialog-close type="button" aria-label="Zamknij">×</button><div class="eyebrow dark">KREATOR WYZWANIA</div><h2>Co chcesz odkryć?</h2><p class="dialog-lead">Wybierz gotowy pomysł i dopasuj nazwę. Kraje uzupełnimy automatycznie.</p><div class="challenge-ideas" id="challengeIdeas"></div><form id="challengeForm"><input type="hidden" id="challengeTemplate" name="template"><label>Nazwa wyzwania<input id="challengeName" name="name" maxlength="55" required placeholder="np. Nasza północna piątka"></label><div class="dialog-actions"><button class="pill-button ghost" data-dialog-close type="button">Anuluj</button><button class="pill-button dark" type="submit">Dodaj wyzwanie</button></div></form></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <footer class="wrap">Guides · family travel toolkit</footer>
+  <script src="./assets/vendor/d3.min.js"></script>
+  <script src="./assets/vendor/topojson-client.min.js"></script>
+  <script src="./been-data.js"></script>
   <script src="./app.js" defer></script>
 </body>
 </html>

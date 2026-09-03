@@ -39,8 +39,9 @@ for (const definition of definitions) {
 }
 
 const shell = [
-  "./", "index.html", "styles.css", "app.js", "sw.js", "manifest.webmanifest", "offline-catalog.json",
+  "./", "index.html", "styles.css", "app.js", "been-data.js", "sw.js", "manifest.webmanifest", "offline-catalog.json",
   "shared/common.css",
+  ...(await runtimeFiles("assets")),
   ...(await runtimeFiles("tools"))
 ];
 
