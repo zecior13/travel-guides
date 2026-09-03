@@ -1,4 +1,4 @@
-const SHELL_CACHE = "guides-shell-v2";
+const SHELL_CACHE = "guides-shell-v3";
 const PACKAGE_PREFIX = "guides-package-";
 const MARKER = "__guides_package_complete__";
 const CATALOG_URL = new URL("./offline-catalog.json", self.registration.scope).href;

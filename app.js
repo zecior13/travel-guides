@@ -23,6 +23,7 @@ let beenState = loadBeenState();
 let selectedCountryId = null;
 let selectedScope = "Świat";
 let mapReady = false;
+let globeZoom = 1;
 let spinning = !matchMedia("(prefers-reduced-motion: reduce)").matches;
 let projection, geoPath, mapFeatures, mapSvg, mapLayer, lastFrame;
 let installPrompt = null;
@@ -228,6 +229,10 @@ async function initMap() {
       projection.rotate([rotate[0] + event.dx * .35, Math.max(-85, Math.min(85, rotate[1] - event.dy * .35)), rotate[2]]);
       drawMap();
     }));
+    mapSvg.on("wheel", event => {
+      event.preventDefault();
+      setGlobeZoom(globeZoom * (event.deltaY < 0 ? 1.12 : .89));
+    }, { passive: false });
     mapReady = true;
     $("#mapLoading").hidden = true;
     resizeMap();
@@ -243,8 +248,15 @@ function resizeMap() {
   const box = $(".globe-wrap");
   const width = box.clientWidth, height = box.clientHeight;
   mapSvg.attr("viewBox", `0 0 ${width} ${height}`);
-  projection.translate([width / 2, height / 2]).scale(Math.min(width, height) * .42);
+  projection.translate([width / 2, height / 2]).scale(Math.min(width, height) * .42 * globeZoom);
   drawMap();
+}
+
+function setGlobeZoom(value) {
+  globeZoom = Math.max(.85, Math.min(3.4, value));
+  resizeMap();
+  $("#zoomOut").disabled = globeZoom <= .86;
+  $("#zoomIn").disabled = globeZoom >= 3.39;
 }
 
 function drawMap() {
@@ -289,6 +301,7 @@ function updateSpinButton() {
 function focusScope(scope) {
   const targets = { Świat: [0, -10, 0], Europa: [-15, -51, 0], Afryka: [-20, 2, 0], Azja: [-90, -30, 0], Ameryki: [75, -10, 0], Oceania: [-140, 20, 0] };
   selectedScope = scope;
+  globeZoom = ({ Świat: 1, Europa: 2.15, Afryka: 1.25, Azja: 1.15, Ameryki: 1.1, Oceania: 1.35 })[scope] || 1;
   renderBeen();
   if (projection) {
     const start = projection.rotate(), target = targets[scope];
@@ -370,6 +383,9 @@ function initBeenEvents() {
   });
   $("#visitForm").addEventListener("submit", event => { event.preventDefault(); addVisitYear(event.currentTarget.year.value); $("#visitDialog").close(); });
   $("#spinToggle").addEventListener("click", () => { spinning = !spinning; updateSpinButton(); });
+  $("#zoomIn").addEventListener("click", () => setGlobeZoom(globeZoom * 1.3));
+  $("#zoomOut").addEventListener("click", () => setGlobeZoom(globeZoom / 1.3));
+  $("#zoomReset").addEventListener("click", () => { globeZoom = 1; focusScope("Świat"); });
   $("#openChallengeBuilder").addEventListener("click", () => { renderChallengeIdeas(); selectChallengeTemplate("nordic"); $("#challengeDialog").showModal(); });
   $("#challengeIdeas").addEventListener("click", event => { const button = event.target.closest("[data-template]"); if (button) selectChallengeTemplate(button.dataset.template); });
   $("#challengeForm").addEventListener("submit", event => {
