@@ -24,6 +24,12 @@ test('current month omits past departures',()=>{
   const s={...base(),dateMode:'month',departMonth:'2026-09',returnMonth:'2026-09',minDays:3,maxDays:3};
   assert.equal(C.datePairs(s,now)[0].depart,now);
 });
+test('year of Friday-Sunday weekends stays 52 dates, grouped into 12 months',()=>{
+  const s={...base(),dateMode:'range',departFrom:'2026-09-04',departTo:'2027-08-31',returnFrom:'2026-09-06',returnTo:'2027-08-31',departDays:[5],returnDays:[0],minDays:2,maxDays:2};
+  const pairs=C.datePairs(s,now);assert.equal(pairs.length,52);assert.equal(C.calendarMonths(pairs).length,12);
+  assert(C.durationHint(s).includes('2 nocy'));
+  const bad={...s,minDays:3,maxDays:3};assert.equal(C.datePairs(bad,now).length,0);assert(C.noDatesReason(bad).includes('konflikt dat'));assert(C.noDatesReason(bad).includes('2 nocy'));
+});
 test('validation protects all dimensions and bounded ranges',()=>{
   for(const patch of [{origins:[]},{origins:['<X>']},{adults:0},{adults:1.5},{children:'1, 3'},{children:'7,'},{children:'18'},{departTimeRule:'after',departTime:''},{dateMode:'range',departDays:[]},{dateMode:'range',minDays:8,maxDays:3},{dateMode:'range',minDays:1.5},{dateMode:'range',departTo:'2028-10-01'},{dateMode:'month',departMonth:'2026-13'},{destinationMode:'airports',destinations:[]}])assert.throws(()=>C.datePairs({...base(),...patch},now),JSON.stringify(patch));
 });

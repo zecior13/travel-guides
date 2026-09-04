@@ -52,7 +52,7 @@
   }
   function defaults(now=today()) {
     const start=addDays(now,7),end=addDays(start,3),month=start.slice(0,7);
-    return {origins:['WRO'],destinations:[],destinationMode:'anywhere',continent:'EU',dateMode:'exact',departDate:start,returnDate:end,departFrom:start,departTo:addDays(start,21),returnFrom:end,returnTo:addDays(end,21),departMonth:month,returnMonth:month,minDays:3,maxDays:7,departDays:[1,2,3,4,5,6,0],returnDays:[1,2,3,4,5,6,0],departTimeRule:'any',departTime:'16:00',returnTimeRule:'any',returnTime:'08:00',directOnly:false,adults:1,children:''};
+    return {origins:['WRO'],destinations:[],destinationMode:'anywhere',destinationQuery:'',continent:'EU',dateMode:'exact',departDate:start,returnDate:end,departFrom:start,departTo:addDays(start,21),returnFrom:end,returnTo:addDays(end,21),departMonth:month,returnMonth:month,minDays:3,maxDays:7,departDays:[1,2,3,4,5,6,0],returnDays:[1,2,3,4,5,6,0],departTimeRule:'any',departTime:'16:00',returnTimeRule:'any',returnTime:'08:00',directOnly:false,adults:1,children:''};
   }
   function monthBounds(value) {
     if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(value||'')) throw Error('Wybierz poprawny miesiąc wylotu i powrotu.');
@@ -116,7 +116,25 @@
     const q=`Round trip flights from ${origin} to ${destination==='anywhere'?'anywhere':destination} departing ${pair.depart} returning ${pair.back} for ${s.adults} adults${s.directOnly?' nonstop':''}`;
     return 'https://www.google.com/travel/flights?hl=pl&q='+encodeURIComponent(q);
   }
-  const api={airports,airport,parseAirport,normalize,today,date,iso,addDays,defaults,validate,datePairs,destinations,skyLink,googleLink};
+  function durationHint(s) {
+    if(s.dateMode==='exact') return '';
+    if(s.departDays.length===1&&s.returnDays.length===1){
+      const names=['niedziela','poniedziałek','wtorek','środa','czwartek','piątek','sobota'];
+      const delta=(s.returnDays[0]-s.departDays[0]+7)%7||7;
+      return `${names[s.departDays[0]]} → ${names[s.returnDays[0]]}: najkrócej ${delta} nocy między datami.`;
+    }
+    return 'Liczba nocy to różnica dat, nie liczba dni kalendarzowych.';
+  }
+  function noDatesReason(s) {
+    if(s.dateMode!=='exact'){
+      let fits=false;
+      for(let n=+s.minDays;n<=+s.maxDays;n++)if(s.departDays.some(d=>s.returnDays.includes((d+n)%7)))fits=true;
+      if(!fits)return `Wybrane dni tygodnia nie pasują do liczby nocy (${s.minDays}–${s.maxDays}). ${durationHint(s)} Zmień liczbę nocy lub dni tygodnia. To konflikt dat, nie brak lotów.`;
+    }
+    return 'W wybranym przedziale nie ma terminów spełniających te warunki. Sprawdź zakres wylotu, powrotu i liczbę nocy. To nie jest informacja o dostępności lotów.';
+  }
+  function calendarMonths(pairs){const groups=new Map();for(const p of pairs){const m=p.depart.slice(0,7);const list=groups.get(m)||[];list.push(p);groups.set(m,list);}return [...groups];}
+  const api={airports,airport,parseAirport,normalize,today,date,iso,addDays,defaults,validate,datePairs,destinations,skyLink,googleLink,durationHint,noDatesReason,calendarMonths};
   root.GuidesPlanner=api;
   if(typeof module!=='undefined') module.exports=api;
 })(typeof window==='undefined'?globalThis:window);

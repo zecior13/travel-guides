@@ -23,8 +23,11 @@
   </header>
   <main class="wrap planner">
     <div class="planner-heading"><div class="eyebrow dark">NAJPIERW WOLNE. POTEM KIERUNEK.</div><h1>Zrób miejsce na podróż.</h1><p>Kilka lotnisk, elastyczne daty i jeden plan poszukiwań.</p></div>
-    <div class="notice"><strong>Generator wyszukiwań · bez cen w Guides</strong><p>Przygotujemy terminy i linki. Ceny, dostępność połączeń i godziny sprawdzisz w Skyscannerze lub Google Flights. To nie jest lista znalezionych lotów.</p></div>
+    <p class="availability-note">Propozycje do sprawdzenia — bez potwierdzonych cen i dostępności.</p>
+    <details class="how-it-works"><summary>Jak to działa?</summary><p>Wybierz terminy i kierunki, a potem sprawdź loty u dostawcy. Guides wylicza daty, ale nie pobiera rozkładów ani cen. Godziny i loty bezpośrednie to zapisane wymagania do potwierdzenia, nie zweryfikowane oferty.</p><p>Skyscanner: przekazujemy lotniska, daty startu obu lotów, pasażerów oraz prośbę o loty bezpośrednie i sortowanie cenowe. Google Flights otrzymuje zapytanie tekstowe. Potwierdź wszystkie ustawienia, bagaż oraz datę i godzinę lądowania. Lot powrotny może zaczynać się dzień wcześniej.</p></details>
     <div class="preset-row" aria-label="Pomysły na wyszukiwanie"><button type="button" data-preset="weekend">↗ Weekend po pracy</button><button type="button" data-preset="week">☀ Tydzień w przyszłym miesiącu</button><a href="../kiedy-i-dokad/">◷ Sprawdź ferie i dni wolne</a></div>
+    <details id="filterPanel" class="filter-panel" open>
+      <summary id="filterSummary"><span><strong>Ustawienia podróży</strong><span id="searchSummary">Lotniska, termin i sposób podróży</span></span><span class="edit-label">Zmień / zwiń</span></summary>
     <div class="planner-layout">
       <form id="plannerForm" novalidate>
         <section class="planner-card">
@@ -33,6 +36,7 @@
           <label class="field">Cel podróży<select id="destinationMode"><option value="anywhere">Gdziekolwiek</option><option value="airports">Wybrane lotniska</option></select></label>
           <div id="continentPanel"><label class="field">Kontynent<select id="continent"><option value="all">Cały świat</option><option value="EU">Europa</option><option value="AF">Afryka</option><option value="AS">Azja</option><option value="NA">Ameryka Północna</option><option value="SA">Ameryka Południowa</option><option value="OC">Oceania</option></select></label><p class="hint">Lista kierunków to katalog inspiracji, nie pełna mapa połączeń. Filtr kontynentu dotyczy lotnisk w tym katalogu. Dla całego świata dodamy też link „Gdziekolwiek” w Skyscannerze. Liczy się położenie lotniska, nie państwo: Wyspy Kanaryjskie i Madera są tu w Afryce, Cypr w Azji.</p></div>
           <fieldset id="destinationPanel" hidden><legend>Lotniska docelowe</legend><div id="destinationChips" class="chips"></div><div class="add-airport"><input id="destinationInput" list="airports" placeholder="Miasto lub kod, np. TIA" aria-label="Dodaj lotnisko docelowe" autocomplete="off"><button type="button" data-add="destinations">Dodaj</button></div></fieldset>
+          <label class="field">Kraj lub miasto — opcjonalne zawężenie<input id="destinationQuery" type="search" placeholder="np. Włochy lub Tirana"></label>
           <p class="hint">Nie ma lotniska na liście? Wpisz jego 3-literowy kod IATA. Własne kody wymagają potwierdzenia w wyszukiwarce. Powrót domyślnie do tego samego lotniska startowego.</p>
           <datalist id="airports"></datalist>
         </section>
@@ -42,16 +46,16 @@
           <div id="exactPanel" class="fields-two"><label class="field">Data wylotu<input id="departDate" type="date" required></label><label class="field">Data powrotu — lądowania<input id="returnDate" type="date" required></label></div>
           <div id="rangePanel" hidden><div class="fields-two"><label class="field">Wylot od<input id="departFrom" type="date"></label><label class="field">Wylot do<input id="departTo" type="date"></label><label class="field">Lądowanie po powrocie od<input id="returnFrom" type="date"></label><label class="field">Lądowanie po powrocie do<input id="returnTo" type="date"></label></div></div>
           <div id="monthPanel" class="fields-two" hidden><label class="field">Miesiąc wylotu<input id="departMonth" type="month"></label><label class="field">Miesiąc powrotu<input id="returnMonth" type="month"></label></div>
-          <div id="durationPanel" hidden><div class="fields-two"><label class="field">Długość minimum<input id="minDays" type="number" min="1" max="90" step="1"></label><label class="field">Długość maksimum<input id="maxDays" type="number" min="1" max="90" step="1"></label></div><p class="hint">Liczba dni między datami: piątek → poniedziałek = 3. Wpisz tę samą liczbę w obu polach, aby ustalić dokładną długość.</p></div>
+          <div id="durationPanel" hidden><div class="fields-two"><label class="field">Noce między datami — minimum<input id="minDays" type="number" min="1" max="90" step="1"></label><label class="field">Noce między datami — maksimum<input id="maxDays" type="number" min="1" max="90" step="1"></label></div><p class="hint">Piątek → niedziela = 2 noce (3 dni kalendarzowe). Piątek → poniedziałek = 3 noce. Liczymy odstęp między datą wylotu i lądowania po powrocie, nie liczbę noclegów w hotelu.</p><p id="durationExample" class="duration-example" aria-live="polite"></p></div>
           <div id="weekdaysPanel" hidden><fieldset><legend>Dni tygodnia — wylot</legend><div id="departDays" class="weekdays"></div></fieldset><fieldset><legend>Dni tygodnia — lądowanie po powrocie</legend><div id="returnDays" class="weekdays"></div></fieldset><p class="hint">Wszystkie zaznaczone = dowolny dzień. Terminy liczymy według dat lokalnych lotnisk.</p></div>
-          <fieldset><legend>Godziny — opcjonalnie</legend><div class="fields-two"><label class="field">Start pierwszego lotu<select id="departTimeRule"><option value="any">Dowolna godzina</option><option value="after">Po godzinie</option><option value="before">Przed godziną</option></select></label><label class="field">Godzina wylotu<input id="departTime" type="time" value="16:00" disabled></label><label class="field">Lądowanie po powrocie<select id="returnTimeRule"><option value="any">Dowolna godzina</option><option value="before">Przed godziną</option><option value="after">Po godzinie</option></select></label><label class="field">Godzina lądowania<input id="returnTime" type="time" value="08:00" disabled></label></div><p class="hint">To warunki do sprawdzenia w zewnętrznej wyszukiwarce, nie potwierdzone godziny lotów. Link domyślnie ustawia start lotu powrotnego na dzień powrotu. Przy nocnych lotach sprawdź także start dzień wcześniej.</p></fieldset>
+          <fieldset><legend>Godziny — do potwierdzenia u dostawcy</legend><div class="fields-two"><label class="field">Start pierwszego lotu<select id="departTimeRule"><option value="any">Dowolna godzina</option><option value="after">Po godzinie</option><option value="before">Przed godziną</option></select></label><label class="field">Godzina wylotu<input id="departTime" type="time" value="16:00" disabled></label><label class="field">Lądowanie po powrocie<select id="returnTimeRule"><option value="any">Dowolna godzina</option><option value="before">Przed godziną</option><option value="after">Po godzinie</option></select></label><label class="field">Godzina lądowania<input id="returnTime" type="time" value="08:00" disabled></label></div><p class="hint">Zapiszemy te wymagania przy wybranym terminie. Bez rozkładów nie sprawdzamy, które loty je spełniają.</p></fieldset>
         </section>
         <section class="planner-card">
           <div class="step-title"><span>03</span><h2>Jak lecimy?</h2></div>
           <label class="check-field"><input id="directOnly" type="checkbox"> Tylko loty bezpośrednie</label>
           <div class="fields-two"><label class="field">Dorośli (18+)<input id="adults" type="number" min="1" max="9" value="1"></label><label class="field">Wiek dzieci, oddzielony przecinkami<input id="children" placeholder="np. 8, 14" inputmode="numeric"></label></div><p class="hint">Dzieci: 2–17 lat, maksymalnie 8. Niemowlęta, bagaż i szczegóły taryfy ustaw na stronie wyszukiwarki. Ceny porównuj dla całej grupy i tego samego bagażu.</p>
           <div id="formError" role="alert" tabindex="-1" hidden></div>
-          <div class="form-actions"><button class="pill-button dark" type="submit">Przygotuj wyszukiwania ↗</button><button class="pill-button" type="button" id="resetForm">Wyczyść</button></div>
+          <div class="form-actions"><button class="pill-button dark" type="submit" id="prepareButton">Pokaż pasujące terminy ↗</button><button class="pill-button" type="button" id="resetForm">Wyczyść</button></div><p id="autoUpdateNote" class="hint" hidden>Zmiany automatycznie aktualizują plan poniżej. Ten przycisk tylko zwija ustawienia.</p>
         </section>
       </form>
       <aside class="planner-aside">
@@ -59,11 +63,16 @@
         <section class="planner-card"><h2>Zapisane plany</h2><p class="hint">Tylko w tej przeglądarce, bez konta i synchronizacji. Usunięcie danych aplikacji usuwa też plany.</p><div id="savedPlans"></div><label class="field">Nazwa planu<input id="planName" maxlength="70" placeholder="np. Jesienny weekend z Wrocławia"></label><button id="savePlan" class="pill-button" type="button">＋ Zapisz ustawienia</button><p id="saveStatus" role="status" class="hint"></p></section>
       </aside>
     </div>
+    </details>
     <section id="results" class="planner-card results-section" hidden aria-labelledby="resultsTitle">
-      <div class="eyebrow dark">TERMINY I KIERUNKI DO SPRAWDZENIA</div><h2 id="resultsTitle" tabindex="-1">Twój plan poszukiwań</h2><p id="resultSummary" aria-live="polite"></p><p id="dirtyNotice" class="notice" hidden>Ustawienia formularza zmieniły się. Wybierz „Przygotuj wyszukiwania”, aby zastąpić poniższy plan.</p>
-      <p class="hint">Kraje i miasta są alfabetycznie, terminy chronologicznie. Bez danych cenowych nie wskazujemy „najtańszego”. Link do Skyscannera prosi o sortowanie od najniższej ceny — potwierdź ustawienia po otwarciu.</p>
-      <div class="results-filters"><label class="field">Zawęź kraj / miasto / kod<input id="resultSearch" type="search" placeholder="np. Włochy, Tirana, TIA"></label><label class="field">Lotnisko startowe<select id="resultOrigin"></select></label><label class="field">Para dat<select id="resultDates"></select></label></div>
-      <div id="transferNote" class="transfer-note"></div><div id="globalLinks"></div><div id="countryResults"></div>
+      <div class="eyebrow dark">OD PLANU DO PODRÓŻY</div><h2 id="resultsTitle" tabindex="-1">Wybierz swój termin</h2><p id="resultSummary" aria-live="polite"></p>
+      <p id="planError" class="notice" role="status" hidden></p>
+      <div id="planContent">
+        <div id="beforeCalendar"></div>
+        <section id="calendarSection" aria-labelledby="calendarTitle"><h3 id="calendarTitle">Pasujące terminy</h3><p class="hint">Otwórz miesiąc i zaznacz do 3 terminów do porównania. To daty zgodne z kalendarzem, nie potwierdzone loty.</p><div id="selectedDates" class="selected-dates"></div><p id="selectionStatus" class="hint" role="status"></p><div id="monthCalendar" class="month-calendar"></div></section>
+        <div id="afterCalendar"><section id="directionPicker" aria-labelledby="directionTitle"><h3 id="directionTitle">Wybierz kierunek</h3><p id="directionHint" class="hint"></p><div id="countryResults"></div></section></div>
+        <section id="handoff" class="handoff" hidden aria-labelledby="handoffTitle"><h3 id="handoffTitle">Sprawdź wybrany wariant</h3><p id="handoffRoute"></p><div id="originChoices" class="origin-choices"></div><p id="transferNote" class="hint"></p><div id="handoffLinks"></div></section>
+      </div>
     </section>
     <noscript><p>Planer wymaga włączonego JavaScript.</p></noscript>
   </main>

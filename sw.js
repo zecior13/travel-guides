@@ -1,4 +1,4 @@
-const SHELL_CACHE = "guides-shell-v4-planer";
+const SHELL_CACHE = "guides-shell-v7-planner-calendar";
 // Planner shell includes local saved searches and bounded, price-free search handoffs.
 const PACKAGE_PREFIX = "guides-package-";
 const MARKER = "__guides_package_complete__";
